@@ -6,12 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import {
-  ArrowLeft,
   Clock,
   Flame,
-  Leaf,
   Loader2,
-  LogOut,
   Trash2,
   UtensilsCrossed,
   User,
@@ -21,6 +18,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { SavedRecipe } from "@/types/recipe";
+import { Header } from "@/components/Header";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -42,7 +40,7 @@ interface Profile {
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { user, isAuthenticated, loading: authLoading, signOut } = useAuth();
+  const { user, isAuthenticated, loading: authLoading } = useAuth();
   const { toast } = useToast();
 
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -182,11 +180,6 @@ const Profile = () => {
     }
   };
 
-  const handleSignOut = async () => {
-    await signOut();
-    navigate("/");
-  };
-
   if (authLoading || !isAuthenticated) {
     return (
       <div className="min-h-screen gradient-hero flex items-center justify-center">
@@ -197,29 +190,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen gradient-hero">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6">
-        <nav className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-soft">
-              <Leaf className="w-6 h-6 text-primary-foreground" />
-            </div>
-            <span className="font-heading text-xl font-bold text-foreground">NutriChef</span>
-          </Link>
-          <div className="flex items-center gap-2">
-            <Link to="/">
-              <Button variant="ghost">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Home
-              </Button>
-            </Link>
-            <Button variant="outline" onClick={handleSignOut}>
-              <LogOut className="w-4 h-4 mr-2" />
-              Sign Out
-            </Button>
-          </div>
-        </nav>
-      </header>
+      <Header showBackButton backTo="/" backLabel="Home" />
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Profile Card */}

@@ -3,7 +3,6 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import {
   ArrowLeft,
   Bookmark,
@@ -19,13 +18,13 @@ import {
   Check,
   AlertCircle,
   Share2,
-  Copy,
   CheckCircle,
 } from "lucide-react";
 import { Recipe } from "@/types/recipe";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { Header } from "@/components/Header";
 
 const RecipeResult = () => {
   const location = useLocation();
@@ -165,6 +164,39 @@ const RecipeResult = () => {
     }
   };
 
+  const recipeActions = (
+    <>
+      <Button variant="outline" onClick={generateRecipe} disabled={isLoading}>
+        <RefreshCw className="w-4 h-4 mr-2" />
+        New Recipe
+      </Button>
+      <Button
+        onClick={handleSaveRecipe}
+        disabled={isSaving || isSaved}
+        className={isSaved ? "bg-success text-success-foreground" : ""}
+      >
+        {isSaving ? (
+          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+        ) : isSaved ? (
+          <BookmarkCheck className="w-4 h-4 mr-2" />
+        ) : (
+          <Bookmark className="w-4 h-4 mr-2" />
+        )}
+        {isSaved ? "Saved" : "Save Recipe"}
+      </Button>
+      {isSaved && (
+        <Button variant="outline" onClick={handleShare}>
+          {copied ? (
+            <CheckCircle className="w-4 h-4 mr-2 text-success" />
+          ) : (
+            <Share2 className="w-4 h-4 mr-2" />
+          )}
+          {copied ? "Copied!" : "Share"}
+        </Button>
+      )}
+    </>
+  );
+
   if (isLoading) {
     return (
       <div className="min-h-screen gradient-hero flex items-center justify-center">
@@ -210,47 +242,7 @@ const RecipeResult = () => {
 
   return (
     <div className="min-h-screen gradient-hero">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6">
-        <nav className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-soft">
-              <Leaf className="w-6 h-6 text-primary-foreground" />
-            </div>
-            <span className="font-heading text-xl font-bold text-foreground">NutriChef</span>
-          </Link>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" onClick={generateRecipe} disabled={isLoading}>
-              <RefreshCw className="w-4 h-4 mr-2" />
-              New Recipe
-            </Button>
-            <Button
-              onClick={handleSaveRecipe}
-              disabled={isSaving || isSaved}
-              className={isSaved ? "bg-success text-success-foreground" : "gradient-primary text-primary-foreground"}
-            >
-              {isSaving ? (
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              ) : isSaved ? (
-                <BookmarkCheck className="w-4 h-4 mr-2" />
-              ) : (
-                <Bookmark className="w-4 h-4 mr-2" />
-              )}
-              {isSaved ? "Saved" : "Save Recipe"}
-            </Button>
-            {isSaved && (
-              <Button variant="outline" onClick={handleShare}>
-                {copied ? (
-                  <CheckCircle className="w-4 h-4 mr-2 text-success" />
-                ) : (
-                  <Share2 className="w-4 h-4 mr-2" />
-                )}
-                {copied ? "Copied!" : "Share"}
-              </Button>
-            )}
-          </div>
-        </nav>
-      </header>
+      <Header actions={recipeActions} />
 
       {/* Recipe Content */}
       <main className="container mx-auto px-4 py-8 max-w-4xl">

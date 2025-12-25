@@ -2,9 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Utensils, Sparkles, ShoppingCart, Heart, Leaf, LogOut, User, Calendar, Search, ArrowRight, Clock, ChefHat } from "lucide-react";
+import { Utensils, Sparkles, ShoppingCart, Heart, Leaf, Calendar, Search, ArrowRight, Clock, ChefHat } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { Header } from "@/components/Header";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -18,7 +18,7 @@ interface SavedRecipe {
 }
 
 const Landing = () => {
-  const { user, isAuthenticated, signOut, loading } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
   const [recentRecipes, setRecentRecipes] = useState<SavedRecipe[]>([]);
   const [recipesLoading, setRecipesLoading] = useState(false);
@@ -63,42 +63,7 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6">
-        <nav className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <Leaf className="w-5 h-5 text-primary-foreground" />
-            </div>
-            <span className="text-xl font-semibold text-foreground tracking-tight">NutriChef</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            {!loading && (
-              isAuthenticated ? (
-                <>
-                  <Link to="/profile">
-                    <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                      <User className="w-4 h-4 mr-2" />
-                      <span className="hidden sm:inline">{user?.email}</span>
-                      <span className="sm:hidden">Profile</span>
-                    </Button>
-                  </Link>
-                  <Button variant="ghost" size="sm" onClick={signOut} className="text-muted-foreground hover:text-foreground">
-                    <LogOut className="w-4 h-4" />
-                  </Button>
-                </>
-              ) : (
-                <Link to="/auth">
-                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                    Sign In
-                  </Button>
-                </Link>
-              )
-            )}
-          </div>
-        </nav>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <main className="container mx-auto px-4 pt-16 pb-24">
