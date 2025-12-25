@@ -13,8 +13,12 @@ const Landing = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    navigateToGenerate(searchQuery);
+  };
+
+  const navigateToGenerate = (query: string) => {
+    if (query.trim()) {
+      navigate(`/preferences?prompt=${encodeURIComponent(query.trim())}`);
     } else {
       navigate('/preferences');
     }
@@ -81,7 +85,7 @@ const Landing = () => {
               <Search className="w-5 h-5 text-muted-foreground ml-4" />
               <Input
                 type="text"
-                placeholder="Search for recipes... e.g., high protein breakfast"
+                placeholder="What do you want to cook? e.g., high protein breakfast"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="flex-1 border-0 text-base py-6 px-3 bg-transparent focus-visible:ring-0 placeholder:text-muted-foreground/50"
@@ -101,7 +105,7 @@ const Landing = () => {
             {trendingTags.map((tag) => (
               <button
                 key={tag}
-                onClick={() => setSearchQuery(tag)}
+                onClick={() => navigateToGenerate(tag)}
                 className="px-3 py-1.5 rounded-full bg-secondary text-sm text-secondary-foreground hover:bg-primary/10 hover:text-primary transition-colors"
               >
                 {tag}
@@ -142,16 +146,19 @@ const Landing = () => {
             icon={<Sparkles className="w-5 h-5" />}
             title="Smart Recommendations"
             description="AI learns your preferences and suggests recipes you'll actually enjoy."
+            href="/preferences"
           />
           <FeatureCard
             icon={<ShoppingCart className="w-5 h-5" />}
             title="Automated Shopping"
             description="Generate shopping lists automatically from your selected recipes."
+            href={isAuthenticated ? "/shopping-list" : "/auth"}
           />
           <FeatureCard
             icon={<Heart className="w-5 h-5" />}
             title="Nutrition Focused"
             description="Track macros and nutritional information for every recipe."
+            href={isAuthenticated ? "/meal-planning" : "/auth"}
           />
         </div>
 
@@ -169,16 +176,19 @@ const Landing = () => {
               number={1}
               title="Set Preferences"
               description="Share your dietary needs, allergies, and taste preferences"
+              href="/preferences"
             />
             <StepCard
               number={2}
               title="Generate Recipes"
               description="Our AI creates personalized recipes matching your criteria"
+              href="/preferences"
             />
             <StepCard
               number={3}
-              title="Cook and Enjoy"
-              description="Follow easy instructions and enjoy delicious, healthy meals"
+              title="Save and Plan"
+              description="Save favorites and organize your weekly meal plan"
+              href={isAuthenticated ? "/meal-planning" : "/auth"}
             />
           </div>
         </div>
@@ -193,7 +203,7 @@ const Landing = () => {
               <span className="font-medium text-foreground">NutriChef</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2024 NutriChef. All rights reserved.
+              2024 NutriChef. All rights reserved.
             </p>
           </div>
         </div>
@@ -206,34 +216,38 @@ interface FeatureCardProps {
   icon: React.ReactNode;
   title: string;
   description: string;
+  href: string;
 }
 
-const FeatureCard = ({ icon, title, description }: FeatureCardProps) => (
-  <Card className="border-border shadow-sm hover:shadow-md transition-shadow bg-card">
-    <CardContent className="pt-6">
-      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
-        {icon}
-      </div>
-      <h3 className="text-base font-semibold text-foreground mb-2">{title}</h3>
-      <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
-    </CardContent>
-  </Card>
+const FeatureCard = ({ icon, title, description, href }: FeatureCardProps) => (
+  <Link to={href}>
+    <Card className="border-border shadow-sm hover:shadow-md hover:border-primary/30 transition-all cursor-pointer bg-card h-full">
+      <CardContent className="pt-6">
+        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+          {icon}
+        </div>
+        <h3 className="text-base font-semibold text-foreground mb-2">{title}</h3>
+        <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
+      </CardContent>
+    </Card>
+  </Link>
 );
 
 interface StepCardProps {
   number: number;
   title: string;
   description: string;
+  href: string;
 }
 
-const StepCard = ({ number, title, description }: StepCardProps) => (
-  <div className="text-center">
-    <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-lg mx-auto mb-4">
+const StepCard = ({ number, title, description, href }: StepCardProps) => (
+  <Link to={href} className="text-center group">
+    <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-lg mx-auto mb-4 group-hover:scale-110 transition-transform">
       {number}
     </div>
-    <h3 className="text-base font-semibold text-foreground mb-2">{title}</h3>
+    <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">{title}</h3>
     <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
-  </div>
+  </Link>
 );
 
 export default Landing;

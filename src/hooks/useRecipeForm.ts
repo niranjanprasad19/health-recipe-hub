@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 export interface RecipeFormData {
+  // Custom prompt from search
+  prompt: string;
   // Step 1: Food Preferences
   likes: string[];
   dislikes: string[];
@@ -19,6 +21,7 @@ export interface RecipeFormData {
 }
 
 const initialFormData: RecipeFormData = {
+  prompt: "",
   likes: [],
   dislikes: [],
   allergies: [],
