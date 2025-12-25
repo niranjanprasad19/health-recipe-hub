@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Utensils, Sparkles, ShoppingCart, Heart, Leaf, LogOut, User, Calendar, Search, ArrowRight, Clock, ChefHat } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -71,28 +72,31 @@ const Landing = () => {
             </div>
             <span className="text-xl font-semibold text-foreground tracking-tight">NutriChef</span>
           </div>
-          {!loading && (
-            isAuthenticated ? (
-              <div className="flex items-center gap-2">
-                <Link to="/profile">
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            {!loading && (
+              isAuthenticated ? (
+                <>
+                  <Link to="/profile">
+                    <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                      <User className="w-4 h-4 mr-2" />
+                      <span className="hidden sm:inline">{user?.email}</span>
+                      <span className="sm:hidden">Profile</span>
+                    </Button>
+                  </Link>
+                  <Button variant="ghost" size="sm" onClick={signOut} className="text-muted-foreground hover:text-foreground">
+                    <LogOut className="w-4 h-4" />
+                  </Button>
+                </>
+              ) : (
+                <Link to="/auth">
                   <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                    <User className="w-4 h-4 mr-2" />
-                    <span className="hidden sm:inline">{user?.email}</span>
-                    <span className="sm:hidden">Profile</span>
+                    Sign In
                   </Button>
                 </Link>
-                <Button variant="ghost" size="sm" onClick={signOut} className="text-muted-foreground hover:text-foreground">
-                  <LogOut className="w-4 h-4" />
-                </Button>
-              </div>
-            ) : (
-              <Link to="/auth">
-                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                  Sign In
-                </Button>
-              </Link>
-            )
-          )}
+              )
+            )}
+          </div>
         </nav>
       </header>
 
