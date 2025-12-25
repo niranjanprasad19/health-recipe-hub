@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { 
   Calendar, 
   Plus, 
-  Trash2, 
   UtensilsCrossed,
   ChevronLeft,
   ChevronRight,
@@ -21,11 +20,21 @@ import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { format, startOfWeek, addDays, addWeeks, subWeeks } from "date-fns";
 import {
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragOverEvent,
+} from "@dnd-kit/core";
+import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Select,
@@ -34,6 +43,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { MealDropZone } from "@/components/meal-planning/MealDropZone";
 
 interface SavedRecipe {
   id: string;
@@ -78,6 +88,15 @@ const MealPlanning = () => {
   const [selectedMealType, setSelectedMealType] = useState("breakfast");
   const [selectedRecipeId, setSelectedRecipeId] = useState<string>("");
   const [customMealName, setCustomMealName] = useState("");
+  const [activeDragId, setActiveDragId] = useState<string | null>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  );
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -221,6 +240,65 @@ const MealPlanning = () => {
     setDialogOpen(true);
   };
 
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveDragId(event.active.id as string);
+  };
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    setActiveDragId(null);
+    const { active, over } = event;
+
+    if (!over || !mealPlan) return;
+
+    const activeId = active.id as string;
+    const overId = over.id as string;
+
+    // Check if dropped on a droppable zone
+    const overData = over.data.current;
+    if (overData && overData.dayIndex !== undefined && overData.mealType) {
+      const meal = mealPlan.meal_plan_items.find((m) => m.id === activeId);
+      if (!meal) return;
+
+      // Only update if position changed
+      if (meal.day_of_week === overData.dayIndex && meal.meal_type === overData.mealType) {
+        return;
+      }
+
+      // Optimistic update
+      setMealPlan((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          meal_plan_items: prev.meal_plan_items.map((item) =>
+            item.id === activeId
+              ? { ...item, day_of_week: overData.dayIndex, meal_type: overData.mealType }
+              : item
+          ),
+        };
+      });
+
+      // Update in database
+      const { error } = await supabase
+        .from("meal_plan_items")
+        .update({
+          day_of_week: overData.dayIndex,
+          meal_type: overData.mealType,
+        })
+        .eq("id", activeId);
+
+      if (error) {
+        toast.error("Failed to move meal");
+        fetchMealPlan(); // Revert on error
+      } else {
+        toast.success("Meal moved!");
+      }
+    }
+  };
+
+  const activeMeal = activeDragId
+    ? mealPlan?.meal_plan_items.find((m) => m.id === activeDragId)
+    : null;
+
   if (authLoading || isLoading) {
     return (
       <div className="min-h-screen gradient-hero flex items-center justify-center">
@@ -233,7 +311,6 @@ const MealPlanning = () => {
     <div className="min-h-screen gradient-hero">
       <Header showBackButton backTo="/" backLabel="Back to Home" />
 
-      {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8 text-center">
           <h1 className="font-heading text-3xl font-bold text-foreground mb-2 flex items-center justify-center gap-3">
@@ -241,7 +318,7 @@ const MealPlanning = () => {
             Meal Planning
           </h1>
           <p className="text-muted-foreground">
-            Plan your meals for the week ahead
+            Plan your meals for the week ahead • Drag meals to reorganize
           </p>
         </div>
 
@@ -268,127 +345,110 @@ const MealPlanning = () => {
           </Button>
         </div>
 
-        {/* Weekly Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4">
-          {DAYS.map((day, dayIndex) => (
-            <Card key={day} className="gradient-card shadow-card">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-semibold text-center">
-                  {day}
-                  <span className="block text-xs text-muted-foreground font-normal">
-                    {format(addDays(currentWeekStart, dayIndex), "MMM d")}
-                  </span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {MEAL_TYPES.map((mealType) => {
-                  const meals = getMealsForDayAndType(dayIndex, mealType.id);
-                  const Icon = mealType.icon;
+        {/* Weekly Grid with Drag & Drop */}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4">
+            {DAYS.map((day, dayIndex) => (
+              <Card key={day} className="gradient-card shadow-card">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-semibold text-center">
+                    {day}
+                    <span className="block text-xs text-muted-foreground font-normal">
+                      {format(addDays(currentWeekStart, dayIndex), "MMM d")}
+                    </span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {MEAL_TYPES.map((mealType) => (
+                    <MealDropZone
+                      key={mealType.id}
+                      dayIndex={dayIndex}
+                      mealType={mealType}
+                      meals={getMealsForDayAndType(dayIndex, mealType.id)}
+                      onAddMeal={openAddMealDialog}
+                      onRemoveMeal={handleRemoveMeal}
+                    />
+                  ))}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
 
-                  return (
-                    <div key={mealType.id} className="space-y-1">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Icon className="w-3 h-3" />
-                          {mealType.label}
-                        </div>
-                        <Dialog open={dialogOpen && selectedDay === dayIndex && selectedMealType === mealType.id} onOpenChange={(open) => {
-                          if (!open) setDialogOpen(false);
-                        }}>
-                          <DialogTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-5 w-5"
-                              onClick={() => openAddMealDialog(dayIndex, mealType.id)}
-                            >
-                              <Plus className="w-3 h-3" />
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent>
-                            <DialogHeader>
-                              <DialogTitle>
-                                Add {mealType.label} for {day}
-                              </DialogTitle>
-                            </DialogHeader>
-                            <div className="space-y-4 pt-4">
-                              {savedRecipes.length > 0 && (
-                                <div>
-                                  <label className="text-sm font-medium mb-2 block">
-                                    Select a saved recipe
-                                  </label>
-                                  <Select value={selectedRecipeId} onValueChange={(value) => {
-                                    setSelectedRecipeId(value);
-                                    setCustomMealName("");
-                                  }}>
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Choose a recipe..." />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      {savedRecipes.map((recipe) => (
-                                        <SelectItem key={recipe.id} value={recipe.id}>
-                                          {recipe.title}
-                                        </SelectItem>
-                                      ))}
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                              )}
-                              <div className="relative">
-                                <div className="absolute inset-0 flex items-center">
-                                  <span className="w-full border-t" />
-                                </div>
-                                <div className="relative flex justify-center text-xs uppercase">
-                                  <span className="bg-background px-2 text-muted-foreground">
-                                    Or
-                                  </span>
-                                </div>
-                              </div>
-                              <div>
-                                <label className="text-sm font-medium mb-2 block">
-                                  Enter a custom meal
-                                </label>
-                                <Input
-                                  placeholder="e.g., Grilled salmon with veggies"
-                                  value={customMealName}
-                                  onChange={(e) => {
-                                    setCustomMealName(e.target.value);
-                                    setSelectedRecipeId("");
-                                  }}
-                                />
-                              </div>
-                              <Button onClick={handleAddMeal} className="w-full gradient-primary text-primary-foreground">
-                                Add Meal
-                              </Button>
-                            </div>
-                          </DialogContent>
-                        </Dialog>
-                      </div>
-                      {meals.map((meal) => (
-                        <div
-                          key={meal.id}
-                          className="bg-secondary/50 rounded-md p-2 text-xs flex items-center justify-between group"
-                        >
-                          <span className="truncate flex-1">
-                            {meal.saved_recipes?.title || meal.custom_meal_name}
-                          </span>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity"
-                            onClick={() => handleRemoveMeal(meal.id)}
-                          >
-                            <Trash2 className="w-3 h-3 text-destructive" />
-                          </Button>
-                        </div>
+          <DragOverlay>
+            {activeMeal && (
+              <div className="bg-primary/90 text-primary-foreground rounded-md p-2 text-xs shadow-elevated">
+                {activeMeal.saved_recipes?.title || activeMeal.custom_meal_name}
+              </div>
+            )}
+          </DragOverlay>
+        </DndContext>
+
+        {/* Add Meal Dialog */}
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>
+                Add {MEAL_TYPES.find((m) => m.id === selectedMealType)?.label} for {DAYS[selectedDay]}
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 pt-4">
+              {savedRecipes.length > 0 && (
+                <div>
+                  <label className="text-sm font-medium mb-2 block">
+                    Select a saved recipe
+                  </label>
+                  <Select
+                    value={selectedRecipeId}
+                    onValueChange={(value) => {
+                      setSelectedRecipeId(value);
+                      setCustomMealName("");
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose a recipe..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {savedRecipes.map((recipe) => (
+                        <SelectItem key={recipe.id} value={recipe.id}>
+                          {recipe.title}
+                        </SelectItem>
                       ))}
-                    </div>
-                  );
-                })}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-background px-2 text-muted-foreground">Or</span>
+                </div>
+              </div>
+              <div>
+                <label className="text-sm font-medium mb-2 block">
+                  Enter a custom meal
+                </label>
+                <Input
+                  placeholder="e.g., Grilled salmon with veggies"
+                  value={customMealName}
+                  onChange={(e) => {
+                    setCustomMealName(e.target.value);
+                    setSelectedRecipeId("");
+                  }}
+                />
+              </div>
+              <Button onClick={handleAddMeal} className="w-full gradient-primary text-primary-foreground">
+                Add Meal
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {/* Quick Actions */}
         <div className="mt-8 flex flex-wrap gap-4 justify-center">
@@ -399,9 +459,7 @@ const MealPlanning = () => {
             </Button>
           </Link>
           <Link to="/profile">
-            <Button variant="outline">
-              View Saved Recipes
-            </Button>
+            <Button variant="outline">View Saved Recipes</Button>
           </Link>
         </div>
       </main>
