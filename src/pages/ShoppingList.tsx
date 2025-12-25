@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,6 +26,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { PullToRefresh } from "@/components/PullToRefresh";
 
 interface ShoppingListItem {
   id: string;
@@ -101,6 +102,13 @@ const ShoppingList = () => {
       fetchMealPlanInfo();
     }
   }, [user]);
+
+  const handleRefresh = useCallback(async () => {
+    if (currentListId) {
+      await Promise.all([fetchItems(currentListId), fetchMealPlanInfo()]);
+      toast.success("Refreshed!");
+    }
+  }, [currentListId, user]);
 
   // Initialize expanded categories when items change
   useEffect(() => {
@@ -404,15 +412,16 @@ const ShoppingList = () => {
     <div className="min-h-screen gradient-hero">
       <Header showBackButton backTo="/" backLabel="Back to Home" />
 
-      <main className="container mx-auto px-4 py-8 max-w-2xl">
+      <PullToRefresh onRefresh={handleRefresh}>
+        <main className="container mx-auto px-4 py-8 max-w-2xl">
         <Breadcrumb items={[{ label: "Shopping List" }]} />
 
         <div className="mb-8 text-center">
-          <h1 className="font-heading text-3xl font-bold text-foreground mb-2 flex items-center justify-center gap-3">
-            <ShoppingCart className="w-8 h-8 text-primary" />
+          <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mb-2 flex items-center justify-center gap-2 sm:gap-3">
+            <ShoppingCart className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
             Shopping List
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-sm sm:text-base">
             Your grocery list for the week
           </p>
         </div>
@@ -618,6 +627,7 @@ const ShoppingList = () => {
           </CardContent>
         </Card>
       </main>
+      </PullToRefresh>
     </div>
   );
 };
