@@ -6,6 +6,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap');
 
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
 @layer base {
   :root {
     --background: 140 20% 98%;
@@ -41,7 +43,7 @@
     /* Custom tokens for recipe app */
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
-    
+
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
@@ -61,6 +63,7 @@
     --sidebar-accent-foreground: 150 25% 20%;
     --sidebar-border: 145 20% 88%;
     --sidebar-ring: 152 58% 42%;
+    --font-sans: Poppins, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   }
 
   .dark {
@@ -114,6 +117,7 @@
     --sidebar-accent-foreground: 140 20% 90%;
     --sidebar-border: 150 15% 22%;
     --sidebar-ring: 152 58% 48%;
+    --font-sans: Poppins, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   }
 }
 
