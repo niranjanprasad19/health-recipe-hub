@@ -10,6 +10,7 @@ const corsHeaders = {
 // Zod schema for input validation
 const RecipeFormSchema = z.object({
   formData: z.object({
+    prompt: z.string().max(500).optional().default(""),
     likes: z.array(z.string().max(100)).max(20).default([]),
     dislikes: z.array(z.string().max(100)).max(20).default([]),
     allergies: z.array(z.string().max(100)).max(10).default([]),
@@ -91,6 +92,7 @@ serve(async (req) => {
 
     // Sanitize all input strings
     const formData = {
+      prompt: sanitizeString(parsed.data.formData.prompt || ""),
       likes: sanitizeArray(parsed.data.formData.likes),
       dislikes: sanitizeArray(parsed.data.formData.dislikes),
       allergies: sanitizeArray(parsed.data.formData.allergies),
@@ -118,6 +120,7 @@ Always provide accurate nutritional information and clear cooking instructions.`
 
     const userPrompt = `Create a personalized healthy recipe based on these preferences:
 
+${formData.prompt ? `**Special Request:** ${formData.prompt}` : ""}
 **Liked Foods:** ${formData.likes.length > 0 ? formData.likes.join(", ") : "No specific preferences"}
 **Disliked Foods:** ${formData.dislikes.length > 0 ? formData.dislikes.join(", ") : "None"}
 **Allergies/Intolerances:** ${formData.allergies.length > 0 ? formData.allergies.join(", ") : "None"}
@@ -128,6 +131,8 @@ Always provide accurate nutritional information and clear cooking instructions.`
 **Nutritional Deficiencies to Address:** ${formData.deficiencies.length > 0 ? formData.deficiencies.join(", ") : "None specified"}
 **Health Goals:** ${formData.healthGoals.length > 0 ? formData.healthGoals.join(", ") : "General wellness"}
 **Cuisine Preferences:** ${formData.cuisines.length > 0 ? formData.cuisines.join(", ") : "Any cuisine"}
+
+${formData.prompt ? `IMPORTANT: Focus the recipe on fulfilling the special request "${formData.prompt}". Make it the primary theme of the recipe.` : ""}
 
 Please respond with a JSON object in this exact format:
 {

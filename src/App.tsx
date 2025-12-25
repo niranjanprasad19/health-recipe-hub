@@ -13,6 +13,7 @@ import Auth from "./pages/Auth";
 import RecipeResult from "./pages/RecipeResult";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import QuickRecipe from "./pages/QuickRecipe";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/shopping-list" element={<ShoppingList />} />
           <Route path="/search" element={<RecipeSearch />} />
           <Route path="/shared/:shareToken" element={<SharedRecipe />} />
+          <Route path="/quick-recipe" element={<QuickRecipe />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
