@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Loader2 } from "lucide-react";
+import { Mail, Loader2, RefreshCw } from "lucide-react";
 
 interface ForgotPasswordDialogProps {
   defaultEmail?: string;
@@ -23,6 +23,7 @@ export const ForgotPasswordDialog = ({ defaultEmail = "" }: ForgotPasswordDialog
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [sent, setSent] = useState(false);
+  const [resending, setResending] = useState(false);
   const { toast } = useToast();
 
   const handleResetRequest = async (e: React.FormEvent) => {
@@ -55,6 +56,27 @@ export const ForgotPasswordDialog = ({ defaultEmail = "" }: ForgotPasswordDialog
       toast({
         title: "Check your email",
         description: "We've sent you a password reset link",
+      });
+    }
+  };
+
+  const handleResend = async () => {
+    setResending(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setResending(false);
+
+    if (error) {
+      toast({
+        title: "Failed to resend",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Email sent!",
+        description: "We've sent another password reset link",
       });
     }
   };
@@ -95,13 +117,31 @@ export const ForgotPasswordDialog = ({ defaultEmail = "" }: ForgotPasswordDialog
                 A password reset link has been sent to <strong>{email}</strong>
               </p>
             </div>
-            <Button 
-              variant="outline" 
-              className="w-full"
-              onClick={() => setOpen(false)}
-            >
-              Close
-            </Button>
+            <p className="text-sm text-center text-muted-foreground">
+              Didn't receive the email? Check your spam folder or click below to resend.
+            </p>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                className="flex-1"
+                onClick={() => setOpen(false)}
+              >
+                Close
+              </Button>
+              <Button 
+                variant="secondary"
+                className="flex-1"
+                onClick={handleResend}
+                disabled={resending}
+              >
+                {resending ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : (
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                )}
+                Resend
+              </Button>
+            </div>
           </div>
         ) : (
           <form onSubmit={handleResetRequest} className="space-y-4">
