@@ -18,6 +18,9 @@ import {
   Sparkles,
   Check,
   AlertCircle,
+  Share2,
+  Copy,
+  CheckCircle,
 } from "lucide-react";
 import { Recipe } from "@/types/recipe";
 import { supabase } from "@/integrations/supabase/client";
@@ -34,6 +37,10 @@ const RecipeResult = () => {
   const [isLoading, setIsLoading] = useState(!location.state?.recipe);
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [savedRecipeId, setSavedRecipeId] = useState<string | null>(null);
+  const [shareToken, setShareToken] = useState<string | null>(null);
+  const [isSharing, setIsSharing] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const formData = location.state?.formData;
@@ -93,7 +100,9 @@ const RecipeResult = () => {
 
     setIsSaving(true);
     try {
-      const { error } = await supabase.from("saved_recipes").insert([{
+      const token = crypto.randomUUID().replace(/-/g, '').slice(0, 12);
+      
+      const { data, error } = await supabase.from("saved_recipes").insert([{
         user_id: user.id,
         title: recipe.title,
         description: recipe.description,
@@ -105,11 +114,14 @@ const RecipeResult = () => {
         servings: recipe.servings,
         cuisine: recipe.cuisine,
         tags: recipe.tags,
-      }]);
+        share_token: token,
+      }]).select().single();
 
       if (error) throw error;
 
       setIsSaved(true);
+      setSavedRecipeId(data.id);
+      setShareToken(token);
       toast({
         title: "Recipe saved!",
         description: "You can find it in your profile.",
@@ -123,6 +135,33 @@ const RecipeResult = () => {
       });
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleShare = async () => {
+    if (!shareToken) {
+      toast({
+        title: "Save first",
+        description: "Please save the recipe before sharing.",
+      });
+      return;
+    }
+
+    const shareUrl = `${window.location.origin}/shared/${shareToken}`;
+    
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      toast({
+        title: "Link copied!",
+        description: "Share this link with anyone.",
+      });
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast({
+        title: "Share link",
+        description: shareUrl,
+      });
     }
   };
 
@@ -199,6 +238,16 @@ const RecipeResult = () => {
               )}
               {isSaved ? "Saved" : "Save Recipe"}
             </Button>
+            {isSaved && (
+              <Button variant="outline" onClick={handleShare}>
+                {copied ? (
+                  <CheckCircle className="w-4 h-4 mr-2 text-success" />
+                ) : (
+                  <Share2 className="w-4 h-4 mr-2" />
+                )}
+                {copied ? "Copied!" : "Share"}
+              </Button>
+            )}
           </div>
         </nav>
       </header>

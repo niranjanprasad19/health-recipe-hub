@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Utensils, Sparkles, ShoppingCart, Heart, Leaf, LogOut, User, Calendar } from "lucide-react";
+import { Utensils, Sparkles, ShoppingCart, Heart, Leaf, LogOut, User, Calendar, Search } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 const Landing = () => {
@@ -69,12 +69,26 @@ const Landing = () => {
               </Button>
             </Link>
             {isAuthenticated && (
-              <Link to="/meal-planning">
-                <Button size="lg" variant="outline" className="text-lg px-8 py-6 h-auto rounded-xl">
-                  <Calendar className="w-5 h-5 mr-2" />
-                  Meal Planning
-                </Button>
-              </Link>
+              <>
+                <Link to="/meal-planning">
+                  <Button size="lg" variant="outline" className="text-lg px-8 py-6 h-auto rounded-xl">
+                    <Calendar className="w-5 h-5 mr-2" />
+                    Meal Planning
+                  </Button>
+                </Link>
+                <Link to="/shopping-list">
+                  <Button size="lg" variant="outline" className="text-lg px-8 py-6 h-auto rounded-xl">
+                    <ShoppingCart className="w-5 h-5 mr-2" />
+                    Shopping List
+                  </Button>
+                </Link>
+                <Link to="/search">
+                  <Button size="lg" variant="outline" className="text-lg px-8 py-6 h-auto rounded-xl">
+                    <Search className="w-5 h-5 mr-2" />
+                    Search Recipes
+                  </Button>
+                </Link>
+              </>
             )}
           </div>
         </div>

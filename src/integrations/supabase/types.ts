@@ -128,6 +128,7 @@ export type Database = {
           nutrition_info: Json | null
           prep_time: number | null
           servings: number | null
+          share_token: string | null
           tags: string[] | null
           title: string
           user_id: string
@@ -143,6 +144,7 @@ export type Database = {
           nutrition_info?: Json | null
           prep_time?: number | null
           servings?: number | null
+          share_token?: string | null
           tags?: string[] | null
           title: string
           user_id: string
@@ -158,11 +160,79 @@ export type Database = {
           nutrition_info?: Json | null
           prep_time?: number | null
           servings?: number | null
+          share_token?: string | null
           tags?: string[] | null
           title?: string
           user_id?: string
         }
         Relationships: []
+      }
+      shopping_list_items: {
+        Row: {
+          amount: string | null
+          checked: boolean
+          created_at: string
+          id: string
+          ingredient_name: string
+          shopping_list_id: string
+        }
+        Insert: {
+          amount?: string | null
+          checked?: boolean
+          created_at?: string
+          id?: string
+          ingredient_name: string
+          shopping_list_id: string
+        }
+        Update: {
+          amount?: string | null
+          checked?: boolean
+          created_at?: string
+          id?: string
+          ingredient_name?: string
+          shopping_list_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shopping_list_items_shopping_list_id_fkey"
+            columns: ["shopping_list_id"]
+            isOneToOne: false
+            referencedRelation: "shopping_lists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shopping_lists: {
+        Row: {
+          created_at: string
+          id: string
+          meal_plan_id: string | null
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          meal_plan_id?: string | null
+          name?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          meal_plan_id?: string | null
+          name?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shopping_lists_meal_plan_id_fkey"
+            columns: ["meal_plan_id"]
+            isOneToOne: false
+            referencedRelation: "meal_plans"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
