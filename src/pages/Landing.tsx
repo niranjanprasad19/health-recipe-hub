@@ -2,14 +2,48 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Utensils, Sparkles, ShoppingCart, Heart, Leaf, LogOut, User, Calendar, Search, ArrowRight } from "lucide-react";
+import { Utensils, Sparkles, ShoppingCart, Heart, Leaf, LogOut, User, Calendar, Search, ArrowRight, Clock, ChefHat } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface SavedRecipe {
+  id: string;
+  title: string;
+  description: string | null;
+  prep_time: number | null;
+  cook_time: number | null;
+  cuisine: string | null;
+}
 
 const Landing = () => {
   const { user, isAuthenticated, signOut, loading } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
+  const [recentRecipes, setRecentRecipes] = useState<SavedRecipe[]>([]);
+  const [recipesLoading, setRecipesLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      fetchRecentRecipes();
+    }
+  }, [isAuthenticated, user]);
+
+  const fetchRecentRecipes = async () => {
+    if (!user) return;
+    setRecipesLoading(true);
+    const { data, error } = await supabase
+      .from("saved_recipes")
+      .select("id, title, description, prep_time, cook_time, cuisine")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false })
+      .limit(4);
+
+    if (!error && data) {
+      setRecentRecipes(data);
+    }
+    setRecipesLoading(false);
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -140,7 +174,25 @@ const Landing = () => {
           </div>
         </div>
 
-        {/* Features */}
+        {/* Recent Recipes for Logged-in Users */}
+        {isAuthenticated && recentRecipes.length > 0 && (
+          <div className="mt-20 max-w-4xl mx-auto animate-fade-in">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-semibold text-foreground">Your Recent Recipes</h2>
+              <Link to="/search">
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
+                  View All
+                  <ArrowRight className="w-4 h-4 ml-1" />
+                </Button>
+              </Link>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {recentRecipes.map((recipe) => (
+                <RecipeCard key={recipe.id} recipe={recipe} />
+              ))}
+            </div>
+          </div>
+        )}
         <div className="grid md:grid-cols-3 gap-6 mt-28 max-w-4xl mx-auto">
           <FeatureCard
             icon={<Sparkles className="w-5 h-5" />}
@@ -247,6 +299,31 @@ const StepCard = ({ number, title, description, href }: StepCardProps) => (
     </div>
     <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">{title}</h3>
     <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
+  </Link>
+);
+
+const RecipeCard = ({ recipe }: { recipe: SavedRecipe }) => (
+  <Link to={`/search?recipe=${recipe.id}`}>
+    <Card className="border-border hover:border-primary/30 hover:shadow-md transition-all cursor-pointer bg-card h-full">
+      <CardContent className="p-4">
+        <div className="flex items-center gap-2 mb-2">
+          <ChefHat className="w-4 h-4 text-primary" />
+          {recipe.cuisine && (
+            <span className="text-xs text-muted-foreground">{recipe.cuisine}</span>
+          )}
+        </div>
+        <h3 className="font-medium text-foreground text-sm mb-1 line-clamp-2">{recipe.title}</h3>
+        {recipe.description && (
+          <p className="text-xs text-muted-foreground line-clamp-2 mb-2">{recipe.description}</p>
+        )}
+        {(recipe.prep_time || recipe.cook_time) && (
+          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+            <Clock className="w-3 h-3" />
+            <span>{(recipe.prep_time || 0) + (recipe.cook_time || 0)} min</span>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   </Link>
 );
 
