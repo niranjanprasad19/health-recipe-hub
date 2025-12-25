@@ -5,14 +5,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { 
-  ArrowLeft, 
-  Leaf, 
   Search, 
   Clock,
   Users,
   ChefHat,
   ExternalLink
 } from "lucide-react";
+import { Header } from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -104,23 +103,7 @@ const RecipeSearch = () => {
 
   return (
     <div className="min-h-screen gradient-hero">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6">
-        <nav className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-soft">
-              <Leaf className="w-6 h-6 text-primary-foreground" />
-            </div>
-            <span className="font-heading text-xl font-bold text-foreground">NutriChef</span>
-          </Link>
-          <Link to="/">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Home
-            </Button>
-          </Link>
-        </nav>
-      </header>
+      <Header showBackButton backTo="/" backLabel="Back to Home" />
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8 max-w-4xl">

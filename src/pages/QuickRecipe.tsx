@@ -9,7 +9,6 @@ import {
   BookmarkCheck,
   Clock,
   Flame,
-  Leaf,
   Loader2,
   RefreshCw,
   Users,
@@ -19,7 +18,9 @@ import {
   AlertCircle,
   Share2,
   CheckCircle,
+  Leaf,
 } from "lucide-react";
+import { Header } from "@/components/Header";
 import { Recipe } from "@/types/recipe";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -222,15 +223,8 @@ const QuickRecipe = () => {
 
   return (
     <div className="min-h-screen gradient-hero">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6">
-        <nav className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-soft">
-              <Leaf className="w-6 h-6 text-primary-foreground" />
-            </div>
-            <span className="font-heading text-xl font-bold text-foreground">NutriChef</span>
-          </Link>
+      <Header 
+        actions={
           <div className="flex items-center gap-2">
             <Button variant="outline" onClick={generateRecipe} disabled={isLoading}>
               <RefreshCw className="w-4 h-4 mr-2" />
@@ -261,8 +255,8 @@ const QuickRecipe = () => {
               </Button>
             )}
           </div>
-        </nav>
-      </header>
+        }
+      />
 
       {/* Search Context */}
       <div className="container mx-auto px-4 mb-4">
