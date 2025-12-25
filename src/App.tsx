@@ -15,6 +15,7 @@ import RecipeResult from "./pages/RecipeResult";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import QuickRecipe from "./pages/QuickRecipe";
+import ResetPassword from "./pages/ResetPassword";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/preferences" element={<Preferences />} />
             <Route path="/recipe" element={<RecipeResult />} />
             <Route path="/recipe/:id" element={<RecipeResult />} />
