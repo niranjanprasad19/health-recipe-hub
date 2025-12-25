@@ -73,7 +73,7 @@ const Landing = () => {
             AI-Powered Recipe Generation
           </p>
           
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-foreground mb-6 tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-6 tracking-tight leading-tight">
             Personalized recipes for{" "}
             <span className="text-primary">healthier living</span>
           </h1>
@@ -85,18 +85,20 @@ const Landing = () => {
 
           {/* Search Bar */}
           <form onSubmit={handleSearch} className="relative max-w-2xl mx-auto mb-8">
-            <div className="flex items-center bg-card rounded-xl border border-border shadow-sm overflow-hidden transition-shadow focus-within:shadow-md focus-within:border-primary/50">
-              <Search className="w-5 h-5 text-muted-foreground ml-4" />
-              <Input
-                type="text"
-                placeholder="What do you want to cook? e.g., high protein breakfast"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 border-0 text-base py-6 px-3 bg-transparent focus-visible:ring-0 placeholder:text-muted-foreground/50"
-              />
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center bg-card rounded-xl border border-border shadow-sm overflow-hidden transition-shadow focus-within:shadow-md focus-within:border-primary/50">
+              <div className="flex items-center flex-1">
+                <Search className="w-5 h-5 text-muted-foreground ml-4" />
+                <Input
+                  type="text"
+                  placeholder="What do you want to cook?"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="flex-1 border-0 text-base py-6 px-3 bg-transparent focus-visible:ring-0 placeholder:text-muted-foreground/50"
+                />
+              </div>
               <Button 
                 type="submit"
-                className="mr-2 px-6 rounded-lg"
+                className="mx-2 mb-2 sm:mb-0 sm:mr-2 px-6 rounded-lg"
               >
                 Generate
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -118,9 +120,9 @@ const Landing = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="flex flex-wrap gap-3 justify-center">
+          <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
             <Link to="/preferences">
-              <Button size="lg" variant="outline" className="rounded-lg">
+              <Button size="default" variant="outline" className="rounded-lg text-sm sm:text-base">
                 <Utensils className="w-4 h-4 mr-2" />
                 Set Preferences
               </Button>
@@ -128,13 +130,13 @@ const Landing = () => {
             {isAuthenticated && (
               <>
                 <Link to="/meal-planning">
-                  <Button size="lg" variant="outline" className="rounded-lg">
+                  <Button size="default" variant="outline" className="rounded-lg text-sm sm:text-base">
                     <Calendar className="w-4 h-4 mr-2" />
                     Meal Plan
                   </Button>
                 </Link>
                 <Link to="/shopping-list">
-                  <Button size="lg" variant="outline" className="rounded-lg">
+                  <Button size="default" variant="outline" className="rounded-lg text-sm sm:text-base">
                     <ShoppingCart className="w-4 h-4 mr-2" />
                     Shopping List
                   </Button>
