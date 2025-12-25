@@ -1,21 +1,38 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-interface RecipeFormData {
-  likes: string[];
-  dislikes: string[];
-  allergies: string[];
-  dietaryStyles: string[];
-  ageRange: string;
-  activityLevel: string;
-  servings: string;
-  deficiencies: string[];
-  healthGoals: string[];
-  cuisines: string[];
+// Zod schema for input validation
+const RecipeFormSchema = z.object({
+  formData: z.object({
+    likes: z.array(z.string().max(100)).max(20).default([]),
+    dislikes: z.array(z.string().max(100)).max(20).default([]),
+    allergies: z.array(z.string().max(100)).max(10).default([]),
+    dietaryStyles: z.array(z.string().max(100)).max(5).default([]),
+    ageRange: z.string().max(50).default(""),
+    activityLevel: z.string().max(50).default(""),
+    servings: z.string().max(10).default("2"),
+    deficiencies: z.array(z.string().max(100)).max(10).default([]),
+    healthGoals: z.array(z.string().max(100)).max(10).default([]),
+    cuisines: z.array(z.string().max(100)).max(10).default([]),
+  }),
+});
+
+// Sanitize strings to prevent prompt injection
+function sanitizeString(str: string): string {
+  return str
+    .replace(/[<>{}[\]\\]/g, "") // Remove potentially dangerous characters
+    .trim()
+    .slice(0, 100); // Limit length
+}
+
+function sanitizeArray(arr: string[]): string[] {
+  return arr.map(sanitizeString).filter(s => s.length > 0);
 }
 
 serve(async (req) => {
@@ -24,7 +41,68 @@ serve(async (req) => {
   }
 
   try {
-    const { formData } = await req.json() as { formData: RecipeFormData };
+    // Verify user authentication
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      console.error("Missing authorization header");
+      return new Response(
+        JSON.stringify({ error: "Missing authorization header" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const supabaseClient = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+      { global: { headers: { Authorization: authHeader } } }
+    );
+
+    const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+    if (authError || !user) {
+      console.error("Authentication failed:", authError?.message);
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    console.log("Authenticated user:", user.id);
+
+    // Parse and validate input
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      console.error("Failed to parse request body");
+      return new Response(
+        JSON.stringify({ error: "Invalid JSON body" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const parsed = RecipeFormSchema.safeParse(body);
+    if (!parsed.success) {
+      console.error("Input validation failed:", parsed.error.errors);
+      return new Response(
+        JSON.stringify({ error: "Invalid input data", details: parsed.error.errors }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Sanitize all input strings
+    const formData = {
+      likes: sanitizeArray(parsed.data.formData.likes),
+      dislikes: sanitizeArray(parsed.data.formData.dislikes),
+      allergies: sanitizeArray(parsed.data.formData.allergies),
+      dietaryStyles: sanitizeArray(parsed.data.formData.dietaryStyles),
+      ageRange: sanitizeString(parsed.data.formData.ageRange),
+      activityLevel: sanitizeString(parsed.data.formData.activityLevel),
+      servings: sanitizeString(parsed.data.formData.servings),
+      deficiencies: sanitizeArray(parsed.data.formData.deficiencies),
+      healthGoals: sanitizeArray(parsed.data.formData.healthGoals),
+      cuisines: sanitizeArray(parsed.data.formData.cuisines),
+    };
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
