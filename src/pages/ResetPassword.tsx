@@ -13,19 +13,40 @@ const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isValidSession, setIsValidSession] = useState(false);
+  const [isRecoveryMode, setIsRecoveryMode] = useState(false);
   const [checkingSession, setCheckingSession] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setIsValidSession(!!session);
+    // Listen for PASSWORD_RECOVERY event specifically
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY") {
+        setIsRecoveryMode(true);
+        setCheckingSession(false);
+      } else if (event === "SIGNED_IN" && !isRecoveryMode) {
+        // If signed in but not in recovery mode, redirect away
+        setCheckingSession(false);
+      }
+    });
+
+    // Also check URL hash for recovery token (Supabase includes it in URL)
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const type = hashParams.get("type");
+    if (type === "recovery") {
+      setIsRecoveryMode(true);
+    }
+    
+    // Set a timeout to stop checking after a reasonable time
+    const timeout = setTimeout(() => {
       setCheckingSession(false);
+    }, 2000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
     };
-    checkSession();
-  }, []);
+  }, [isRecoveryMode]);
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,9 +92,11 @@ const ResetPassword = () => {
         variant: "destructive",
       });
     } else {
+      // Sign out after password update to ensure clean login
+      await supabase.auth.signOut();
       toast({
         title: "Password updated!",
-        description: "Your password has been successfully changed",
+        description: "Please sign in with your new password",
       });
       navigate("/auth");
     }
@@ -90,7 +113,7 @@ const ResetPassword = () => {
     );
   }
 
-  if (!isValidSession) {
+  if (!isRecoveryMode) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/10">
         <Header minimal />
