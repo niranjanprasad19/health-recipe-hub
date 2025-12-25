@@ -50,6 +50,8 @@
     --gradient-primary: linear-gradient(135deg, hsl(152, 58%, 42%) 0%, hsl(158, 64%, 52%) 100%);
     --gradient-hero: linear-gradient(180deg, hsl(140, 20%, 98%) 0%, hsl(145, 30%, 94%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%) 0%, hsl(145, 30%, 98%) 100%);
+    --gradient-neon: linear-gradient(135deg, hsl(152, 80%, 50%) 0%, hsl(180, 70%, 45%) 50%, hsl(158, 90%, 55%) 100%);
+    --gradient-glow: linear-gradient(90deg, hsl(152, 80%, 60%) 0%, hsl(180, 70%, 55%) 100%);
 
     --shadow-soft: 0 4px 20px -4px hsl(152 58% 42% / 0.15);
     --shadow-card: 0 2px 12px -2px hsl(150 25% 15% / 0.08);
@@ -104,6 +106,8 @@
     --gradient-primary: linear-gradient(135deg, hsl(152, 58%, 48%) 0%, hsl(158, 64%, 45%) 100%);
     --gradient-hero: linear-gradient(180deg, hsl(150, 25%, 8%) 0%, hsl(150, 20%, 12%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(150, 20%, 12%) 0%, hsl(150, 20%, 15%) 100%);
+    --gradient-neon: linear-gradient(135deg, hsl(152, 80%, 55%) 0%, hsl(180, 70%, 50%) 50%, hsl(158, 90%, 60%) 100%);
+    --gradient-glow: linear-gradient(90deg, hsl(152, 80%, 65%) 0%, hsl(180, 70%, 60%) 100%);
 
     --shadow-soft: 0 4px 20px -4px hsl(152 58% 48% / 0.2);
     --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.3);
@@ -150,6 +154,14 @@
     background: var(--gradient-card);
   }
 
+  .gradient-neon {
+    background: var(--gradient-neon);
+  }
+
+  .gradient-glow {
+    background: var(--gradient-glow);
+  }
+
   .shadow-soft {
     box-shadow: var(--shadow-soft);
   }
@@ -164,5 +176,31 @@
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  .glow-effect {
+    box-shadow: 0 0 30px hsl(152 80% 50% / 0.4), 0 0 60px hsl(180 70% 45% / 0.2);
+  }
+
+  .pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(152 80% 50% / 0.3), 0 0 40px hsl(180 70% 45% / 0.15);
+    }
+    50% {
+      box-shadow: 0 0 30px hsl(152 80% 50% / 0.5), 0 0 60px hsl(180 70% 45% / 0.3);
+    }
+  }
+
+  .float-animation {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
   }
 }
