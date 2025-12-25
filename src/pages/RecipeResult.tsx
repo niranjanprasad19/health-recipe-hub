@@ -180,37 +180,31 @@ const RecipeResult = () => {
   };
 
   const recipeActions = (
-    <div className="flex items-center gap-1 sm:gap-2">
-      <Button variant="outline" size="sm" onClick={generateRecipe} disabled={isLoading} className="hidden sm:flex">
-        <RefreshCw className="w-4 h-4 mr-2" />
-        New Recipe
-      </Button>
-      <Button variant="outline" size="icon" onClick={generateRecipe} disabled={isLoading} className="sm:hidden">
+    <div className="flex items-center gap-1">
+      <Button variant="outline" size="icon" onClick={generateRecipe} disabled={isLoading}>
         <RefreshCw className="w-4 h-4" />
       </Button>
       <Button
-        size="sm"
+        size="icon"
         onClick={handleSaveRecipe}
         disabled={isSaving || isSaved}
-        className={isSaved ? "bg-success text-success-foreground" : ""}
+        className={isSaved ? "bg-success text-success-foreground" : "gradient-primary text-primary-foreground"}
       >
         {isSaving ? (
-          <Loader2 className="w-4 h-4 sm:mr-2 animate-spin" />
+          <Loader2 className="w-4 h-4 animate-spin" />
         ) : isSaved ? (
-          <BookmarkCheck className="w-4 h-4 sm:mr-2" />
+          <BookmarkCheck className="w-4 h-4" />
         ) : (
-          <Bookmark className="w-4 h-4 sm:mr-2" />
+          <Bookmark className="w-4 h-4" />
         )}
-        <span className="hidden sm:inline">{isSaved ? "Saved" : "Save"}</span>
       </Button>
       {isSaved && (
-        <Button variant="outline" size="sm" onClick={handleShare}>
+        <Button variant="outline" size="icon" onClick={handleShare}>
           {copied ? (
-            <CheckCircle className="w-4 h-4 sm:mr-2 text-success" />
+            <CheckCircle className="w-4 h-4 text-success" />
           ) : (
-            <Share2 className="w-4 h-4 sm:mr-2" />
+            <Share2 className="w-4 h-4" />
           )}
-          <span className="hidden sm:inline">{copied ? "Copied!" : "Share"}</span>
         </Button>
       )}
     </div>
