@@ -50,7 +50,7 @@ export const Header = ({
       .from("profiles")
       .select("avatar_url, display_name")
       .eq("user_id", user.id)
-      .single();
+      .maybeSingle();
     
     if (data) {
       setAvatarUrl(data.avatar_url);
@@ -201,9 +201,11 @@ export const Header = ({
         </div>
 
         {/* Mobile Navigation */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex md:hidden items-center gap-1 overflow-hidden">
           <ThemeToggle />
-          {actions}
+          <div className="flex items-center gap-1 overflow-hidden shrink min-w-0">
+            {actions}
+          </div>
           
           {!minimal && (
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
