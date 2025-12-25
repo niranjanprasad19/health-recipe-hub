@@ -1,6 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight, Leaf, Loader2, Sparkles } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { ArrowLeft, ArrowRight, Leaf, Loader2, Sparkles, X } from "lucide-react";
 import FormProgress from "@/components/recipe-form/FormProgress";
 import StepFoodPreferences from "@/components/recipe-form/StepFoodPreferences";
 import StepAllergies from "@/components/recipe-form/StepAllergies";
@@ -8,6 +9,7 @@ import StepPersonalDetails from "@/components/recipe-form/StepPersonalDetails";
 import StepNutrition from "@/components/recipe-form/StepNutrition";
 import StepCuisine from "@/components/recipe-form/StepCuisine";
 import { useRecipeForm } from "@/hooks/useRecipeForm";
+import { useEffect } from "react";
 
 const steps = [
   { title: "Preferences", description: "Foods you love and avoid" },
@@ -19,6 +21,9 @@ const steps = [
 
 const Preferences = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const promptFromUrl = searchParams.get("prompt") || "";
+  
   const {
     formData,
     currentStep,
@@ -28,6 +33,13 @@ const Preferences = () => {
     nextStep,
     prevStep,
   } = useRecipeForm();
+
+  // Set prompt from URL on mount
+  useEffect(() => {
+    if (promptFromUrl) {
+      updateFormData("prompt", promptFromUrl);
+    }
+  }, [promptFromUrl]);
 
   const handleSubmit = async () => {
     // Navigate to recipe result page with form data
@@ -116,6 +128,26 @@ const Preferences = () => {
             Help us create the perfect recipe for you
           </p>
         </div>
+
+        {/* Prompt Display */}
+        {formData.prompt && (
+          <div className="mb-6 p-4 rounded-lg bg-primary/5 border border-primary/20">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex-1">
+                <p className="text-sm text-muted-foreground mb-1">Generating recipe for:</p>
+                <p className="font-medium text-foreground">{formData.prompt}</p>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => updateFormData("prompt", "")}
+                className="shrink-0"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        )}
 
         {/* Progress */}
         <div className="mb-8">
