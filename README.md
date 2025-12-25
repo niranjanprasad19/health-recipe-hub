@@ -36,15 +36,6 @@ An intelligent recipe generation and meal planning application that creates pers
 - Beautiful animations and transitions
 - Accessible navigation with breadcrumbs
 
-## 📸 Screenshots
-
-| Landing Page | Recipe Generation | Meal Planning |
-|:---:|:---:|:---:|
-| ![Landing](screenshots/landing-placeholder.png) | ![Recipe](screenshots/recipe-placeholder.png) | ![Meal Plan](screenshots/mealplan-placeholder.png) |
-
-| Shopping List | Preferences | Profile |
-|:---:|:---:|:---:|
-| ![Shopping](screenshots/shopping-placeholder.png) | ![Preferences](screenshots/preferences-placeholder.png) | ![Profile](screenshots/profile-placeholder.png) |
 
 ## 🛠️ Tech Stack
 
