@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,11 +12,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Loader2, RefreshCw } from "lucide-react";
+import { Mail, Loader2, RefreshCw, Clock } from "lucide-react";
 
 interface ForgotPasswordDialogProps {
   defaultEmail?: string;
 }
+
+const COOLDOWN_SECONDS = 60;
 
 export const ForgotPasswordDialog = ({ defaultEmail = "" }: ForgotPasswordDialogProps) => {
   const [email, setEmail] = useState(defaultEmail);
@@ -24,7 +26,23 @@ export const ForgotPasswordDialog = ({ defaultEmail = "" }: ForgotPasswordDialog
   const [open, setOpen] = useState(false);
   const [sent, setSent] = useState(false);
   const [resending, setResending] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
   const { toast } = useToast();
+
+  // Countdown timer effect
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    
+    const timer = setInterval(() => {
+      setCooldown((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [cooldown]);
+
+  const startCooldown = useCallback(() => {
+    setCooldown(COOLDOWN_SECONDS);
+  }, []);
 
   const handleResetRequest = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,6 +71,7 @@ export const ForgotPasswordDialog = ({ defaultEmail = "" }: ForgotPasswordDialog
       });
     } else {
       setSent(true);
+      startCooldown();
       toast({
         title: "Check your email",
         description: "We've sent you a password reset link",
@@ -61,6 +80,8 @@ export const ForgotPasswordDialog = ({ defaultEmail = "" }: ForgotPasswordDialog
   };
 
   const handleResend = async () => {
+    if (cooldown > 0) return;
+    
     setResending(true);
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
@@ -74,6 +95,7 @@ export const ForgotPasswordDialog = ({ defaultEmail = "" }: ForgotPasswordDialog
         variant: "destructive",
       });
     } else {
+      startCooldown();
       toast({
         title: "Email sent!",
         description: "We've sent another password reset link",
@@ -85,7 +107,14 @@ export const ForgotPasswordDialog = ({ defaultEmail = "" }: ForgotPasswordDialog
     setOpen(newOpen);
     if (!newOpen) {
       setSent(false);
+      setCooldown(0);
     }
+  };
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return mins > 0 ? `${mins}:${secs.toString().padStart(2, '0')}` : `${secs}s`;
   };
 
   return (
@@ -120,6 +149,16 @@ export const ForgotPasswordDialog = ({ defaultEmail = "" }: ForgotPasswordDialog
             <p className="text-sm text-center text-muted-foreground">
               Didn't receive the email? Check your spam folder or click below to resend.
             </p>
+            
+            {cooldown > 0 && (
+              <div className="flex items-center justify-center gap-2 p-3 bg-muted/50 rounded-lg">
+                <Clock className="h-4 w-4 text-muted-foreground" />
+                <span className="text-sm text-muted-foreground">
+                  You can resend in <strong className="text-foreground">{formatTime(cooldown)}</strong>
+                </span>
+              </div>
+            )}
+            
             <div className="flex gap-2">
               <Button 
                 variant="outline" 
@@ -132,14 +171,16 @@ export const ForgotPasswordDialog = ({ defaultEmail = "" }: ForgotPasswordDialog
                 variant="secondary"
                 className="flex-1"
                 onClick={handleResend}
-                disabled={resending}
+                disabled={resending || cooldown > 0}
               >
                 {resending ? (
                   <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : cooldown > 0 ? (
+                  <Clock className="h-4 w-4 mr-2" />
                 ) : (
                   <RefreshCw className="h-4 w-4 mr-2" />
                 )}
-                Resend
+                {cooldown > 0 ? formatTime(cooldown) : "Resend"}
               </Button>
             </div>
           </div>
