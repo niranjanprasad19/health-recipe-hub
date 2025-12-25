@@ -52,7 +52,7 @@ const Landing = () => {
 
   const navigateToGenerate = (query: string) => {
     if (query.trim()) {
-      navigate(`/preferences?prompt=${encodeURIComponent(query.trim())}`);
+      navigate(`/quick-recipe?prompt=${encodeURIComponent(query.trim())}`);
     } else {
       navigate('/preferences');
     }
