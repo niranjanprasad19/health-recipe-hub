@@ -99,8 +99,6 @@ const RecipeResult = () => {
 
     setIsSaving(true);
     try {
-      const token = crypto.randomUUID().replace(/-/g, '').slice(0, 12);
-      
       const { data, error } = await supabase.from("saved_recipes").insert([{
         user_id: user.id,
         title: recipe.title,
@@ -113,14 +111,13 @@ const RecipeResult = () => {
         servings: recipe.servings,
         cuisine: recipe.cuisine,
         tags: recipe.tags,
-        share_token: token,
+        share_token: null,
       }]).select().single();
 
       if (error) throw error;
 
       setIsSaved(true);
       setSavedRecipeId(data.id);
-      setShareToken(token);
       toast({
         title: "Recipe saved!",
         description: "You can find it in your profile.",
@@ -138,7 +135,7 @@ const RecipeResult = () => {
   };
 
   const handleShare = async () => {
-    if (!shareToken) {
+    if (!savedRecipeId) {
       toast({
         title: "Save first",
         description: "Please save the recipe before sharing.",
@@ -146,9 +143,23 @@ const RecipeResult = () => {
       return;
     }
 
-    const shareUrl = `${window.location.origin}/shared/${shareToken}`;
-    
+    setIsSharing(true);
     try {
+      let token = shareToken;
+      
+      // Generate token only when sharing for the first time
+      if (!token) {
+        token = crypto.randomUUID().replace(/-/g, '').slice(0, 12);
+        const { error } = await supabase
+          .from("saved_recipes")
+          .update({ share_token: token })
+          .eq("id", savedRecipeId);
+        
+        if (error) throw error;
+        setShareToken(token);
+      }
+
+      const shareUrl = `${window.location.origin}/shared/${token}`;
       await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
       toast({
@@ -156,11 +167,15 @@ const RecipeResult = () => {
         description: "Share this link with anyone.",
       });
       setTimeout(() => setCopied(false), 2000);
-    } catch {
+    } catch (err) {
+      console.error("Error sharing recipe:", err);
       toast({
-        title: "Share link",
-        description: shareUrl,
+        title: "Failed to share",
+        description: "Please try again.",
+        variant: "destructive",
       });
+    } finally {
+      setIsSharing(false);
     }
   };
 
