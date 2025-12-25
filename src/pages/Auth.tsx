@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Lock, User, Loader2 } from "lucide-react";
+import { Header } from "@/components/Header";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -110,8 +111,10 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/10 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md border-primary/20 shadow-xl">
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/10">
+      <Header minimal />
+      <div className="flex items-center justify-center p-4 min-h-[calc(100vh-100px)]">
+        <Card className="w-full max-w-md border-primary/20 shadow-xl">
         <CardHeader className="text-center space-y-2">
           <CardTitle className="text-2xl font-bold text-primary">
             Healthy Recipe Generator
@@ -268,6 +271,7 @@ const Auth = () => {
           </p>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };
