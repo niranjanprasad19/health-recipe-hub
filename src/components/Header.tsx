@@ -96,7 +96,7 @@ export const Header = ({
 
   const navLinks = [
     { to: "/", label: "Home", icon: Home },
-    { to: "/recipe-search", label: "Search", icon: Search },
+    { to: "/search", label: "Search", icon: Search },
     { to: "/profile", label: "Saved Recipes", icon: Heart },
     { to: "/meal-planning", label: "Meal Planning", icon: Calendar },
     { to: "/shopping-list", label: "Shopping List", icon: ShoppingCart },
