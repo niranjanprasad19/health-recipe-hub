@@ -61,7 +61,7 @@ An intelligent recipe generation and meal planning application that creates pers
 
 1. **Clone the repository**
    ```bash
-   git clone <YOUR_GIT_URL>
+   git clone https://github.com/niranjanprasad19/health-recipe-hub.git
    cd <YOUR_PROJECT_NAME>
    ```
 
