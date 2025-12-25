@@ -14,7 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      saved_recipes: {
+        Row: {
+          cook_time: number | null
+          created_at: string
+          cuisine: string | null
+          description: string | null
+          id: string
+          ingredients: Json
+          instructions: Json
+          nutrition_info: Json | null
+          prep_time: number | null
+          servings: number | null
+          tags: string[] | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          cook_time?: number | null
+          created_at?: string
+          cuisine?: string | null
+          description?: string | null
+          id?: string
+          ingredients?: Json
+          instructions?: Json
+          nutrition_info?: Json | null
+          prep_time?: number | null
+          servings?: number | null
+          tags?: string[] | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          cook_time?: number | null
+          created_at?: string
+          cuisine?: string | null
+          description?: string | null
+          id?: string
+          ingredients?: Json
+          instructions?: Json
+          nutrition_info?: Json | null
+          prep_time?: number | null
+          servings?: number | null
+          tags?: string[] | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

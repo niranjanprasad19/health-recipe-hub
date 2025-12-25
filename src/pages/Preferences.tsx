@@ -8,7 +8,6 @@ import StepPersonalDetails from "@/components/recipe-form/StepPersonalDetails";
 import StepNutrition from "@/components/recipe-form/StepNutrition";
 import StepCuisine from "@/components/recipe-form/StepCuisine";
 import { useRecipeForm } from "@/hooks/useRecipeForm";
-import { useToast } from "@/hooks/use-toast";
 
 const steps = [
   { title: "Preferences", description: "Foods you love and avoid" },
@@ -20,7 +19,6 @@ const steps = [
 
 const Preferences = () => {
   const navigate = useNavigate();
-  const { toast } = useToast();
   const {
     formData,
     currentStep,
@@ -29,17 +27,11 @@ const Preferences = () => {
     updateFormData,
     nextStep,
     prevStep,
-    submitForm,
   } = useRecipeForm();
 
   const handleSubmit = async () => {
-    await submitForm();
-    toast({
-      title: "Recipe Generated!",
-      description: "Your personalized healthy recipe is ready.",
-    });
-    // Placeholder: navigate to recipe result page
-    console.log("Navigate to recipe result");
+    // Navigate to recipe result page with form data
+    navigate("/recipe", { state: { formData } });
   };
 
   const renderStep = () => {

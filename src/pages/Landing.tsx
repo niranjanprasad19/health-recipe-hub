@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Utensils, Sparkles, ShoppingCart, Heart, Leaf, LogOut } from "lucide-react";
+import { Utensils, Sparkles, ShoppingCart, Heart, Leaf, LogOut, User } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 const Landing = () => {
@@ -20,13 +20,16 @@ const Landing = () => {
           </div>
           {!loading && (
             isAuthenticated ? (
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-muted-foreground hidden sm:inline">
-                  {user?.email}
-                </span>
+              <div className="flex items-center gap-2">
+                <Link to="/profile">
+                  <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
+                    <User className="w-4 h-4 mr-2" />
+                    <span className="hidden sm:inline">{user?.email}</span>
+                    <span className="sm:hidden">Profile</span>
+                  </Button>
+                </Link>
                 <Button variant="ghost" onClick={signOut} className="text-muted-foreground hover:text-foreground">
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Sign Out
+                  <LogOut className="w-4 h-4" />
                 </Button>
               </div>
             ) : (
