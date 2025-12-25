@@ -114,8 +114,6 @@ const QuickRecipe = () => {
 
     setIsSaving(true);
     try {
-      const token = crypto.randomUUID().replace(/-/g, '').slice(0, 12);
-      
       const { data, error } = await supabase.from("saved_recipes").insert([{
         user_id: user.id,
         title: recipe.title,
@@ -128,14 +126,13 @@ const QuickRecipe = () => {
         servings: recipe.servings,
         cuisine: recipe.cuisine,
         tags: recipe.tags,
-        share_token: token,
+        share_token: null,
       }]).select().single();
 
       if (error) throw error;
 
       setIsSaved(true);
       setSavedRecipeId(data.id);
-      setShareToken(token);
       toast({
         title: "Recipe saved!",
         description: "You can find it in your profile.",
@@ -153,7 +150,7 @@ const QuickRecipe = () => {
   };
 
   const handleShare = async () => {
-    if (!shareToken) {
+    if (!savedRecipeId) {
       toast({
         title: "Save first",
         description: "Please save the recipe before sharing.",
@@ -161,9 +158,21 @@ const QuickRecipe = () => {
       return;
     }
 
-    const shareUrl = `${window.location.origin}/shared/${shareToken}`;
-    
     try {
+      let token = shareToken;
+      
+      if (!token) {
+        token = crypto.randomUUID().replace(/-/g, '').slice(0, 12);
+        const { error } = await supabase
+          .from("saved_recipes")
+          .update({ share_token: token })
+          .eq("id", savedRecipeId);
+        
+        if (error) throw error;
+        setShareToken(token);
+      }
+
+      const shareUrl = `${window.location.origin}/shared/${token}`;
       await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
       toast({
@@ -171,10 +180,12 @@ const QuickRecipe = () => {
         description: "Share this link with anyone.",
       });
       setTimeout(() => setCopied(false), 2000);
-    } catch {
+    } catch (err) {
+      console.error("Error sharing recipe:", err);
       toast({
-        title: "Share link",
-        description: shareUrl,
+        title: "Failed to share",
+        description: "Please try again.",
+        variant: "destructive",
       });
     }
   };
@@ -226,33 +237,37 @@ const QuickRecipe = () => {
     <div className="min-h-screen gradient-hero">
       <Header 
         actions={
-          <div className="flex items-center gap-2">
-            <Button variant="outline" onClick={generateRecipe} disabled={isLoading}>
+          <div className="flex items-center gap-1 sm:gap-2">
+            <Button variant="outline" size="sm" onClick={generateRecipe} disabled={isLoading} className="hidden sm:flex">
               <RefreshCw className="w-4 h-4 mr-2" />
               New Recipe
             </Button>
+            <Button variant="outline" size="icon" onClick={generateRecipe} disabled={isLoading} className="sm:hidden">
+              <RefreshCw className="w-4 h-4" />
+            </Button>
             <Button
+              size="sm"
               onClick={handleSaveRecipe}
               disabled={isSaving || isSaved}
               className={isSaved ? "bg-success text-success-foreground" : "gradient-primary text-primary-foreground"}
             >
               {isSaving ? (
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                <Loader2 className="w-4 h-4 sm:mr-2 animate-spin" />
               ) : isSaved ? (
-                <BookmarkCheck className="w-4 h-4 mr-2" />
+                <BookmarkCheck className="w-4 h-4 sm:mr-2" />
               ) : (
-                <Bookmark className="w-4 h-4 mr-2" />
+                <Bookmark className="w-4 h-4 sm:mr-2" />
               )}
-              {isSaved ? "Saved" : "Save Recipe"}
+              <span className="hidden sm:inline">{isSaved ? "Saved" : "Save"}</span>
             </Button>
             {isSaved && (
-              <Button variant="outline" onClick={handleShare}>
+              <Button variant="outline" size="sm" onClick={handleShare}>
                 {copied ? (
-                  <CheckCircle className="w-4 h-4 mr-2 text-success" />
+                  <CheckCircle className="w-4 h-4 sm:mr-2 text-success" />
                 ) : (
-                  <Share2 className="w-4 h-4 mr-2" />
+                  <Share2 className="w-4 h-4 sm:mr-2" />
                 )}
-                {copied ? "Copied!" : "Share"}
+                <span className="hidden sm:inline">{copied ? "Copied!" : "Share"}</span>
               </Button>
             )}
           </div>
@@ -273,8 +288,8 @@ const QuickRecipe = () => {
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Title Section */}
         <div className="text-center mb-8">
-          <h1 className="font-heading text-4xl font-bold text-foreground mb-4">{recipe.title}</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{recipe.description}</p>
+          <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">{recipe.title}</h1>
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">{recipe.description}</p>
         </div>
 
         {/* Quick Info Cards */}

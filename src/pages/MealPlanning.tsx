@@ -315,17 +315,17 @@ const MealPlanning = () => {
 
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8 text-center">
-          <h1 className="font-heading text-3xl font-bold text-foreground mb-2 flex items-center justify-center gap-3">
-            <Calendar className="w-8 h-8 text-primary" />
+          <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mb-2 flex items-center justify-center gap-2 sm:gap-3">
+            <Calendar className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
             Meal Planning
           </h1>
-          <p className="text-muted-foreground">
-            Plan your meals for the week ahead • Drag meals to reorganize
+          <p className="text-muted-foreground text-sm sm:text-base">
+            Plan your meals for the week ahead
           </p>
         </div>
 
         {/* Week Navigation */}
-        <div className="flex items-center justify-center gap-4 mb-8">
+        <div className="flex items-center justify-center gap-2 sm:gap-4 mb-8">
           <Button
             variant="outline"
             size="icon"
@@ -333,8 +333,8 @@ const MealPlanning = () => {
           >
             <ChevronLeft className="w-4 h-4" />
           </Button>
-          <div className="text-center min-w-[200px]">
-            <p className="font-semibold text-foreground">
+          <div className="text-center min-w-[160px] sm:min-w-[200px]">
+            <p className="font-semibold text-foreground text-sm sm:text-base">
               {format(currentWeekStart, "MMM d")} - {format(addDays(currentWeekStart, 6), "MMM d, yyyy")}
             </p>
           </div>
@@ -453,15 +453,15 @@ const MealPlanning = () => {
         </Dialog>
 
         {/* Quick Actions */}
-        <div className="mt-8 flex flex-wrap gap-4 justify-center">
+        <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
           <Link to="/preferences">
-            <Button className="gradient-primary text-primary-foreground shadow-soft">
+            <Button className="gradient-primary text-primary-foreground shadow-soft w-full sm:w-auto">
               <UtensilsCrossed className="w-4 h-4 mr-2" />
               Generate New Recipe
             </Button>
           </Link>
           <Link to="/profile">
-            <Button variant="outline">View Saved Recipes</Button>
+            <Button variant="outline" className="w-full sm:w-auto">View Saved Recipes</Button>
           </Link>
         </div>
       </main>

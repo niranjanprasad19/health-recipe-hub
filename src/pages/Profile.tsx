@@ -239,12 +239,12 @@ const Profile = () => {
 
         {/* Saved Recipes */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="font-heading text-2xl font-bold text-foreground">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h2 className="font-heading text-xl sm:text-2xl font-bold text-foreground">
               Saved Recipes ({savedRecipes.length})
             </h2>
             <Link to="/preferences">
-              <Button className="gradient-primary text-primary-foreground">
+              <Button className="gradient-primary text-primary-foreground w-full sm:w-auto">
                 Create New Recipe
               </Button>
             </Link>
@@ -276,33 +276,33 @@ const Profile = () => {
               {savedRecipes.map((recipe) => (
                 <Card key={recipe.id} className="shadow-card hover:shadow-elevated transition-shadow">
                   <CardContent className="py-4">
-                    <div className="flex flex-col md:flex-row md:items-center gap-4">
+                    <div className="flex flex-col gap-4">
                       <div className="flex-1">
-                        <h3 className="font-heading text-lg font-semibold text-foreground">
+                        <h3 className="font-heading text-base sm:text-lg font-semibold text-foreground line-clamp-2">
                           {recipe.title}
                         </h3>
                         <p className="text-muted-foreground text-sm line-clamp-2">
                           {recipe.description}
                         </p>
-                        <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-muted-foreground">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2 text-xs sm:text-sm text-muted-foreground">
                           <span className="flex items-center gap-1">
-                            <Clock className="w-4 h-4" />
+                            <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
                             {recipe.prepTime + recipe.cookTime} min
                           </span>
                           <span className="flex items-center gap-1">
-                            <Users className="w-4 h-4" />
+                            <Users className="w-3 h-3 sm:w-4 sm:h-4" />
                             {recipe.servings} servings
                           </span>
                           <span className="flex items-center gap-1">
-                            <Flame className="w-4 h-4" />
+                            <Flame className="w-3 h-3 sm:w-4 sm:h-4" />
                             {recipe.nutritionInfo?.calories || "N/A"} cal
                           </span>
                           {recipe.cuisine && (
-                            <Badge variant="secondary">{recipe.cuisine}</Badge>
+                            <Badge variant="secondary" className="text-xs">{recipe.cuisine}</Badge>
                           )}
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 pt-2 border-t sm:border-t-0 sm:pt-0">
                         <Link to={`/recipe/${recipe.id}`} state={{ recipe, fromProfile: true }}>
                           <Button variant="outline" size="sm">
                             View Recipe
