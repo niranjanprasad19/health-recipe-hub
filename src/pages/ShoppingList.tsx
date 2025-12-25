@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,7 +26,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { PullToRefresh } from "@/components/PullToRefresh";
 
 interface ShoppingListItem {
   id: string;
@@ -103,12 +102,6 @@ const ShoppingList = () => {
     }
   }, [user]);
 
-  const handleRefresh = useCallback(async () => {
-    if (currentListId) {
-      await Promise.all([fetchItems(currentListId), fetchMealPlanInfo()]);
-      toast.success("Refreshed!");
-    }
-  }, [currentListId, user]);
 
   // Initialize expanded categories when items change
   useEffect(() => {
@@ -412,8 +405,7 @@ const ShoppingList = () => {
     <div className="min-h-screen gradient-hero">
       <Header showBackButton backTo="/" backLabel="Back to Home" />
 
-      <PullToRefresh onRefresh={handleRefresh}>
-        <main className="container mx-auto px-4 py-8 max-w-2xl">
+      <main className="container mx-auto px-4 py-8 max-w-2xl">
         <Breadcrumb items={[{ label: "Shopping List" }]} />
 
         <div className="mb-8 text-center">
@@ -627,7 +619,6 @@ const ShoppingList = () => {
           </CardContent>
         </Card>
       </main>
-      </PullToRefresh>
     </div>
   );
 };

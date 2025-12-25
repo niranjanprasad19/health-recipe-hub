@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Utensils, Sparkles, ShoppingCart, Heart, Leaf, Calendar, Search, ArrowRight, Clock, ChefHat } from "lucide-react";
+import { Utensils, Sparkles, ShoppingCart, Heart, Leaf, Calendar, Search, ArrowRight, Clock, ChefHat, Star } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Header } from "@/components/Header";
 import { useState, useEffect } from "react";
@@ -16,18 +16,21 @@ interface SavedRecipe {
   prep_time: number | null;
   cook_time: number | null;
   cuisine: string | null;
+  is_favorite: boolean;
 }
 
 const Landing = () => {
   const { user, isAuthenticated } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
   const [recentRecipes, setRecentRecipes] = useState<SavedRecipe[]>([]);
+  const [favoriteRecipes, setFavoriteRecipes] = useState<SavedRecipe[]>([]);
   const [recipesLoading, setRecipesLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated && user) {
       fetchRecentRecipes();
+      fetchFavoriteRecipes();
     }
   }, [isAuthenticated, user]);
 
@@ -36,7 +39,7 @@ const Landing = () => {
     setRecipesLoading(true);
     const { data, error } = await supabase
       .from("saved_recipes")
-      .select("id, title, description, prep_time, cook_time, cuisine")
+      .select("id, title, description, prep_time, cook_time, cuisine, is_favorite")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
       .limit(4);
@@ -45,6 +48,46 @@ const Landing = () => {
       setRecentRecipes(data);
     }
     setRecipesLoading(false);
+  };
+
+  const fetchFavoriteRecipes = async () => {
+    if (!user) return;
+    const { data, error } = await supabase
+      .from("saved_recipes")
+      .select("id, title, description, prep_time, cook_time, cuisine, is_favorite")
+      .eq("user_id", user.id)
+      .eq("is_favorite", true)
+      .order("created_at", { ascending: false })
+      .limit(6);
+
+    if (!error && data) {
+      setFavoriteRecipes(data);
+    }
+  };
+
+  const toggleFavorite = async (recipeId: string, currentStatus: boolean) => {
+    const { error } = await supabase
+      .from("saved_recipes")
+      .update({ is_favorite: !currentStatus })
+      .eq("id", recipeId);
+
+    if (!error) {
+      // Update local state
+      setRecentRecipes(prev => prev.map(r => r.id === recipeId ? { ...r, is_favorite: !currentStatus } : r));
+      setFavoriteRecipes(prev => {
+        if (!currentStatus) {
+          // Adding to favorites
+          const recipe = recentRecipes.find(r => r.id === recipeId);
+          if (recipe && !prev.find(r => r.id === recipeId)) {
+            return [{ ...recipe, is_favorite: true }, ...prev].slice(0, 6);
+          }
+        } else {
+          // Removing from favorites
+          return prev.filter(r => r.id !== recipeId);
+        }
+        return prev;
+      });
+    }
   };
 
   const handleSearch = (e: React.FormEvent) => {
@@ -146,11 +189,34 @@ const Landing = () => {
           </div>
         </div>
 
-        {/* Recent Recipes for Logged-in Users */}
-        {isAuthenticated && recentRecipes.length > 0 && (
+        {/* Favorites Section */}
+        {isAuthenticated && favoriteRecipes.length > 0 && (
           <div className="mt-20 max-w-4xl mx-auto animate-fade-in">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-foreground">Your Recent Recipes</h2>
+              <h2 className="text-xl font-semibold text-foreground flex items-center gap-2">
+                <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
+                Your Favorites
+              </h2>
+              <Link to="/profile">
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
+                  View All
+                  <ArrowRight className="w-4 h-4 ml-1" />
+                </Button>
+              </Link>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {favoriteRecipes.map((recipe) => (
+                <RecipeCard key={recipe.id} recipe={recipe} onToggleFavorite={toggleFavorite} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Recent Recipes for Logged-in Users */}
+        {isAuthenticated && recentRecipes.length > 0 && (
+          <div className="mt-12 max-w-4xl mx-auto animate-fade-in">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-semibold text-foreground">Recent Recipes</h2>
               <Link to="/search">
                 <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
                   View All
@@ -160,7 +226,7 @@ const Landing = () => {
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {recentRecipes.map((recipe) => (
-                <RecipeCard key={recipe.id} recipe={recipe} />
+                <RecipeCard key={recipe.id} recipe={recipe} onToggleFavorite={toggleFavorite} />
               ))}
             </div>
           </div>
@@ -274,29 +340,55 @@ const StepCard = ({ number, title, description, href }: StepCardProps) => (
   </Link>
 );
 
-const RecipeCard = ({ recipe }: { recipe: SavedRecipe }) => (
-  <Link to={`/search?recipe=${recipe.id}`}>
-    <Card className="border-border hover:border-primary/30 hover:shadow-md transition-all cursor-pointer bg-card h-full">
-      <CardContent className="p-4">
-        <div className="flex items-center gap-2 mb-2">
+const RecipeCard = ({ 
+  recipe, 
+  onToggleFavorite 
+}: { 
+  recipe: SavedRecipe; 
+  onToggleFavorite?: (id: string, currentStatus: boolean) => void;
+}) => (
+  <Card className="border-border hover:border-primary/30 hover:shadow-md transition-all bg-card h-full group">
+    <CardContent className="p-4">
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
           <ChefHat className="w-4 h-4 text-primary" />
           {recipe.cuisine && (
             <span className="text-xs text-muted-foreground">{recipe.cuisine}</span>
           )}
         </div>
-        <h3 className="font-medium text-foreground text-sm mb-1 line-clamp-2">{recipe.title}</h3>
-        {recipe.description && (
-          <p className="text-xs text-muted-foreground line-clamp-2 mb-2">{recipe.description}</p>
+        {onToggleFavorite && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onToggleFavorite(recipe.id, recipe.is_favorite);
+            }}
+            className="p-1 rounded-full hover:bg-secondary transition-colors"
+          >
+            <Star 
+              className={`w-4 h-4 transition-colors ${
+                recipe.is_favorite 
+                  ? "text-yellow-500 fill-yellow-500" 
+                  : "text-muted-foreground hover:text-yellow-500"
+              }`} 
+            />
+          </button>
         )}
-        {(recipe.prep_time || recipe.cook_time) && (
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <Clock className="w-3 h-3" />
-            <span>{(recipe.prep_time || 0) + (recipe.cook_time || 0)} min</span>
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  </Link>
+      </div>
+      <Link to={`/search?recipe=${recipe.id}`}>
+        <h3 className="font-medium text-foreground text-sm mb-1 line-clamp-2 hover:text-primary transition-colors cursor-pointer">{recipe.title}</h3>
+      </Link>
+      {recipe.description && (
+        <p className="text-xs text-muted-foreground line-clamp-2 mb-2">{recipe.description}</p>
+      )}
+      {(recipe.prep_time || recipe.cook_time) && (
+        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+          <Clock className="w-3 h-3" />
+          <span>{(recipe.prep_time || 0) + (recipe.cook_time || 0)} min</span>
+        </div>
+      )}
+    </CardContent>
+  </Card>
 );
 
 export default Landing;
