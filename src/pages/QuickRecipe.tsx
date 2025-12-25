@@ -21,6 +21,7 @@ import {
   Leaf,
 } from "lucide-react";
 import { Header } from "@/components/Header";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { Recipe } from "@/types/recipe";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -258,12 +259,13 @@ const QuickRecipe = () => {
         }
       />
 
-      {/* Search Context */}
+      {/* Breadcrumb */}
       <div className="container mx-auto px-4 mb-4">
         <div className="max-w-4xl mx-auto">
-          <Badge variant="secondary" className="text-sm">
-            Results for: {prompt}
-          </Badge>
+          <Breadcrumb items={[
+            { label: "Recipes", href: "/recipe-search" },
+            { label: prompt }
+          ]} />
         </div>
       </div>
 
