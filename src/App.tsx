@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
+import MealPlanning from "./pages/MealPlanning";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/recipe" element={<RecipeResult />} />
           <Route path="/recipe/:id" element={<RecipeResult />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/meal-planning" element={<MealPlanning />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
