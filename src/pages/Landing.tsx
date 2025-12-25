@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Utensils, Sparkles, ShoppingCart, Heart, Clock, Leaf } from "lucide-react";
+import { Utensils, Sparkles, ShoppingCart, Heart, Leaf, LogOut } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const Landing = () => {
+  const { user, isAuthenticated, signOut, loading } = useAuth();
+
   return (
     <div className="min-h-screen gradient-hero">
       {/* Header */}
@@ -15,9 +18,25 @@ const Landing = () => {
             </div>
             <span className="font-heading text-xl font-bold text-foreground">NutriChef</span>
           </div>
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
-            Sign In
-          </Button>
+          {!loading && (
+            isAuthenticated ? (
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-muted-foreground hidden sm:inline">
+                  {user?.email}
+                </span>
+                <Button variant="ghost" onClick={signOut} className="text-muted-foreground hover:text-foreground">
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <Link to="/auth">
+                <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
+                  Sign In
+                </Button>
+              </Link>
+            )
+          )}
         </nav>
       </header>
 
