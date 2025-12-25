@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
-  Leaf, 
   Clock, 
   Users, 
   ChefHat,
@@ -12,6 +11,7 @@ import {
   Home
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { Header } from "@/components/Header";
 
 interface Recipe {
   id: string;
@@ -95,23 +95,17 @@ const SharedRecipe = () => {
 
   return (
     <div className="min-h-screen gradient-hero">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6">
-        <nav className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-soft">
-              <Leaf className="w-6 h-6 text-primary-foreground" />
-            </div>
-            <span className="font-heading text-xl font-bold text-foreground">NutriChef</span>
-          </Link>
+      <Header 
+        actions={
           <Link to="/preferences">
-            <Button className="gradient-primary text-primary-foreground">
+            <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
               <UtensilsCrossed className="w-4 h-4 mr-2" />
-              Create Your Own
+              <span className="hidden sm:inline">Create Your Own</span>
+              <span className="sm:hidden">Create</span>
             </Button>
           </Link>
-        </nav>
-      </header>
+        }
+      />
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8 max-w-4xl">
