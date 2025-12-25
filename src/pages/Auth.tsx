@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Lock, User, Loader2 } from "lucide-react";
 import { Header } from "@/components/Header";
+import { ForgotPasswordDialog } from "@/components/ForgotPasswordDialog";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -190,7 +191,10 @@ const Auth = () => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signin-password">Password</Label>
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="signin-password">Password</Label>
+                    <ForgotPasswordDialog defaultEmail={email} />
+                  </div>
                   <div className="relative">
                     <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Input
