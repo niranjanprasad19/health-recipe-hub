@@ -1,10 +1,20 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Leaf, LogOut, User, ArrowLeft, Menu, Home, Calendar, ShoppingCart, Search } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Leaf, LogOut, User, ArrowLeft, Menu, Home, Calendar, ShoppingCart, Search, Heart, Upload } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface HeaderProps {
   showBackButton?: boolean;
@@ -23,13 +33,80 @@ export const Header = ({
 }: HeaderProps) => {
   const { user, isAuthenticated, signOut, loading } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [displayName, setDisplayName] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      fetchProfile();
+    }
+  }, [user]);
+
+  const fetchProfile = async () => {
+    if (!user) return;
+    
+    const { data } = await supabase
+      .from("profiles")
+      .select("avatar_url, display_name")
+      .eq("user_id", user.id)
+      .single();
+    
+    if (data) {
+      setAvatarUrl(data.avatar_url);
+      setDisplayName(data.display_name);
+    }
+  };
+
+  const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !user) return;
+
+    if (!file.type.startsWith('image/')) {
+      toast.error("Please select an image file");
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Image must be less than 2MB");
+      return;
+    }
+
+    try {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64 = reader.result as string;
+        
+        const { error } = await supabase
+          .from("profiles")
+          .update({ avatar_url: base64 })
+          .eq("user_id", user.id);
+
+        if (error) throw error;
+
+        setAvatarUrl(base64);
+        toast.success("Avatar updated successfully!");
+      };
+      reader.readAsDataURL(file);
+    } catch (err) {
+      console.error("Error uploading avatar:", err);
+      toast.error("Failed to update avatar");
+    }
+  };
 
   const navLinks = [
     { to: "/", label: "Home", icon: Home },
     { to: "/recipe-search", label: "Search", icon: Search },
+    { to: "/profile", label: "Saved Recipes", icon: Heart },
     { to: "/meal-planning", label: "Meal Planning", icon: Calendar },
     { to: "/shopping-list", label: "Shopping List", icon: ShoppingCart },
   ];
+
+  const getInitials = () => {
+    if (displayName) return displayName.charAt(0).toUpperCase();
+    if (user?.email) return user.email.charAt(0).toUpperCase();
+    return "U";
+  };
 
   return (
     <header className="container mx-auto px-4 py-6">
@@ -58,18 +135,61 @@ export const Header = ({
           
           {!loading && !minimal && (
             isAuthenticated ? (
-              <>
-                <Link to="/profile">
-                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                    <User className="w-4 h-4 mr-2" />
-                    <span className="hidden sm:inline">{user?.email}</span>
-                    <span className="sm:hidden">Profile</span>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="flex items-center gap-2 p-1 pr-2">
+                    <Avatar className="w-8 h-8">
+                      <AvatarImage src={avatarUrl || ""} />
+                      <AvatarFallback className="bg-primary text-primary-foreground text-sm">
+                        {getInitials()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="hidden sm:inline text-sm text-muted-foreground">
+                      {displayName || user?.email?.split('@')[0]}
+                    </span>
                   </Button>
-                </Link>
-                <Button variant="ghost" size="sm" onClick={signOut} className="text-muted-foreground hover:text-foreground">
-                  <LogOut className="w-4 h-4" />
-                </Button>
-              </>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <div className="flex items-center gap-3 p-2">
+                    <Avatar className="w-10 h-10">
+                      <AvatarImage src={avatarUrl || ""} />
+                      <AvatarFallback className="bg-primary text-primary-foreground">
+                        {getInitials()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium truncate">{displayName || "User"}</p>
+                      <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+                    </div>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <Upload className="w-4 h-4" />
+                      Update Avatar
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleAvatarUpload}
+                      />
+                    </label>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/profile")}>
+                    <User className="w-4 h-4 mr-2" />
+                    Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/profile")}>
+                    <Heart className="w-4 h-4 mr-2" />
+                    Saved Recipes
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={signOut} className="text-destructive focus:text-destructive">
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <Link to="/auth">
                 <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
@@ -94,6 +214,21 @@ export const Header = ({
               </SheetTrigger>
               <SheetContent side="right" className="w-72">
                 <div className="flex flex-col gap-4 mt-8">
+                  {isAuthenticated && (
+                    <div className="flex items-center gap-3 p-3 bg-secondary/30 rounded-lg mb-2">
+                      <Avatar className="w-12 h-12">
+                        <AvatarImage src={avatarUrl || ""} />
+                        <AvatarFallback className="bg-primary text-primary-foreground">
+                          {getInitials()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium truncate">{displayName || "User"}</p>
+                        <p className="text-sm text-muted-foreground truncate">{user?.email}</p>
+                      </div>
+                    </div>
+                  )}
+
                   {showBackButton && (
                     <Link to={backTo} onClick={() => setMobileMenuOpen(false)}>
                       <Button variant="ghost" className="w-full justify-start">
@@ -116,6 +251,23 @@ export const Header = ({
                     {!loading && (
                       isAuthenticated ? (
                         <>
+                          <label className="w-full">
+                            <Button variant="ghost" className="w-full justify-start mb-2 cursor-pointer" asChild>
+                              <span>
+                                <Upload className="w-4 h-4 mr-2" />
+                                Update Avatar
+                              </span>
+                            </Button>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                handleAvatarUpload(e);
+                                setMobileMenuOpen(false);
+                              }}
+                            />
+                          </label>
                           <Link to="/profile" onClick={() => setMobileMenuOpen(false)}>
                             <Button variant="ghost" className="w-full justify-start mb-2">
                               <User className="w-4 h-4 mr-2" />
