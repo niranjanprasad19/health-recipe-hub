@@ -125,6 +125,7 @@ export type Database = {
           id: string
           ingredients: Json
           instructions: Json
+          is_favorite: boolean
           nutrition_info: Json | null
           prep_time: number | null
           servings: number | null
@@ -141,6 +142,7 @@ export type Database = {
           id?: string
           ingredients?: Json
           instructions?: Json
+          is_favorite?: boolean
           nutrition_info?: Json | null
           prep_time?: number | null
           servings?: number | null
@@ -157,6 +159,7 @@ export type Database = {
           id?: string
           ingredients?: Json
           instructions?: Json
+          is_favorite?: boolean
           nutrition_info?: Json | null
           prep_time?: number | null
           servings?: number | null

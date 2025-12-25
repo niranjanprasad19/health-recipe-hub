@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -44,7 +44,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MealDropZone } from "@/components/meal-planning/MealDropZone";
-import { PullToRefresh } from "@/components/PullToRefresh";
 
 interface SavedRecipe {
   id: string;
@@ -112,10 +111,6 @@ const MealPlanning = () => {
     }
   }, [user, currentWeekStart]);
 
-  const handleRefresh = useCallback(async () => {
-    await Promise.all([fetchMealPlan(), fetchSavedRecipes()]);
-    toast.success("Refreshed!");
-  }, [user, currentWeekStart]);
 
   const fetchSavedRecipes = async () => {
     if (!user) return;
@@ -319,8 +314,7 @@ const MealPlanning = () => {
     <div className="min-h-screen gradient-hero">
       <Header showBackButton backTo="/" backLabel="Back to Home" />
 
-      <PullToRefresh onRefresh={handleRefresh}>
-        <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8">
         <div className="mb-8 text-center">
           <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mb-2 flex items-center justify-center gap-2 sm:gap-3">
             <Calendar className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
@@ -472,7 +466,6 @@ const MealPlanning = () => {
           </Link>
         </div>
       </main>
-      </PullToRefresh>
     </div>
   );
 };
