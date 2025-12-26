@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,7 +12,8 @@ import {
   Coffee,
   Sun,
   Moon,
-  Cookie
+  Cookie,
+  Loader2
 } from "lucide-react";
 import { Header } from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
@@ -89,6 +90,10 @@ const MealPlanning = () => {
   const [selectedRecipeId, setSelectedRecipeId] = useState<string>("");
   const [customMealName, setCustomMealName] = useState("");
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
+  const [isAddingMeal, setIsAddingMeal] = useState(false);
+  
+  // Ref to track in-flight meal plan creation to prevent race conditions
+  const mealPlanCreationPromise = useRef<Promise<string | null> | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -104,28 +109,36 @@ const MealPlanning = () => {
     }
   }, [user, authLoading, navigate]);
 
+  // Fetch meal plan when week changes
   useEffect(() => {
     if (user) {
       fetchMealPlan();
-      fetchSavedRecipes();
     }
   }, [user, currentWeekStart]);
 
+  // Fetch saved recipes only once on mount (not on week change)
+  useEffect(() => {
+    if (user) {
+      fetchSavedRecipes();
+    }
+  }, [user]);
 
-  const fetchSavedRecipes = async () => {
+
+  const fetchSavedRecipes = useCallback(async () => {
     if (!user) return;
     const { data, error } = await supabase
       .from("saved_recipes")
       .select("id, title")
       .eq("user_id", user.id)
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .limit(100); // Limit for performance
 
     if (!error && data) {
       setSavedRecipes(data);
     }
-  };
+  }, [user]);
 
-  const fetchMealPlan = async () => {
+  const fetchMealPlan = useCallback(async () => {
     if (!user) return;
     setIsLoading(true);
 
@@ -151,6 +164,7 @@ const MealPlanning = () => {
           )
         )
       `)
+      .eq("user_id", user.id)
       .eq("start_date", weekStartStr)
       .maybeSingle();
 
@@ -160,35 +174,76 @@ const MealPlanning = () => {
       setMealPlan(data);
     }
     setIsLoading(false);
-  };
+  }, [user, currentWeekStart]);
 
-  const createOrGetMealPlan = async (): Promise<string | null> => {
+  const createOrGetMealPlan = useCallback(async (): Promise<string | null> => {
     if (!user) return null;
 
     const weekStartStr = format(currentWeekStart, "yyyy-MM-dd");
 
+    // If we already have a meal plan for this week, return it
     if (mealPlan) {
       return mealPlan.id;
     }
 
-    const { data, error } = await supabase
-      .from("meal_plans")
-      .insert({
-        user_id: user.id,
-        name: `Week of ${format(currentWeekStart, "MMM d, yyyy")}`,
-        start_date: weekStartStr,
-      })
-      .select()
-      .single();
-
-    if (error) {
-      toast.error("Failed to create meal plan");
-      console.error(error);
-      return null;
+    // If there's already a creation in progress, wait for it
+    if (mealPlanCreationPromise.current) {
+      return mealPlanCreationPromise.current;
     }
 
-    return data.id;
-  };
+    // Create the meal plan and store the promise to prevent race conditions
+    const createPromise = (async () => {
+      // First try to fetch existing (in case state is stale)
+      const { data: existing } = await supabase
+        .from("meal_plans")
+        .select("id")
+        .eq("user_id", user.id)
+        .eq("start_date", weekStartStr)
+        .maybeSingle();
+
+      if (existing) {
+        return existing.id;
+      }
+
+      // Create new meal plan
+      const { data, error } = await supabase
+        .from("meal_plans")
+        .insert({
+          user_id: user.id,
+          name: `Week of ${format(currentWeekStart, "MMM d, yyyy")}`,
+          start_date: weekStartStr,
+        })
+        .select()
+        .single();
+
+      if (error) {
+        // Handle unique constraint violation (duplicate key)
+        if (error.code === "23505") {
+          // Another request created it, fetch it
+          const { data: refetch } = await supabase
+            .from("meal_plans")
+            .select("id")
+            .eq("user_id", user.id)
+            .eq("start_date", weekStartStr)
+            .single();
+          return refetch?.id || null;
+        }
+        console.error("Failed to create meal plan:", error);
+        return null;
+      }
+
+      return data.id;
+    })();
+
+    mealPlanCreationPromise.current = createPromise;
+    
+    try {
+      const result = await createPromise;
+      return result;
+    } finally {
+      mealPlanCreationPromise.current = null;
+    }
+  }, [user, currentWeekStart, mealPlan]);
 
   const handleAddMeal = async () => {
     if (!selectedRecipeId && !customMealName.trim()) {
@@ -196,26 +251,35 @@ const MealPlanning = () => {
       return;
     }
 
-    const planId = await createOrGetMealPlan();
-    if (!planId) return;
+    setIsAddingMeal(true);
+    
+    try {
+      const planId = await createOrGetMealPlan();
+      if (!planId) {
+        toast.error("Failed to create meal plan");
+        return;
+      }
 
-    const { error } = await supabase.from("meal_plan_items").insert({
-      meal_plan_id: planId,
-      day_of_week: selectedDay,
-      meal_type: selectedMealType,
-      recipe_id: selectedRecipeId || null,
-      custom_meal_name: selectedRecipeId ? null : customMealName.trim(),
-    });
+      const { error } = await supabase.from("meal_plan_items").insert({
+        meal_plan_id: planId,
+        day_of_week: selectedDay,
+        meal_type: selectedMealType,
+        recipe_id: selectedRecipeId || null,
+        custom_meal_name: selectedRecipeId ? null : customMealName.trim(),
+      });
 
-    if (error) {
-      toast.error("Failed to add meal");
-      console.error(error);
-    } else {
-      toast.success("Meal added!");
-      setDialogOpen(false);
-      setSelectedRecipeId("");
-      setCustomMealName("");
-      fetchMealPlan();
+      if (error) {
+        toast.error("Failed to add meal");
+        console.error(error);
+      } else {
+        toast.success("Meal added!");
+        setDialogOpen(false);
+        setSelectedRecipeId("");
+        setCustomMealName("");
+        await fetchMealPlan();
+      }
+    } finally {
+      setIsAddingMeal(false);
     }
   };
 
@@ -446,8 +510,19 @@ const MealPlanning = () => {
                   }}
                 />
               </div>
-              <Button onClick={handleAddMeal} className="w-full gradient-primary text-primary-foreground">
-                Add Meal
+              <Button 
+                onClick={handleAddMeal} 
+                disabled={isAddingMeal}
+                className="w-full gradient-primary text-primary-foreground"
+              >
+                {isAddingMeal ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Adding...
+                  </>
+                ) : (
+                  "Add Meal"
+                )}
               </Button>
             </div>
           </DialogContent>
