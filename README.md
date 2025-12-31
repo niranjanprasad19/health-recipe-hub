@@ -1,8 +1,8 @@
-# 🍳 RecipeAI - AI-Powered Recipe & Meal Planning Platform
+# 🍳 NutriCheff - AI-Powered Recipe & Meal Planning Platform
 
 An intelligent recipe generation and meal planning application that creates personalized recipes based on your dietary preferences, allergies, and nutritional goals.
 
-![RecipeAI Banner](screenshots/banner-placeholder.png)
+![NutriChef Banner](screenshots/banner-placeholder.png)
 
 ## ✨ Features
 
