@@ -139,6 +139,11 @@ ${formData.prompt ? `**Special Request:** ${formData.prompt}` : ""}
 **Nutritional Deficiencies to Address:** ${formData.deficiencies.length > 0 ? formData.deficiencies.join(", ") : "None specified"}
 **Health Goals:** ${formData.healthGoals.length > 0 ? formData.healthGoals.join(", ") : "General wellness"}
 **Cuisine Preferences:** ${formData.cuisines.length > 0 ? formData.cuisines.join(", ") : "Any cuisine"}
+${formData.indianRegion.length > 0 ? `**Indian Regional Cuisine:** ${formData.indianRegion.join(", ")}` : ""}
+${formData.spiceLevel ? `**Spice Level:** ${formData.spiceLevel}` : ""}
+${formData.indianSpices.length > 0 ? `**Preferred Indian Spices:** ${formData.indianSpices.join(", ")}` : ""}
+${formData.indianMealType ? `**Indian Meal Type:** ${formData.indianMealType}` : ""}
+${formData.indianDietaryStyles.length > 0 ? `**Indian Dietary Style:** ${formData.indianDietaryStyles.join(", ")}` : ""}
 
 ${formData.prompt ? `IMPORTANT: Focus the recipe on fulfilling the special request "${formData.prompt}". Make it the primary theme of the recipe.` : ""}
 
