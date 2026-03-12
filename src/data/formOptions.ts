@@ -5,7 +5,8 @@ export const foodLikes = [
   "Pasta", "Rice", "Quinoa", "Potatoes", "Sweet Potatoes",
   "Broccoli", "Spinach", "Tomatoes", "Avocado", "Mushrooms",
   "Cheese", "Yogurt", "Beans", "Lentils", "Chickpeas",
-  "Salmon", "Tuna", "Turkey", "Pork", "Lamb"
+  "Salmon", "Tuna", "Turkey", "Pork", "Lamb",
+  "Paneer", "Dal", "Basmati Rice", "Ghee", "Naan"
 ];
 
 export const foodDislikes = [
@@ -95,4 +96,64 @@ export const cuisines = [
   { id: "greek", label: "Greek", emoji: "🇬🇷" },
   { id: "middle-eastern", label: "Middle Eastern", emoji: "🧆" },
   { id: "korean", label: "Korean", emoji: "🇰🇷" },
+];
+
+// Indian-specific options
+
+export const indianFoodLikes = [
+  "Paneer", "Dal (Lentils)", "Basmati Rice", "Roti/Naan", "Ghee",
+  "Curd/Raita", "Biryani", "Samosa", "Idli/Dosa", "Chana",
+  "Rajma", "Palak", "Methi", "Aloo", "Gobi",
+  "Tandoori Chicken", "Butter Chicken", "Chole", "Poha", "Upma"
+];
+
+export const indianSpicePreferences = [
+  { id: "turmeric", label: "Turmeric (Haldi)", emoji: "🟡" },
+  { id: "cumin", label: "Cumin (Jeera)", emoji: "🌰" },
+  { id: "coriander", label: "Coriander (Dhania)", emoji: "🌿" },
+  { id: "garam-masala", label: "Garam Masala", emoji: "✨" },
+  { id: "cardamom", label: "Cardamom (Elaichi)", emoji: "💚" },
+  { id: "mustard-seeds", label: "Mustard Seeds (Rai)", emoji: "🟤" },
+  { id: "red-chilli", label: "Red Chilli (Lal Mirch)", emoji: "🌶️" },
+  { id: "black-pepper", label: "Black Pepper (Kali Mirch)", emoji: "⚫" },
+  { id: "fenugreek", label: "Fenugreek (Methi)", emoji: "🍃" },
+  { id: "asafoetida", label: "Asafoetida (Hing)", emoji: "🧂" },
+  { id: "curry-leaves", label: "Curry Leaves (Kadi Patta)", emoji: "🌿" },
+  { id: "saffron", label: "Saffron (Kesar)", emoji: "🧡" },
+];
+
+export const indianRegionalCuisines = [
+  { id: "north-indian", label: "North Indian", emoji: "🍛" },
+  { id: "south-indian", label: "South Indian", emoji: "🥥" },
+  { id: "bengali", label: "Bengali", emoji: "🐟" },
+  { id: "gujarati", label: "Gujarati", emoji: "🍬" },
+  { id: "rajasthani", label: "Rajasthani", emoji: "🏜️" },
+  { id: "punjabi", label: "Punjabi", emoji: "🧈" },
+  { id: "hyderabadi", label: "Hyderabadi", emoji: "🍚" },
+  { id: "kerala", label: "Kerala", emoji: "🌴" },
+  { id: "maharashtrian", label: "Maharashtrian", emoji: "🥜" },
+  { id: "chettinad", label: "Chettinad", emoji: "🌶️" },
+  { id: "goan", label: "Goan", emoji: "🦐" },
+  { id: "awadhi", label: "Awadhi", emoji: "👑" },
+];
+
+export const indianDietaryStyles = [
+  { id: "jain", label: "Jain", description: "No root vegetables, no onion/garlic" },
+  { id: "sattvic", label: "Sattvic", description: "Pure, yogic diet — no onion/garlic, minimal spice" },
+  { id: "ayurvedic", label: "Ayurvedic", description: "Balanced doshas, seasonal eating" },
+];
+
+export const indianMealTypes = [
+  { id: "nashta", label: "Breakfast (Nashta)", emoji: "🌅" },
+  { id: "thali", label: "Lunch (Thali)", emoji: "🍽️" },
+  { id: "dinner", label: "Dinner", emoji: "🌙" },
+  { id: "chaat-tiffin", label: "Snacks (Chaat/Tiffin)", emoji: "🥟" },
+  { id: "festive", label: "Festive / Special", emoji: "🪔" },
+];
+
+export const spiceLevels = [
+  { value: "mild", label: "Mild", emoji: "🌶️", description: "Light spice, aromatic" },
+  { value: "medium", label: "Medium", emoji: "🌶️🌶️", description: "Balanced heat" },
+  { value: "spicy", label: "Spicy", emoji: "🌶️🌶️🌶️", description: "Authentic Indian heat" },
+  { value: "extra-spicy", label: "Extra Spicy", emoji: "🌶️🌶️🌶️🌶️", description: "Fiery and bold" },
 ];
