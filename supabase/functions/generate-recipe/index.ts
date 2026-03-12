@@ -103,6 +103,11 @@ serve(async (req) => {
       deficiencies: sanitizeArray(parsed.data.formData.deficiencies),
       healthGoals: sanitizeArray(parsed.data.formData.healthGoals),
       cuisines: sanitizeArray(parsed.data.formData.cuisines),
+      indianRegion: sanitizeArray(parsed.data.formData.indianRegion || []),
+      spiceLevel: sanitizeString(parsed.data.formData.spiceLevel || ""),
+      indianSpices: sanitizeArray(parsed.data.formData.indianSpices || []),
+      indianMealType: sanitizeString(parsed.data.formData.indianMealType || ""),
+      indianDietaryStyles: sanitizeArray(parsed.data.formData.indianDietaryStyles || []),
     };
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
