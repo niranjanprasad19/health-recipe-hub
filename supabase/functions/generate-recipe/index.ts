@@ -21,6 +21,11 @@ const RecipeFormSchema = z.object({
     deficiencies: z.array(z.string().max(100)).max(10).default([]),
     healthGoals: z.array(z.string().max(100)).max(10).default([]),
     cuisines: z.array(z.string().max(100)).max(10).default([]),
+    indianRegion: z.array(z.string().max(100)).max(12).optional().default([]),
+    spiceLevel: z.string().max(50).optional().default(""),
+    indianSpices: z.array(z.string().max(100)).max(12).optional().default([]),
+    indianMealType: z.string().max(50).optional().default(""),
+    indianDietaryStyles: z.array(z.string().max(100)).max(5).optional().default([]),
   }),
 });
 
@@ -98,6 +103,11 @@ serve(async (req) => {
       deficiencies: sanitizeArray(parsed.data.formData.deficiencies),
       healthGoals: sanitizeArray(parsed.data.formData.healthGoals),
       cuisines: sanitizeArray(parsed.data.formData.cuisines),
+      indianRegion: sanitizeArray(parsed.data.formData.indianRegion || []),
+      spiceLevel: sanitizeString(parsed.data.formData.spiceLevel || ""),
+      indianSpices: sanitizeArray(parsed.data.formData.indianSpices || []),
+      indianMealType: sanitizeString(parsed.data.formData.indianMealType || ""),
+      indianDietaryStyles: sanitizeArray(parsed.data.formData.indianDietaryStyles || []),
     };
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
@@ -109,9 +119,12 @@ serve(async (req) => {
 
     console.log("Generating recipe with preferences:", formData);
 
+    const isIndian = formData.cuisines.includes("indian") || formData.indianRegion.length > 0;
+
     const systemPrompt = `You are a professional nutritionist and chef who creates personalized, healthy recipes. 
 Generate a complete, detailed recipe based on the user's preferences, dietary restrictions, and health goals.
-Always provide accurate nutritional information and clear cooking instructions.`;
+Always provide accurate nutritional information and clear cooking instructions.
+${isIndian ? "When Indian cuisine is selected, use authentic Indian cooking techniques, traditional spice combinations (tadka, tempering, etc.), and regional specialties. Ensure the recipe reflects the specific regional cuisine if provided (e.g., South Indian uses coconut and curry leaves, Punjabi uses ghee and cream, Bengali uses mustard oil and panch phoron)." : ""}`;
 
     const userPrompt = `Create a personalized healthy recipe based on these preferences:
 
@@ -126,6 +139,11 @@ ${formData.prompt ? `**Special Request:** ${formData.prompt}` : ""}
 **Nutritional Deficiencies to Address:** ${formData.deficiencies.length > 0 ? formData.deficiencies.join(", ") : "None specified"}
 **Health Goals:** ${formData.healthGoals.length > 0 ? formData.healthGoals.join(", ") : "General wellness"}
 **Cuisine Preferences:** ${formData.cuisines.length > 0 ? formData.cuisines.join(", ") : "Any cuisine"}
+${formData.indianRegion.length > 0 ? `**Indian Regional Cuisine:** ${formData.indianRegion.join(", ")}` : ""}
+${formData.spiceLevel ? `**Spice Level:** ${formData.spiceLevel}` : ""}
+${formData.indianSpices.length > 0 ? `**Preferred Indian Spices:** ${formData.indianSpices.join(", ")}` : ""}
+${formData.indianMealType ? `**Indian Meal Type:** ${formData.indianMealType}` : ""}
+${formData.indianDietaryStyles.length > 0 ? `**Indian Dietary Style:** ${formData.indianDietaryStyles.join(", ")}` : ""}
 
 ${formData.prompt ? `IMPORTANT: Focus the recipe on fulfilling the special request "${formData.prompt}". Make it the primary theme of the recipe.` : ""}
 

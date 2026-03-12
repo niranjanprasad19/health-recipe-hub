@@ -7,17 +7,20 @@ import StepAllergies from "@/components/recipe-form/StepAllergies";
 import StepPersonalDetails from "@/components/recipe-form/StepPersonalDetails";
 import StepNutrition from "@/components/recipe-form/StepNutrition";
 import StepCuisine from "@/components/recipe-form/StepCuisine";
+import StepIndianPreferences from "@/components/recipe-form/StepIndianPreferences";
 import { useRecipeForm } from "@/hooks/useRecipeForm";
 import { Header } from "@/components/Header";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
-const steps = [
+const baseSteps = [
   { title: "Preferences", description: "Foods you love and avoid" },
   { title: "Allergies", description: "Safety first" },
   { title: "Details", description: "About you" },
   { title: "Nutrition", description: "Health goals" },
   { title: "Cuisine", description: "Flavor inspiration" },
 ];
+
+const indianStep = { title: "Indian", description: "Regional flavors" };
 
 const Preferences = () => {
   const navigate = useNavigate();
@@ -29,10 +32,16 @@ const Preferences = () => {
     currentStep,
     totalSteps,
     isSubmitting,
+    hasIndianCuisine,
     updateFormData,
     nextStep,
     prevStep,
   } = useRecipeForm();
+
+  const steps = useMemo(
+    () => hasIndianCuisine ? [...baseSteps, indianStep] : baseSteps,
+    [hasIndianCuisine]
+  );
 
   // Set prompt from URL on mount
   useEffect(() => {
@@ -42,7 +51,6 @@ const Preferences = () => {
   }, [promptFromUrl]);
 
   const handleSubmit = async () => {
-    // Navigate to recipe result page with form data
     navigate("/recipe", { state: { formData } });
   };
 
@@ -93,6 +101,24 @@ const Preferences = () => {
             onCuisinesChange={(cuisines) => updateFormData("cuisines", cuisines)}
           />
         );
+      case 6:
+        if (hasIndianCuisine) {
+          return (
+            <StepIndianPreferences
+              indianRegion={formData.indianRegion}
+              spiceLevel={formData.spiceLevel}
+              indianSpices={formData.indianSpices}
+              indianMealType={formData.indianMealType}
+              indianDietary={formData.indianDietaryStyles}
+              onRegionChange={(regions) => updateFormData("indianRegion", regions)}
+              onSpiceLevelChange={(level) => updateFormData("spiceLevel", level)}
+              onSpicesChange={(spices) => updateFormData("indianSpices", spices)}
+              onMealTypeChange={(type) => updateFormData("indianMealType", type)}
+              onDietaryChange={(dietary) => updateFormData("indianDietaryStyles", dietary)}
+            />
+          );
+        }
+        return null;
       default:
         return null;
     }
@@ -102,7 +128,6 @@ const Preferences = () => {
     <div className="min-h-screen gradient-hero">
       <Header showBackButton backTo="/" backLabel="Back to Home" />
 
-      {/* Form Container */}
       <main className="container mx-auto px-4 py-8 max-w-3xl">
         <div className="mb-8">
           <h1 className="font-heading text-3xl font-bold text-foreground mb-2 text-center">
@@ -113,7 +138,6 @@ const Preferences = () => {
           </p>
         </div>
 
-        {/* Prompt Display */}
         {formData.prompt && (
           <div className="mb-6 p-4 rounded-lg bg-primary/5 border border-primary/20">
             <div className="flex items-center justify-between gap-2">
@@ -133,15 +157,12 @@ const Preferences = () => {
           </div>
         )}
 
-        {/* Progress */}
         <div className="mb-8">
           <FormProgress currentStep={currentStep} totalSteps={totalSteps} steps={steps} />
         </div>
 
-        {/* Step Content */}
         <div className="mb-8">{renderStep()}</div>
 
-        {/* Navigation */}
         <div className="flex items-center justify-between gap-4">
           <Button
             variant="outline"

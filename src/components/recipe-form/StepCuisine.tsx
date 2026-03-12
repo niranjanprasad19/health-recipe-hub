@@ -63,8 +63,16 @@ const StepCuisine = ({ selectedCuisines, onCuisinesChange }: StepCuisineProps) =
 
       <div className="p-4 bg-primary/5 rounded-xl border border-primary/20">
         <p className="text-sm text-muted-foreground text-center">
-          <span className="font-medium text-foreground">Almost there!</span> Click "Generate Recipe" below 
-          to get your personalized healthy recipe.
+          {selectedCuisines.includes("indian") ? (
+            <>
+              <span className="font-medium text-foreground">🇮🇳 Indian selected!</span> You'll get a dedicated step to customize regional flavors and spice preferences.
+            </>
+          ) : (
+            <>
+              <span className="font-medium text-foreground">Almost there!</span> Click "Generate Recipe" below 
+              to get your personalized healthy recipe.
+            </>
+          )}
         </p>
       </div>
     </div>

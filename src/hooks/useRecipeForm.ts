@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 export interface RecipeFormData {
   // Custom prompt from search
@@ -18,6 +18,12 @@ export interface RecipeFormData {
   healthGoals: string[];
   // Step 5: Cuisine
   cuisines: string[];
+  // Step 6: Indian Preferences (conditional)
+  indianRegion: string[];
+  spiceLevel: string;
+  indianSpices: string[];
+  indianMealType: string;
+  indianDietaryStyles: string[];
 }
 
 const initialFormData: RecipeFormData = {
@@ -32,6 +38,11 @@ const initialFormData: RecipeFormData = {
   deficiencies: [],
   healthGoals: [],
   cuisines: [],
+  indianRegion: [],
+  spiceLevel: "",
+  indianSpices: [],
+  indianMealType: "",
+  indianDietaryStyles: [],
 };
 
 export const useRecipeForm = () => {
@@ -39,7 +50,8 @@ export const useRecipeForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const totalSteps = 5;
+  const hasIndianCuisine = formData.cuisines.includes("indian");
+  const totalSteps = hasIndianCuisine ? 6 : 5;
 
   const updateFormData = <K extends keyof RecipeFormData>(
     key: K,
@@ -68,7 +80,6 @@ export const useRecipeForm = () => {
 
   const submitForm = async () => {
     setIsSubmitting(true);
-    // Placeholder for AI integration
     await new Promise((resolve) => setTimeout(resolve, 2000));
     setIsSubmitting(false);
     console.log("Form submitted:", formData);
@@ -85,6 +96,7 @@ export const useRecipeForm = () => {
     currentStep,
     totalSteps,
     isSubmitting,
+    hasIndianCuisine,
     updateFormData,
     nextStep,
     prevStep,
