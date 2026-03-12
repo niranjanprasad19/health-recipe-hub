@@ -21,6 +21,11 @@ const RecipeFormSchema = z.object({
     deficiencies: z.array(z.string().max(100)).max(10).default([]),
     healthGoals: z.array(z.string().max(100)).max(10).default([]),
     cuisines: z.array(z.string().max(100)).max(10).default([]),
+    indianRegion: z.array(z.string().max(100)).max(12).optional().default([]),
+    spiceLevel: z.string().max(50).optional().default(""),
+    indianSpices: z.array(z.string().max(100)).max(12).optional().default([]),
+    indianMealType: z.string().max(50).optional().default(""),
+    indianDietaryStyles: z.array(z.string().max(100)).max(5).optional().default([]),
   }),
 });
 
