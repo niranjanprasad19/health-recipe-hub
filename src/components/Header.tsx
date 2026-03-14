@@ -121,6 +121,7 @@ export const Header = ({
         
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-2">
+          <LanguageSelector />
           <ThemeToggle />
           
           {showBackButton && (
