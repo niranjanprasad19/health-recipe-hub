@@ -49,6 +49,16 @@ const QuickRecipe = () => {
       navigate("/");
       return;
     }
+    // Check sessionStorage for cached recipe to avoid regeneration on refresh
+    const cacheKey = `quick-recipe-${prompt}`;
+    const cached = sessionStorage.getItem(cacheKey);
+    if (cached) {
+      try {
+        setRecipe(JSON.parse(cached));
+        setIsLoading(false);
+        return;
+      } catch { /* ignore parse errors */ }
+    }
     generateRecipe();
   }, [prompt]);
 
