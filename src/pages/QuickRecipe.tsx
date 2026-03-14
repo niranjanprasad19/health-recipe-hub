@@ -97,6 +97,9 @@ const QuickRecipe = () => {
       }
 
       setRecipe(response.data.recipe);
+      // Cache the recipe in sessionStorage
+      const cacheKey = `quick-recipe-${prompt}`;
+      sessionStorage.setItem(cacheKey, JSON.stringify(response.data.recipe));
     } catch (err) {
       console.error("Error generating recipe:", err);
       setError(err instanceof Error ? err.message : "Failed to generate recipe");

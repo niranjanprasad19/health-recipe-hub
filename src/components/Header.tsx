@@ -204,6 +204,7 @@ export const Header = ({
 
         {/* Mobile Navigation */}
         <div className="flex md:hidden items-center gap-1 overflow-hidden">
+          <LanguageSelector />
           <ThemeToggle />
           <div className="flex items-center gap-1 overflow-hidden shrink min-w-0">
             {actions}
