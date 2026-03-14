@@ -49,6 +49,16 @@ const QuickRecipe = () => {
       navigate("/");
       return;
     }
+    // Check sessionStorage for cached recipe to avoid regeneration on refresh
+    const cacheKey = `quick-recipe-${prompt}`;
+    const cached = sessionStorage.getItem(cacheKey);
+    if (cached) {
+      try {
+        setRecipe(JSON.parse(cached));
+        setIsLoading(false);
+        return;
+      } catch { /* ignore parse errors */ }
+    }
     generateRecipe();
   }, [prompt]);
 
@@ -87,6 +97,9 @@ const QuickRecipe = () => {
       }
 
       setRecipe(response.data.recipe);
+      // Cache the recipe in sessionStorage
+      const cacheKey = `quick-recipe-${prompt}`;
+      sessionStorage.setItem(cacheKey, JSON.stringify(response.data.recipe));
     } catch (err) {
       console.error("Error generating recipe:", err);
       setError(err instanceof Error ? err.message : "Failed to generate recipe");

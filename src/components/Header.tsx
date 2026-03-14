@@ -13,6 +13,7 @@ import {
 import { Leaf, LogOut, User, ArrowLeft, Menu, Home, Calendar, ShoppingCart, Search, Heart, Upload } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -120,6 +121,7 @@ export const Header = ({
         
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-2">
+          <LanguageSelector />
           <ThemeToggle />
           
           {showBackButton && (
@@ -202,6 +204,7 @@ export const Header = ({
 
         {/* Mobile Navigation */}
         <div className="flex md:hidden items-center gap-1 overflow-hidden">
+          <LanguageSelector />
           <ThemeToggle />
           <div className="flex items-center gap-1 overflow-hidden shrink min-w-0">
             {actions}
