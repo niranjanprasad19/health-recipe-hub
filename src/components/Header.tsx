@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Leaf, LogOut, User, ArrowLeft, Menu, Home, Calendar, ShoppingCart, Search, Heart, Upload } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
@@ -28,79 +25,56 @@ interface HeaderProps {
 export const Header = ({ 
   showBackButton = false, 
   backTo = "/", 
-  backLabel = "Back to Home",
+  backLabel,
   actions,
   minimal = false
 }: HeaderProps) => {
+  const { t } = useTranslation();
   const { user, isAuthenticated, signOut, loading } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  const resolvedBackLabel = backLabel || t('common.backToHome');
+
   useEffect(() => {
-    if (user) {
-      fetchProfile();
-    }
+    if (user) { fetchProfile(); }
   }, [user]);
 
   const fetchProfile = async () => {
     if (!user) return;
-    
-    const { data } = await supabase
-      .from("profiles")
-      .select("avatar_url, display_name")
-      .eq("user_id", user.id)
-      .maybeSingle();
-    
-    if (data) {
-      setAvatarUrl(data.avatar_url);
-      setDisplayName(data.display_name);
-    }
+    const { data } = await supabase.from("profiles").select("avatar_url, display_name").eq("user_id", user.id).maybeSingle();
+    if (data) { setAvatarUrl(data.avatar_url); setDisplayName(data.display_name); }
   };
 
   const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file || !user) return;
-
-    if (!file.type.startsWith('image/')) {
-      toast.error("Please select an image file");
-      return;
-    }
-
-    if (file.size > 2 * 1024 * 1024) {
-      toast.error("Image must be less than 2MB");
-      return;
-    }
-
+    if (!file.type.startsWith('image/')) { toast.error(t('common.error')); return; }
+    if (file.size > 2 * 1024 * 1024) { toast.error(t('common.error')); return; }
     try {
       const reader = new FileReader();
       reader.onloadend = async () => {
         const base64 = reader.result as string;
-        
-        const { error } = await supabase
-          .from("profiles")
-          .update({ avatar_url: base64 })
-          .eq("user_id", user.id);
-
+        const { error } = await supabase.from("profiles").update({ avatar_url: base64 }).eq("user_id", user.id);
         if (error) throw error;
-
         setAvatarUrl(base64);
-        toast.success("Avatar updated successfully!");
+        toast.success(t('common.success'));
       };
       reader.readAsDataURL(file);
     } catch (err) {
       console.error("Error uploading avatar:", err);
-      toast.error("Failed to update avatar");
+      toast.error(t('common.error'));
     }
   };
 
   const navLinks = [
-    { to: "/", label: "Home", icon: Home },
-    { to: "/search", label: "Search", icon: Search },
-    { to: "/profile", label: "Saved Recipes", icon: Heart },
-    { to: "/meal-planning", label: "Meal Planning", icon: Calendar },
-    { to: "/shopping-list", label: "Shopping List", icon: ShoppingCart },
+    { to: "/", label: t('nav.home'), icon: Home },
+    { to: "/search", label: t('nav.search'), icon: Search },
+    { to: "/profile", label: t('nav.savedRecipes'), icon: Heart },
+    { to: "/meal-planning", label: t('nav.mealPlanning'), icon: Calendar },
+    { to: "/shopping-list", label: t('nav.shoppingList'), icon: ShoppingCart },
   ];
 
   const getInitials = () => {
@@ -128,7 +102,7 @@ export const Header = ({
             <Link to={backTo}>
               <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                {backLabel}
+                {resolvedBackLabel}
               </Button>
             </Link>
           )}
@@ -142,22 +116,16 @@ export const Header = ({
                   <Button variant="ghost" size="sm" className="flex items-center gap-2 p-1 pr-2">
                     <Avatar className="w-8 h-8">
                       <AvatarImage src={avatarUrl || ""} />
-                      <AvatarFallback className="bg-primary text-primary-foreground text-sm">
-                        {getInitials()}
-                      </AvatarFallback>
+                      <AvatarFallback className="bg-primary text-primary-foreground text-sm">{getInitials()}</AvatarFallback>
                     </Avatar>
-                    <span className="hidden sm:inline text-sm text-muted-foreground">
-                      {displayName || user?.email?.split('@')[0]}
-                    </span>
+                    <span className="hidden sm:inline text-sm text-muted-foreground">{displayName || user?.email?.split('@')[0]}</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
                   <div className="flex items-center gap-3 p-2">
                     <Avatar className="w-10 h-10">
                       <AvatarImage src={avatarUrl || ""} />
-                      <AvatarFallback className="bg-primary text-primary-foreground">
-                        {getInitials()}
-                      </AvatarFallback>
+                      <AvatarFallback className="bg-primary text-primary-foreground">{getInitials()}</AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate">{displayName || "User"}</p>
@@ -168,34 +136,29 @@ export const Header = ({
                   <DropdownMenuItem asChild>
                     <label className="flex items-center gap-2 cursor-pointer">
                       <Upload className="w-4 h-4" />
-                      Update Avatar
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={handleAvatarUpload}
-                      />
+                      {t('profile.updateAvatar')}
+                      <input type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} />
                     </label>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate("/profile")}>
                     <User className="w-4 h-4 mr-2" />
-                    Profile
+                    {t('common.profile')}
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate("/profile")}>
                     <Heart className="w-4 h-4 mr-2" />
-                    Saved Recipes
+                    {t('nav.savedRecipes')}
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={signOut} className="text-destructive focus:text-destructive">
                     <LogOut className="w-4 h-4 mr-2" />
-                    Sign Out
+                    {t('common.signOut')}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <Link to="/auth">
                 <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                  Sign In
+                  {t('common.signIn')}
                 </Button>
               </Link>
             )
@@ -206,16 +169,12 @@ export const Header = ({
         <div className="flex md:hidden items-center gap-1 overflow-hidden">
           <LanguageSelector />
           <ThemeToggle />
-          <div className="flex items-center gap-1 overflow-hidden shrink min-w-0">
-            {actions}
-          </div>
+          <div className="flex items-center gap-1 overflow-hidden shrink min-w-0">{actions}</div>
           
           {!minimal && (
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="sm">
-                  <Menu className="w-5 h-5" />
-                </Button>
+                <Button variant="ghost" size="sm"><Menu className="w-5 h-5" /></Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-72">
                 <div className="flex flex-col gap-4 mt-8">
@@ -223,9 +182,7 @@ export const Header = ({
                     <div className="flex items-center gap-3 p-3 bg-secondary/30 rounded-lg mb-2">
                       <Avatar className="w-12 h-12">
                         <AvatarImage src={avatarUrl || ""} />
-                        <AvatarFallback className="bg-primary text-primary-foreground">
-                          {getInitials()}
-                        </AvatarFallback>
+                        <AvatarFallback className="bg-primary text-primary-foreground">{getInitials()}</AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
                         <p className="font-medium truncate">{displayName || "User"}</p>
@@ -236,19 +193,13 @@ export const Header = ({
 
                   {showBackButton && (
                     <Link to={backTo} onClick={() => setMobileMenuOpen(false)}>
-                      <Button variant="ghost" className="w-full justify-start">
-                        <ArrowLeft className="w-4 h-4 mr-2" />
-                        {backLabel}
-                      </Button>
+                      <Button variant="ghost" className="w-full justify-start"><ArrowLeft className="w-4 h-4 mr-2" />{resolvedBackLabel}</Button>
                     </Link>
                   )}
                   
                   {navLinks.map((link) => (
                     <Link key={link.to} to={link.to} onClick={() => setMobileMenuOpen(false)}>
-                      <Button variant="ghost" className="w-full justify-start">
-                        <link.icon className="w-4 h-4 mr-2" />
-                        {link.label}
-                      </Button>
+                      <Button variant="ghost" className="w-full justify-start"><link.icon className="w-4 h-4 mr-2" />{link.label}</Button>
                     </Link>
                   ))}
                   
@@ -258,44 +209,21 @@ export const Header = ({
                         <>
                           <label className="w-full">
                             <Button variant="ghost" className="w-full justify-start mb-2 cursor-pointer" asChild>
-                              <span>
-                                <Upload className="w-4 h-4 mr-2" />
-                                Update Avatar
-                              </span>
+                              <span><Upload className="w-4 h-4 mr-2" />{t('profile.updateAvatar')}</span>
                             </Button>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              onChange={(e) => {
-                                handleAvatarUpload(e);
-                                setMobileMenuOpen(false);
-                              }}
-                            />
+                            <input type="file" accept="image/*" className="hidden" onChange={(e) => { handleAvatarUpload(e); setMobileMenuOpen(false); }} />
                           </label>
                           <Link to="/profile" onClick={() => setMobileMenuOpen(false)}>
-                            <Button variant="ghost" className="w-full justify-start mb-2">
-                              <User className="w-4 h-4 mr-2" />
-                              Profile
-                            </Button>
+                            <Button variant="ghost" className="w-full justify-start mb-2"><User className="w-4 h-4 mr-2" />{t('common.profile')}</Button>
                           </Link>
-                          <Button 
-                            variant="ghost" 
-                            className="w-full justify-start text-destructive hover:text-destructive"
-                            onClick={() => {
-                              signOut();
-                              setMobileMenuOpen(false);
-                            }}
-                          >
-                            <LogOut className="w-4 h-4 mr-2" />
-                            Sign Out
+                          <Button variant="ghost" className="w-full justify-start text-destructive hover:text-destructive"
+                            onClick={() => { signOut(); setMobileMenuOpen(false); }}>
+                            <LogOut className="w-4 h-4 mr-2" />{t('common.signOut')}
                           </Button>
                         </>
                       ) : (
                         <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
-                          <Button variant="default" className="w-full">
-                            Sign In
-                          </Button>
+                          <Button variant="default" className="w-full">{t('common.signIn')}</Button>
                         </Link>
                       )
                     )}
