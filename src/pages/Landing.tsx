@@ -1,5 +1,6 @@
 // Landing page component
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -20,6 +21,7 @@ interface SavedRecipe {
 }
 
 const Landing = () => {
+  const { t } = useTranslation();
   const { user, isAuthenticated } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
   const [recentRecipes, setRecentRecipes] = useState<SavedRecipe[]>([]);
@@ -72,17 +74,14 @@ const Landing = () => {
       .eq("id", recipeId);
 
     if (!error) {
-      // Update local state
       setRecentRecipes(prev => prev.map(r => r.id === recipeId ? { ...r, is_favorite: !currentStatus } : r));
       setFavoriteRecipes(prev => {
         if (!currentStatus) {
-          // Adding to favorites
           const recipe = recentRecipes.find(r => r.id === recipeId);
           if (recipe && !prev.find(r => r.id === recipeId)) {
             return [{ ...recipe, is_favorite: true }, ...prev].slice(0, 6);
           }
         } else {
-          // Removing from favorites
           return prev.filter(r => r.id !== recipeId);
         }
         return prev;
@@ -113,17 +112,16 @@ const Landing = () => {
       <main className="container mx-auto px-4 pt-16 pb-24">
         <div className="text-center max-w-3xl mx-auto animate-fade-in">
           <p className="text-sm font-medium text-primary tracking-wide uppercase mb-4">
-            AI-Powered Recipe Generation
+            {t('landing.tagline')}
           </p>
           
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-6 tracking-tight leading-tight">
-            Personalized recipes for{" "}
-            <span className="text-primary">healthier living</span>
+            {t('landing.heroTitle')}{" "}
+            <span className="text-primary">{t('landing.heroHighlight')}</span>
           </h1>
 
           <p className="text-lg text-muted-foreground mb-10 max-w-xl mx-auto leading-relaxed">
-            Generate custom recipes tailored to your dietary preferences, 
-            nutritional goals, and available ingredients.
+            {t('landing.heroDescription')}
           </p>
 
           {/* Search Bar */}
@@ -133,7 +131,7 @@ const Landing = () => {
                 <Search className="w-5 h-5 text-muted-foreground ml-4" />
                 <Input
                   type="text"
-                  placeholder="What do you want to cook?"
+                  placeholder={t('landing.searchPlaceholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="flex-1 border-0 text-base py-6 px-3 bg-transparent focus-visible:ring-0 placeholder:text-muted-foreground/50"
@@ -143,7 +141,7 @@ const Landing = () => {
                 type="submit"
                 className="mx-2 mb-2 sm:mb-0 sm:mr-2 px-6 rounded-lg"
               >
-                Generate
+                {t('common.generate')}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
@@ -167,7 +165,7 @@ const Landing = () => {
             <Link to="/preferences">
               <Button size="default" variant="outline" className="rounded-lg text-sm sm:text-base">
                 <Utensils className="w-4 h-4 mr-2" />
-                Set Preferences
+                {t('landing.setPreferences')}
               </Button>
             </Link>
             {isAuthenticated && (
@@ -175,13 +173,13 @@ const Landing = () => {
                 <Link to="/meal-planning">
                   <Button size="default" variant="outline" className="rounded-lg text-sm sm:text-base">
                     <Calendar className="w-4 h-4 mr-2" />
-                    Meal Plan
+                    {t('landing.mealPlan')}
                   </Button>
                 </Link>
                 <Link to="/shopping-list">
                   <Button size="default" variant="outline" className="rounded-lg text-sm sm:text-base">
                     <ShoppingCart className="w-4 h-4 mr-2" />
-                    Shopping List
+                    {t('landing.shoppingList')}
                   </Button>
                 </Link>
               </>
@@ -195,11 +193,11 @@ const Landing = () => {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-foreground flex items-center gap-2">
                 <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-                Your Favorites
+                {t('landing.yourFavorites')}
               </h2>
               <Link to="/profile">
                 <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
-                  View All
+                  {t('common.viewAll')}
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </Button>
               </Link>
@@ -216,10 +214,10 @@ const Landing = () => {
         {isAuthenticated && recentRecipes.length > 0 && (
           <div className="mt-12 max-w-4xl mx-auto animate-fade-in">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-foreground">Recent Recipes</h2>
+              <h2 className="text-xl font-semibold text-foreground">{t('landing.recentRecipes')}</h2>
               <Link to="/search">
                 <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
-                  View All
+                  {t('common.viewAll')}
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </Button>
               </Link>
@@ -234,20 +232,20 @@ const Landing = () => {
         <div className="grid md:grid-cols-3 gap-6 mt-28 max-w-4xl mx-auto">
           <FeatureCard
             icon={<Sparkles className="w-5 h-5" />}
-            title="Smart Recommendations"
-            description="AI learns your preferences and suggests recipes you'll actually enjoy."
+            title={t('landing.smartRecommendations')}
+            description={t('landing.smartRecommendationsDesc')}
             href="/preferences"
           />
           <FeatureCard
             icon={<ShoppingCart className="w-5 h-5" />}
-            title="Automated Shopping"
-            description="Generate shopping lists automatically from your selected recipes."
+            title={t('landing.automatedShopping')}
+            description={t('landing.automatedShoppingDesc')}
             href={isAuthenticated ? "/shopping-list" : "/auth"}
           />
           <FeatureCard
             icon={<Heart className="w-5 h-5" />}
-            title="Nutrition Focused"
-            description="Track macros and nutritional information for every recipe."
+            title={t('landing.nutritionFocused')}
+            description={t('landing.nutritionFocusedDesc')}
             href={isAuthenticated ? "/meal-planning" : "/auth"}
           />
         </div>
@@ -255,29 +253,29 @@ const Landing = () => {
         {/* How It Works */}
         <div className="mt-28 max-w-3xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-semibold text-center text-foreground mb-3 tracking-tight">
-            How It Works
+            {t('landing.howItWorks')}
           </h2>
           <p className="text-center text-muted-foreground mb-10">
-            Three simple steps to your perfect meal
+            {t('landing.howItWorksSubtitle')}
           </p>
           
           <div className="grid sm:grid-cols-3 gap-8">
             <StepCard
               number={1}
-              title="Set Preferences"
-              description="Share your dietary needs, allergies, and taste preferences"
+              title={t('landing.step1Title')}
+              description={t('landing.step1Desc')}
               href="/preferences"
             />
             <StepCard
               number={2}
-              title="Generate Recipes"
-              description="Our AI creates personalized recipes matching your criteria"
+              title={t('landing.step2Title')}
+              description={t('landing.step2Desc')}
               href="/preferences"
             />
             <StepCard
               number={3}
-              title="Save and Plan"
-              description="Save favorites and organize your weekly meal plan"
+              title={t('landing.step3Title')}
+              description={t('landing.step3Desc')}
               href={isAuthenticated ? "/meal-planning" : "/auth"}
             />
           </div>
@@ -293,7 +291,7 @@ const Landing = () => {
               <span className="font-medium text-foreground">NutriChef</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              2024 NutriChef. All rights reserved.
+              {t('landing.footer')}
             </p>
           </div>
         </div>
