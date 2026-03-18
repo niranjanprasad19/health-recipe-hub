@@ -280,10 +280,10 @@ const ShoppingList = () => {
       .insert(newItems);
 
     if (insertError) {
-      toast.error("Failed to add ingredients");
+      toast.error(t('shoppingList.failedToAddIngredients'));
       console.error(insertError);
     } else {
-      toast.success(`Added ${newItems.length} ingredients from your meal plan!`);
+      toast.success(t('shoppingList.addedIngredients', { count: newItems.length }));
       await fetchItems(currentListId);
     }
     setIsGenerating(false);
