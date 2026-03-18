@@ -344,7 +344,7 @@ const ShoppingList = () => {
 
     if (!error) {
       setItems(items.filter(item => !item.checked));
-      toast.success("Cleared checked items");
+      toast.success(t('shoppingList.clearedChecked'));
     }
   };
 
