@@ -462,7 +462,7 @@ const MealPlanning = () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>
-                Add {MEAL_TYPES.find((m) => m.id === selectedMealType)?.label} for {DAYS[selectedDay]}
+                {t('mealPlanning.addMealFor', { mealType: t(`mealPlanning.mealTypes.${MEAL_TYPE_KEYS.find((m) => m.id === selectedMealType)?.key || 'breakfast'}`), day: t(`mealPlanning.days.${DAY_KEYS[selectedDay]}`) })}
               </DialogTitle>
             </DialogHeader>
             <div className="space-y-4 pt-4">
