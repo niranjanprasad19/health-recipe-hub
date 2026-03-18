@@ -422,22 +422,22 @@ const MealPlanning = () => {
           onDragEnd={handleDragEnd}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4">
-            {DAYS.map((day, dayIndex) => (
-              <Card key={day} className="gradient-card shadow-card">
+            {DAY_KEYS.map((dayKey, dayIndex) => (
+              <Card key={dayKey} className="gradient-card shadow-card">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm font-semibold text-center">
-                    {day}
+                    {t(`mealPlanning.days.${dayKey}`)}
                     <span className="block text-xs text-muted-foreground font-normal">
                       {format(addDays(currentWeekStart, dayIndex), "MMM d")}
                     </span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  {MEAL_TYPES.map((mealType) => (
+                  {MEAL_TYPE_KEYS.map((mealType) => (
                     <MealDropZone
                       key={mealType.id}
                       dayIndex={dayIndex}
-                      mealType={mealType}
+                      mealType={{ ...mealType, label: t(`mealPlanning.mealTypes.${mealType.key}`) }}
                       meals={getMealsForDayAndType(dayIndex, mealType.id)}
                       onAddMeal={openAddMealDialog}
                       onRemoveMeal={handleRemoveMeal}
