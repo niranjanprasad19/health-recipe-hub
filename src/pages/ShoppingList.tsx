@@ -428,7 +428,7 @@ const ShoppingList = () => {
                 <div className="flex items-center gap-2 text-sm text-muted-foreground bg-secondary/30 rounded-lg p-3">
                   <Calendar className="w-4 h-4 text-primary" />
                   <span>
-                    <strong>{mealPlanInfo.name}</strong> has {mealPlanInfo.itemCount} meals with recipes
+                    <strong>{mealPlanInfo.name}</strong> {t('shoppingList.hasMeals', { count: mealPlanInfo.itemCount })}
                   </span>
                 </div>
               )}
