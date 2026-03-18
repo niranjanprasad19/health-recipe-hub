@@ -249,7 +249,7 @@ const MealPlanning = () => {
 
   const handleAddMeal = async () => {
     if (!selectedRecipeId && !customMealName.trim()) {
-      toast.error("Please select a recipe or enter a custom meal name");
+      toast.error(t('mealPlanning.selectRecipeOrCustom'));
       return;
     }
 
