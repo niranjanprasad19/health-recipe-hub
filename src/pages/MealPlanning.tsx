@@ -479,7 +479,7 @@ const MealPlanning = () => {
                     }}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Choose a recipe..." />
+                      <SelectValue placeholder={t('mealPlanning.chooseRecipe')} />
                     </SelectTrigger>
                     <SelectContent>
                       {savedRecipes.map((recipe) => (
