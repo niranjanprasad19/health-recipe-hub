@@ -21,6 +21,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { format, startOfWeek } from "date-fns";
+import { useTranslation } from "react-i18next";
 import {
   Collapsible,
   CollapsibleContent,
@@ -80,6 +81,7 @@ const categorizeIngredient = (name: string): string => {
 const ShoppingList = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
+  const { t } = useTranslation();
   const [items, setItems] = useState<ShoppingListItem[]>([]);
   const [newItem, setNewItem] = useState("");
   const [newAmount, setNewAmount] = useState("");
@@ -219,13 +221,13 @@ const ShoppingList = () => {
       .maybeSingle();
 
     if (error) {
-      toast.error("Failed to fetch meal plan");
+      toast.error(t('shoppingList.failedToFetch'));
       setIsGenerating(false);
       return;
     }
 
     if (!mealPlan || !mealPlan.meal_plan_items.length) {
-      toast.error("No meals found for this week. Add some meals to your meal plan first!");
+      toast.error(t('shoppingList.noMealsFound'));
       setIsGenerating(false);
       return;
     }
@@ -250,7 +252,7 @@ const ShoppingList = () => {
     });
 
     if (ingredientMap.size === 0) {
-      toast.error("No ingredients found in your meal plan recipes");
+      toast.error(t('shoppingList.noIngredients'));
       setIsGenerating(false);
       return;
     }
@@ -268,7 +270,7 @@ const ShoppingList = () => {
       }));
 
     if (newItems.length === 0) {
-      toast.info("All ingredients are already in your list!");
+      toast.info(t('shoppingList.allInList'));
       setIsGenerating(false);
       return;
     }
@@ -278,10 +280,10 @@ const ShoppingList = () => {
       .insert(newItems);
 
     if (insertError) {
-      toast.error("Failed to add ingredients");
+      toast.error(t('shoppingList.failedToAddIngredients'));
       console.error(insertError);
     } else {
-      toast.success(`Added ${newItems.length} ingredients from your meal plan!`);
+      toast.success(t('shoppingList.addedIngredients', { count: newItems.length }));
       await fetchItems(currentListId);
     }
     setIsGenerating(false);
@@ -299,7 +301,7 @@ const ShoppingList = () => {
       });
 
     if (error) {
-      toast.error("Failed to add item");
+      toast.error(t('shoppingList.failedToAddItem'));
     } else {
       setNewItem("");
       setNewAmount("");
@@ -342,7 +344,7 @@ const ShoppingList = () => {
 
     if (!error) {
       setItems(items.filter(item => !item.checked));
-      toast.success("Cleared checked items");
+      toast.success(t('shoppingList.clearedChecked'));
     }
   };
 
@@ -356,7 +358,7 @@ const ShoppingList = () => {
 
     if (!error) {
       setItems([]);
-      toast.success("Cleared all items");
+      toast.success(t('shoppingList.clearedAll'));
     }
   };
 
@@ -411,10 +413,10 @@ const ShoppingList = () => {
         <div className="mb-8 text-center">
           <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mb-2 flex items-center justify-center gap-2 sm:gap-3">
             <ShoppingCart className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
-            Shopping List
+            {t('shoppingList.title')}
           </h1>
           <p className="text-muted-foreground text-sm sm:text-base">
-            Your grocery list for the week
+            {t('shoppingList.subtitle')}
           </p>
         </div>
 
@@ -426,7 +428,7 @@ const ShoppingList = () => {
                 <div className="flex items-center gap-2 text-sm text-muted-foreground bg-secondary/30 rounded-lg p-3">
                   <Calendar className="w-4 h-4 text-primary" />
                   <span>
-                    <strong>{mealPlanInfo.name}</strong> has {mealPlanInfo.itemCount} meals with recipes
+                    <strong>{mealPlanInfo.name}</strong> {t('shoppingList.hasMeals', { count: mealPlanInfo.itemCount })}
                   </span>
                 </div>
               )}
@@ -441,17 +443,17 @@ const ShoppingList = () => {
                   ) : (
                     <Calendar className="w-4 h-4 mr-2" />
                   )}
-                  {isGenerating ? "Generating..." : "Generate from Meal Plan"}
+                  {isGenerating ? t('shoppingList.generating') : t('shoppingList.generateFromMealPlan')}
                 </Button>
                 <Link to="/meal-planning" className="flex-1">
                   <Button variant="outline" className="w-full">
-                    View Meal Plan
+                    {t('shoppingList.viewMealPlan')}
                   </Button>
                 </Link>
               </div>
               {!mealPlanInfo && (
                 <p className="text-sm text-muted-foreground text-center">
-                  No meal plan found for this week. <Link to="/meal-planning" className="text-primary hover:underline">Create one</Link> to auto-generate your shopping list!
+                  {t('shoppingList.noMealPlan')} <Link to="/meal-planning" className="text-primary hover:underline">{t('shoppingList.createOne')}</Link> {t('shoppingList.autoGenerateHint')}
                 </p>
               )}
             </div>
@@ -463,14 +465,14 @@ const ShoppingList = () => {
           <CardContent className="pt-6">
             <div className="flex gap-2">
               <Input
-                placeholder="Item name..."
+                placeholder={t('shoppingList.itemName')}
                 value={newItem}
                 onChange={(e) => setNewItem(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addItem()}
                 className="flex-1"
               />
               <Input
-                placeholder="Amount"
+                placeholder={t('shoppingList.amount')}
                 value={newAmount}
                 onChange={(e) => setNewAmount(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addItem()}
@@ -488,17 +490,17 @@ const ShoppingList = () => {
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="text-lg flex items-center gap-2">
               <Package className="w-5 h-5 text-primary" />
-              Items ({uncheckedItems.length})
+              {t('shoppingList.items')} ({uncheckedItems.length})
             </CardTitle>
             <div className="flex gap-2">
               {checkedItems.length > 0 && (
                 <Button variant="ghost" size="sm" onClick={clearChecked}>
-                  Clear checked ({checkedItems.length})
+                  {t('shoppingList.clearChecked')} ({checkedItems.length})
                 </Button>
               )}
               {items.length > 0 && (
                 <Button variant="ghost" size="sm" onClick={clearAll}>
-                  Clear all
+                  {t('shoppingList.clearAll')}
                 </Button>
               )}
             </div>
@@ -508,10 +510,10 @@ const ShoppingList = () => {
               <div className="text-center py-12">
                 <ShoppingCart className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
                 <p className="text-muted-foreground mb-2">
-                  No items yet
+                  {t('shoppingList.noItems')}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Add items manually or generate from your meal plan!
+                  {t('shoppingList.addItemsHint')}
                 </p>
               </div>
             ) : (
@@ -578,7 +580,7 @@ const ShoppingList = () => {
                         <div className="flex items-center gap-2 cursor-pointer text-muted-foreground hover:text-foreground transition-colors">
                           <ChevronDown className="w-4 h-4" />
                           <span className="text-sm font-medium">
-                            Checked items ({checkedItems.length})
+                            {t('shoppingList.checkedItems')} ({checkedItems.length})
                           </span>
                         </div>
                       </CollapsibleTrigger>

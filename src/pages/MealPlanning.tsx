@@ -20,6 +20,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { format, startOfWeek, addDays, addWeeks, subWeeks } from "date-fns";
+import { useTranslation } from "react-i18next";
 import {
   DndContext,
   DragEndEvent,
@@ -69,17 +70,18 @@ interface MealPlan {
   meal_plan_items: MealPlanItem[];
 }
 
-const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const MEAL_TYPES = [
-  { id: "breakfast", label: "Breakfast", icon: Coffee },
-  { id: "lunch", label: "Lunch", icon: Sun },
-  { id: "dinner", label: "Dinner", icon: Moon },
-  { id: "snack", label: "Snack", icon: Cookie },
+const DAY_KEYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+const MEAL_TYPE_KEYS = [
+  { id: "breakfast", key: "breakfast", icon: Coffee },
+  { id: "lunch", key: "lunch", icon: Sun },
+  { id: "dinner", key: "dinner", icon: Moon },
+  { id: "snack", key: "snack", icon: Cookie },
 ];
 
 const MealPlanning = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
+  const { t } = useTranslation();
   const [currentWeekStart, setCurrentWeekStart] = useState(startOfWeek(new Date()));
   const [mealPlan, setMealPlan] = useState<MealPlan | null>(null);
   const [savedRecipes, setSavedRecipes] = useState<SavedRecipe[]>([]);
@@ -247,7 +249,7 @@ const MealPlanning = () => {
 
   const handleAddMeal = async () => {
     if (!selectedRecipeId && !customMealName.trim()) {
-      toast.error("Please select a recipe or enter a custom meal name");
+      toast.error(t('mealPlanning.selectRecipeOrCustom'));
       return;
     }
 
@@ -256,7 +258,7 @@ const MealPlanning = () => {
     try {
       const planId = await createOrGetMealPlan();
       if (!planId) {
-        toast.error("Failed to create meal plan");
+        toast.error(t('mealPlanning.failedToCreate'));
         return;
       }
 
@@ -269,10 +271,10 @@ const MealPlanning = () => {
       });
 
       if (error) {
-        toast.error("Failed to add meal");
+        toast.error(t('mealPlanning.failedToAdd'));
         console.error(error);
       } else {
-        toast.success("Meal added!");
+        toast.success(t('mealPlanning.mealAdded'));
         setDialogOpen(false);
         setSelectedRecipeId("");
         setCustomMealName("");
@@ -287,9 +289,9 @@ const MealPlanning = () => {
     const { error } = await supabase.from("meal_plan_items").delete().eq("id", itemId);
 
     if (error) {
-      toast.error("Failed to remove meal");
+      toast.error(t('mealPlanning.failedToRemove'));
     } else {
-      toast.success("Meal removed");
+      toast.success(t('mealPlanning.mealRemoved'));
       fetchMealPlan();
     }
   };
@@ -354,10 +356,10 @@ const MealPlanning = () => {
         .eq("id", activeId);
 
       if (error) {
-        toast.error("Failed to move meal");
-        fetchMealPlan(); // Revert on error
+        toast.error(t('mealPlanning.failedToMove'));
+        fetchMealPlan();
       } else {
-        toast.success("Meal moved!");
+        toast.success(t('mealPlanning.mealMoved'));
       }
     }
   };
@@ -382,10 +384,10 @@ const MealPlanning = () => {
         <div className="mb-8 text-center">
           <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mb-2 flex items-center justify-center gap-2 sm:gap-3">
             <Calendar className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
-            Meal Planning
+            {t('mealPlanning.title')}
           </h1>
           <p className="text-muted-foreground text-sm sm:text-base">
-            Plan your meals for the week ahead
+            {t('mealPlanning.subtitle')}
           </p>
         </div>
 
@@ -420,22 +422,22 @@ const MealPlanning = () => {
           onDragEnd={handleDragEnd}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4">
-            {DAYS.map((day, dayIndex) => (
-              <Card key={day} className="gradient-card shadow-card">
+            {DAY_KEYS.map((dayKey, dayIndex) => (
+              <Card key={dayKey} className="gradient-card shadow-card">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm font-semibold text-center">
-                    {day}
+                    {t(`mealPlanning.days.${dayKey}`)}
                     <span className="block text-xs text-muted-foreground font-normal">
                       {format(addDays(currentWeekStart, dayIndex), "MMM d")}
                     </span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  {MEAL_TYPES.map((mealType) => (
+                  {MEAL_TYPE_KEYS.map((mealType) => (
                     <MealDropZone
                       key={mealType.id}
                       dayIndex={dayIndex}
-                      mealType={mealType}
+                      mealType={{ ...mealType, label: t(`mealPlanning.mealTypes.${mealType.key}`) }}
                       meals={getMealsForDayAndType(dayIndex, mealType.id)}
                       onAddMeal={openAddMealDialog}
                       onRemoveMeal={handleRemoveMeal}
@@ -460,14 +462,14 @@ const MealPlanning = () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>
-                Add {MEAL_TYPES.find((m) => m.id === selectedMealType)?.label} for {DAYS[selectedDay]}
+                {t('mealPlanning.addMealFor', { mealType: t(`mealPlanning.mealTypes.${MEAL_TYPE_KEYS.find((m) => m.id === selectedMealType)?.key || 'breakfast'}`), day: t(`mealPlanning.days.${DAY_KEYS[selectedDay]}`) })}
               </DialogTitle>
             </DialogHeader>
             <div className="space-y-4 pt-4">
               {savedRecipes.length > 0 && (
                 <div>
                   <label className="text-sm font-medium mb-2 block">
-                    Select a saved recipe
+                    {t('mealPlanning.selectRecipe')}
                   </label>
                   <Select
                     value={selectedRecipeId}
@@ -477,7 +479,7 @@ const MealPlanning = () => {
                     }}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Choose a recipe..." />
+                      <SelectValue placeholder={t('mealPlanning.chooseRecipe')} />
                     </SelectTrigger>
                     <SelectContent>
                       {savedRecipes.map((recipe) => (
@@ -494,15 +496,15 @@ const MealPlanning = () => {
                   <span className="w-full border-t" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">Or</span>
+                  <span className="bg-background px-2 text-muted-foreground">{t('mealPlanning.or')}</span>
                 </div>
               </div>
               <div>
                 <label className="text-sm font-medium mb-2 block">
-                  Enter a custom meal
+                  {t('mealPlanning.enterCustomMeal')}
                 </label>
                 <Input
-                  placeholder="e.g., Grilled salmon with veggies"
+                  placeholder={t('mealPlanning.customMealPlaceholder')}
                   value={customMealName}
                   onChange={(e) => {
                     setCustomMealName(e.target.value);
@@ -518,10 +520,10 @@ const MealPlanning = () => {
                 {isAddingMeal ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Adding...
+                    {t('mealPlanning.adding')}
                   </>
                 ) : (
-                  "Add Meal"
+                  t('mealPlanning.addMeal')
                 )}
               </Button>
             </div>
@@ -533,11 +535,11 @@ const MealPlanning = () => {
           <Link to="/preferences">
             <Button className="gradient-primary text-primary-foreground shadow-soft w-full sm:w-auto">
               <UtensilsCrossed className="w-4 h-4 mr-2" />
-              Generate New Recipe
+              {t('mealPlanning.generateNewRecipe')}
             </Button>
           </Link>
           <Link to="/profile">
-            <Button variant="outline" className="w-full sm:w-auto">View Saved Recipes</Button>
+            <Button variant="outline" className="w-full sm:w-auto">{t('mealPlanning.viewSavedRecipes')}</Button>
           </Link>
         </div>
       </main>

@@ -14,6 +14,7 @@ import {
 import { Header } from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { useTranslation } from "react-i18next";
 
 interface Recipe {
   id: string;
@@ -30,6 +31,7 @@ interface Recipe {
 const RecipeSearch = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -110,10 +112,10 @@ const RecipeSearch = () => {
         <div className="mb-8 text-center">
           <h1 className="font-heading text-3xl font-bold text-foreground mb-2 flex items-center justify-center gap-3">
             <Search className="w-8 h-8 text-primary" />
-            Recipe Search
+            {t('recipeSearch.title')}
           </h1>
           <p className="text-muted-foreground">
-            Search through your saved recipes
+            {t('recipeSearch.subtitle')}
           </p>
         </div>
 
@@ -121,7 +123,7 @@ const RecipeSearch = () => {
         <form onSubmit={handleSearch} className="mb-8">
           <div className="flex gap-2 max-w-xl mx-auto">
             <Input
-              placeholder="Search by title, cuisine, or tags..."
+              placeholder={t('recipeSearch.placeholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="text-lg"
@@ -141,12 +143,12 @@ const RecipeSearch = () => {
           <div className="text-center py-12">
             <p className="text-muted-foreground mb-4">
               {hasSearched && searchQuery 
-                ? "No recipes found matching your search" 
-                : "No saved recipes yet"}
+                ? t('recipeSearch.noResults') 
+                : t('recipeSearch.noRecipes')}
             </p>
             <Link to="/preferences">
               <Button className="gradient-primary text-primary-foreground">
-                Generate Your First Recipe
+                {t('recipeSearch.generateFirst')}
               </Button>
             </Link>
           </div>
