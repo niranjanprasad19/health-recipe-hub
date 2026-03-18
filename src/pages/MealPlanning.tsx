@@ -501,10 +501,10 @@ const MealPlanning = () => {
               </div>
               <div>
                 <label className="text-sm font-medium mb-2 block">
-                  Enter a custom meal
+                  {t('mealPlanning.enterCustomMeal')}
                 </label>
                 <Input
-                  placeholder="e.g., Grilled salmon with veggies"
+                  placeholder={t('mealPlanning.customMealPlaceholder')}
                   value={customMealName}
                   onChange={(e) => {
                     setCustomMealName(e.target.value);
