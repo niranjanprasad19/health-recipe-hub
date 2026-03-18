@@ -252,7 +252,7 @@ const ShoppingList = () => {
     });
 
     if (ingredientMap.size === 0) {
-      toast.error("No ingredients found in your meal plan recipes");
+      toast.error(t('shoppingList.noIngredients'));
       setIsGenerating(false);
       return;
     }
