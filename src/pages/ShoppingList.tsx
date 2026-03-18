@@ -81,6 +81,7 @@ const categorizeIngredient = (name: string): string => {
 const ShoppingList = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
+  const { t } = useTranslation();
   const [items, setItems] = useState<ShoppingListItem[]>([]);
   const [newItem, setNewItem] = useState("");
   const [newAmount, setNewAmount] = useState("");
