@@ -443,7 +443,7 @@ const ShoppingList = () => {
                   ) : (
                     <Calendar className="w-4 h-4 mr-2" />
                   )}
-                  {isGenerating ? "Generating..." : "Generate from Meal Plan"}
+                  {isGenerating ? t('shoppingList.generating') : t('shoppingList.generateFromMealPlan')}
                 </Button>
                 <Link to="/meal-planning" className="flex-1">
                   <Button variant="outline" className="w-full">
