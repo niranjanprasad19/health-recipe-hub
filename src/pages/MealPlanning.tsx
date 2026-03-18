@@ -535,11 +535,11 @@ const MealPlanning = () => {
           <Link to="/preferences">
             <Button className="gradient-primary text-primary-foreground shadow-soft w-full sm:w-auto">
               <UtensilsCrossed className="w-4 h-4 mr-2" />
-              Generate New Recipe
+              {t('mealPlanning.generateNewRecipe')}
             </Button>
           </Link>
           <Link to="/profile">
-            <Button variant="outline" className="w-full sm:w-auto">View Saved Recipes</Button>
+            <Button variant="outline" className="w-full sm:w-auto">{t('mealPlanning.viewSavedRecipes')}</Button>
           </Link>
         </div>
       </main>
