@@ -453,7 +453,7 @@ const ShoppingList = () => {
               </div>
               {!mealPlanInfo && (
                 <p className="text-sm text-muted-foreground text-center">
-                  No meal plan found for this week. <Link to="/meal-planning" className="text-primary hover:underline">Create one</Link> to auto-generate your shopping list!
+                  {t('shoppingList.noMealPlan')} <Link to="/meal-planning" className="text-primary hover:underline">{t('shoppingList.createOne')}</Link> {t('shoppingList.autoGenerateHint')}
                 </p>
               )}
             </div>
