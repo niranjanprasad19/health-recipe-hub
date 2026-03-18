@@ -289,9 +289,9 @@ const MealPlanning = () => {
     const { error } = await supabase.from("meal_plan_items").delete().eq("id", itemId);
 
     if (error) {
-      toast.error("Failed to remove meal");
+      toast.error(t('mealPlanning.failedToRemove'));
     } else {
-      toast.success("Meal removed");
+      toast.success(t('mealPlanning.mealRemoved'));
       fetchMealPlan();
     }
   };
