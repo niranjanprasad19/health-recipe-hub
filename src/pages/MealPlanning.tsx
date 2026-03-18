@@ -70,12 +70,12 @@ interface MealPlan {
   meal_plan_items: MealPlanItem[];
 }
 
-const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const MEAL_TYPES = [
-  { id: "breakfast", label: "Breakfast", icon: Coffee },
-  { id: "lunch", label: "Lunch", icon: Sun },
-  { id: "dinner", label: "Dinner", icon: Moon },
-  { id: "snack", label: "Snack", icon: Cookie },
+const DAY_KEYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+const MEAL_TYPE_KEYS = [
+  { id: "breakfast", key: "breakfast", icon: Coffee },
+  { id: "lunch", key: "lunch", icon: Sun },
+  { id: "dinner", key: "dinner", icon: Moon },
+  { id: "snack", key: "snack", icon: Cookie },
 ];
 
 const MealPlanning = () => {
