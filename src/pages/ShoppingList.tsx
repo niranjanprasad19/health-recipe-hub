@@ -227,7 +227,7 @@ const ShoppingList = () => {
     }
 
     if (!mealPlan || !mealPlan.meal_plan_items.length) {
-      toast.error("No meals found for this week. Add some meals to your meal plan first!");
+      toast.error(t('shoppingList.noMealsFound'));
       setIsGenerating(false);
       return;
     }
