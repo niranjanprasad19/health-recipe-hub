@@ -356,10 +356,10 @@ const MealPlanning = () => {
         .eq("id", activeId);
 
       if (error) {
-        toast.error("Failed to move meal");
-        fetchMealPlan(); // Revert on error
+        toast.error(t('mealPlanning.failedToMove'));
+        fetchMealPlan();
       } else {
-        toast.success("Meal moved!");
+        toast.success(t('mealPlanning.mealMoved'));
       }
     }
   };
