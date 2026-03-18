@@ -413,10 +413,10 @@ const ShoppingList = () => {
         <div className="mb-8 text-center">
           <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mb-2 flex items-center justify-center gap-2 sm:gap-3">
             <ShoppingCart className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
-            Shopping List
+            {t('shoppingList.title')}
           </h1>
           <p className="text-muted-foreground text-sm sm:text-base">
-            Your grocery list for the week
+            {t('shoppingList.subtitle')}
           </p>
         </div>
 
