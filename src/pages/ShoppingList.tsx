@@ -580,7 +580,7 @@ const ShoppingList = () => {
                         <div className="flex items-center gap-2 cursor-pointer text-muted-foreground hover:text-foreground transition-colors">
                           <ChevronDown className="w-4 h-4" />
                           <span className="text-sm font-medium">
-                            Checked items ({checkedItems.length})
+                            {t('shoppingList.checkedItems')} ({checkedItems.length})
                           </span>
                         </div>
                       </CollapsibleTrigger>
