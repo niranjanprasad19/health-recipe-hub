@@ -148,7 +148,7 @@ const RecipeSearch = () => {
             </p>
             <Link to="/preferences">
               <Button className="gradient-primary text-primary-foreground">
-                Generate Your First Recipe
+                {t('recipeSearch.generateFirst')}
               </Button>
             </Link>
           </div>
