@@ -221,7 +221,7 @@ const ShoppingList = () => {
       .maybeSingle();
 
     if (error) {
-      toast.error("Failed to fetch meal plan");
+      toast.error(t('shoppingList.failedToFetch'));
       setIsGenerating(false);
       return;
     }
