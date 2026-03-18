@@ -500,7 +500,7 @@ const ShoppingList = () => {
               )}
               {items.length > 0 && (
                 <Button variant="ghost" size="sm" onClick={clearAll}>
-                  Clear all
+                  {t('shoppingList.clearAll')}
                 </Button>
               )}
             </div>
