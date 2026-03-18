@@ -258,7 +258,7 @@ const MealPlanning = () => {
     try {
       const planId = await createOrGetMealPlan();
       if (!planId) {
-        toast.error("Failed to create meal plan");
+        toast.error(t('mealPlanning.failedToCreate'));
         return;
       }
 
