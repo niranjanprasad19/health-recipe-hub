@@ -20,6 +20,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { format, startOfWeek, addDays, addWeeks, subWeeks } from "date-fns";
+import { useTranslation } from "react-i18next";
 import {
   DndContext,
   DragEndEvent,
