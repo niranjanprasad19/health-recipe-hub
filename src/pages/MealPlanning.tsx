@@ -469,7 +469,7 @@ const MealPlanning = () => {
               {savedRecipes.length > 0 && (
                 <div>
                   <label className="text-sm font-medium mb-2 block">
-                    Select a saved recipe
+                    {t('mealPlanning.selectRecipe')}
                   </label>
                   <Select
                     value={selectedRecipeId}
