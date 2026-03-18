@@ -123,7 +123,7 @@ const RecipeSearch = () => {
         <form onSubmit={handleSearch} className="mb-8">
           <div className="flex gap-2 max-w-xl mx-auto">
             <Input
-              placeholder="Search by title, cuisine, or tags..."
+              placeholder={t('recipeSearch.placeholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="text-lg"
