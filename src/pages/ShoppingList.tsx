@@ -270,7 +270,7 @@ const ShoppingList = () => {
       }));
 
     if (newItems.length === 0) {
-      toast.info("All ingredients are already in your list!");
+      toast.info(t('shoppingList.allInList'));
       setIsGenerating(false);
       return;
     }
