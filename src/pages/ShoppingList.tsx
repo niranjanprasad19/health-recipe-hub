@@ -358,7 +358,7 @@ const ShoppingList = () => {
 
     if (!error) {
       setItems([]);
-      toast.success("Cleared all items");
+      toast.success(t('shoppingList.clearedAll'));
     }
   };
 
