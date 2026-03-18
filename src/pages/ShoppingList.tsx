@@ -465,7 +465,7 @@ const ShoppingList = () => {
           <CardContent className="pt-6">
             <div className="flex gap-2">
               <Input
-                placeholder="Item name..."
+                placeholder={t('shoppingList.itemName')}
                 value={newItem}
                 onChange={(e) => setNewItem(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addItem()}
