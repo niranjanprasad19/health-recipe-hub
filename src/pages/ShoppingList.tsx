@@ -472,7 +472,7 @@ const ShoppingList = () => {
                 className="flex-1"
               />
               <Input
-                placeholder="Amount"
+                placeholder={t('shoppingList.amount')}
                 value={newAmount}
                 onChange={(e) => setNewAmount(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addItem()}
