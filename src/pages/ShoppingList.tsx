@@ -490,7 +490,7 @@ const ShoppingList = () => {
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="text-lg flex items-center gap-2">
               <Package className="w-5 h-5 text-primary" />
-              Items ({uncheckedItems.length})
+              {t('shoppingList.items')} ({uncheckedItems.length})
             </CardTitle>
             <div className="flex gap-2">
               {checkedItems.length > 0 && (
