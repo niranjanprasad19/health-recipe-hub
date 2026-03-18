@@ -447,7 +447,7 @@ const ShoppingList = () => {
                 </Button>
                 <Link to="/meal-planning" className="flex-1">
                   <Button variant="outline" className="w-full">
-                    View Meal Plan
+                    {t('shoppingList.viewMealPlan')}
                   </Button>
                 </Link>
               </div>
