@@ -301,7 +301,7 @@ const ShoppingList = () => {
       });
 
     if (error) {
-      toast.error("Failed to add item");
+      toast.error(t('shoppingList.failedToAddItem'));
     } else {
       setNewItem("");
       setNewAmount("");
