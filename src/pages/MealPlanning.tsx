@@ -384,10 +384,10 @@ const MealPlanning = () => {
         <div className="mb-8 text-center">
           <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mb-2 flex items-center justify-center gap-2 sm:gap-3">
             <Calendar className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
-            Meal Planning
+            {t('mealPlanning.title')}
           </h1>
           <p className="text-muted-foreground text-sm sm:text-base">
-            Plan your meals for the week ahead
+            {t('mealPlanning.subtitle')}
           </p>
         </div>
 
