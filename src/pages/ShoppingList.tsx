@@ -510,10 +510,10 @@ const ShoppingList = () => {
               <div className="text-center py-12">
                 <ShoppingCart className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
                 <p className="text-muted-foreground mb-2">
-                  No items yet
+                  {t('shoppingList.noItems')}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Add items manually or generate from your meal plan!
+                  {t('shoppingList.addItemsHint')}
                 </p>
               </div>
             ) : (
