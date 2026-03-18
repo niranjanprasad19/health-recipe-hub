@@ -271,10 +271,10 @@ const MealPlanning = () => {
       });
 
       if (error) {
-        toast.error("Failed to add meal");
+        toast.error(t('mealPlanning.failedToAdd'));
         console.error(error);
       } else {
-        toast.success("Meal added!");
+        toast.success(t('mealPlanning.mealAdded'));
         setDialogOpen(false);
         setSelectedRecipeId("");
         setCustomMealName("");
