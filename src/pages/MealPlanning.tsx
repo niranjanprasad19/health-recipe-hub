@@ -81,6 +81,7 @@ const MEAL_TYPE_KEYS = [
 const MealPlanning = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
+  const { t } = useTranslation();
   const [currentWeekStart, setCurrentWeekStart] = useState(startOfWeek(new Date()));
   const [mealPlan, setMealPlan] = useState<MealPlan | null>(null);
   const [savedRecipes, setSavedRecipes] = useState<SavedRecipe[]>([]);
