@@ -495,7 +495,7 @@ const ShoppingList = () => {
             <div className="flex gap-2">
               {checkedItems.length > 0 && (
                 <Button variant="ghost" size="sm" onClick={clearChecked}>
-                  Clear checked ({checkedItems.length})
+                  {t('shoppingList.clearChecked')} ({checkedItems.length})
                 </Button>
               )}
               {items.length > 0 && (
