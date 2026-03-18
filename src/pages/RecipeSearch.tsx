@@ -143,8 +143,8 @@ const RecipeSearch = () => {
           <div className="text-center py-12">
             <p className="text-muted-foreground mb-4">
               {hasSearched && searchQuery 
-                ? "No recipes found matching your search" 
-                : "No saved recipes yet"}
+                ? t('recipeSearch.noResults') 
+                : t('recipeSearch.noRecipes')}
             </p>
             <Link to="/preferences">
               <Button className="gradient-primary text-primary-foreground">
