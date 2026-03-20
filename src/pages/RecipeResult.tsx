@@ -115,11 +115,9 @@ const RecipeResult = () => {
         className={isSaved ? "bg-success text-success-foreground" : "gradient-primary text-primary-foreground"}>
         {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : isSaved ? <BookmarkCheck className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}
       </Button>
-      {isSaved && (
-        <Button variant="outline" size="icon" onClick={handleShare}>
-          {copied ? <CheckCircle className="w-4 h-4 text-success" /> : <Share2 className="w-4 h-4" />}
-        </Button>
-      )}
+      <Button variant="outline" size="icon" onClick={handleShare}>
+        {copied ? <CheckCircle className="w-4 h-4 text-success" /> : <Share2 className="w-4 h-4" />}
+      </Button>
     </div>
   );
 
