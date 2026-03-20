@@ -14,8 +14,14 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Header } from "@/components/Header";
 
+const formatRecipeText = (recipe: Recipe): string => {
+  const ingredients = recipe.ingredients.map(i => `• ${i.amount} ${i.item}${i.notes ? ` (${i.notes})` : ''}`).join('\n');
+  const steps = recipe.instructions.map(s => `${s.step}. ${s.instruction}${s.tip ? ` (Tip: ${s.tip})` : ''}`).join('\n');
+  return `${recipe.title}\n\n${recipe.description}\n\n🥗 Ingredients:\n${ingredients}\n\n👨‍🍳 Instructions:\n${steps}\n\n📊 Nutrition: ${recipe.nutritionInfo.calories} cal | ${recipe.nutritionInfo.protein} protein | ${recipe.nutritionInfo.carbs} carbs | ${recipe.nutritionInfo.fat} fat`;
+};
+
 const RecipeResult = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth();
@@ -42,7 +48,8 @@ const RecipeResult = () => {
     if (!formData) return;
     setIsLoading(true); setError(null);
     try {
-      const response = await supabase.functions.invoke("generate-recipe", { body: { formData } });
+      const currentLang = i18n.language || "en";
+      const response = await supabase.functions.invoke("generate-recipe", { body: { formData, language: currentLang } });
       if (response.error) throw new Error(response.error.message);
       if (response.data?.error) throw new Error(response.data.error);
       setRecipe(response.data.recipe);
@@ -80,25 +87,25 @@ const RecipeResult = () => {
   };
 
   const handleShare = async () => {
-    if (!savedRecipeId) { toast({ title: t('recipe.saveFirst'), description: t('recipe.saveBeforeSharing') }); return; }
-    setIsSharing(true);
-    try {
-      let token = shareToken;
-      if (!token) {
-        token = crypto.randomUUID().replace(/-/g, '').slice(0, 12);
-        const { error } = await supabase.from("saved_recipes").update({ share_token: token }).eq("id", savedRecipeId);
-        if (error) throw error;
-        setShareToken(token);
+    if (!recipe) return;
+    const recipeText = formatRecipeText(recipe);
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: recipe.title, text: recipeText });
+      } catch (err) {
+        if ((err as Error).name !== 'AbortError') {
+          await navigator.clipboard.writeText(recipeText);
+          setCopied(true);
+          toast({ title: t('recipe.linkCopied'), description: t('recipe.recipeCopied') });
+          setTimeout(() => setCopied(false), 2000);
+        }
       }
-      const shareUrl = `${window.location.origin}/shared/${token}`;
-      await navigator.clipboard.writeText(shareUrl);
+    } else {
+      await navigator.clipboard.writeText(recipeText);
       setCopied(true);
-      toast({ title: t('recipe.linkCopied'), description: t('recipe.shareWithAnyone') });
+      toast({ title: t('recipe.linkCopied'), description: t('recipe.recipeCopied') });
       setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Error sharing recipe:", err);
-      toast({ title: t('recipe.failedToShare'), description: t('recipe.pleaseTryAgain'), variant: "destructive" });
-    } finally { setIsSharing(false); }
+    }
   };
 
   const recipeActions = (
@@ -108,11 +115,9 @@ const RecipeResult = () => {
         className={isSaved ? "bg-success text-success-foreground" : "gradient-primary text-primary-foreground"}>
         {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : isSaved ? <BookmarkCheck className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}
       </Button>
-      {isSaved && (
-        <Button variant="outline" size="icon" onClick={handleShare}>
-          {copied ? <CheckCircle className="w-4 h-4 text-success" /> : <Share2 className="w-4 h-4" />}
-        </Button>
-      )}
+      <Button variant="outline" size="icon" onClick={handleShare}>
+        {copied ? <CheckCircle className="w-4 h-4 text-success" /> : <Share2 className="w-4 h-4" />}
+      </Button>
     </div>
   );
 

@@ -27,6 +27,7 @@ const RecipeFormSchema = z.object({
     indianMealType: z.string().max(50).optional().default(""),
     indianDietaryStyles: z.array(z.string().max(100)).max(5).optional().default([]),
   }),
+  language: z.string().max(20).optional().default("en"),
 });
 
 // Sanitize strings to prevent prompt injection
@@ -110,6 +111,8 @@ serve(async (req) => {
       indianDietaryStyles: sanitizeArray(parsed.data.formData.indianDietaryStyles || []),
     };
 
+    const language = sanitizeString(parsed.data.language || "en");
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
@@ -121,9 +124,16 @@ serve(async (req) => {
 
     const isIndian = formData.cuisines.includes("indian") || formData.indianRegion.length > 0;
 
+    const languageMap: Record<string, string> = {
+      en: "English", hi: "Hindi", bn: "Bengali", te: "Telugu", mr: "Marathi",
+      ta: "Tamil", gu: "Gujarati", kn: "Kannada", ml: "Malayalam", pa: "Punjabi", or: "Odia",
+    };
+    const outputLanguage = languageMap[language] || "English";
+
     const systemPrompt = `You are a professional nutritionist and chef who creates personalized, healthy recipes. 
 Generate a complete, detailed recipe based on the user's preferences, dietary restrictions, and health goals.
 Always provide accurate nutritional information and clear cooking instructions.
+${language !== "en" ? `IMPORTANT: Generate ALL text content (title, description, ingredient names, instructions, tips, tags, health benefits) in ${outputLanguage} language. Use ${outputLanguage} script. Only keep measurement units and nutritional values in English/numbers.` : ""}
 ${isIndian ? "When Indian cuisine is selected, use authentic Indian cooking techniques, traditional spice combinations (tadka, tempering, etc.), and regional specialties. Ensure the recipe reflects the specific regional cuisine if provided (e.g., South Indian uses coconut and curry leaves, Punjabi uses ghee and cream, Bengali uses mustard oil and panch phoron)." : ""}`;
 
     const userPrompt = `Create a personalized healthy recipe based on these preferences:
