@@ -62,7 +62,8 @@ const QuickRecipe = () => {
     };
     
     try {
-      const response = await supabase.functions.invoke("generate-recipe", { body: { formData } });
+      const currentLang = i18n.language || "en";
+      const response = await supabase.functions.invoke("generate-recipe", { body: { formData, language: currentLang } });
       if (response.error) throw new Error(response.error.message);
       if (response.data?.error) throw new Error(response.data.error);
       setRecipe(response.data.recipe);
