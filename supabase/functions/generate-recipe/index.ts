@@ -111,6 +111,8 @@ serve(async (req) => {
       indianDietaryStyles: sanitizeArray(parsed.data.formData.indianDietaryStyles || []),
     };
 
+    const language = sanitizeString(parsed.data.language || "en");
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
