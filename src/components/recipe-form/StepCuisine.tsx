@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { HelpCircle, Globe } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { HelpCircle, Globe, Search, Plus } from "lucide-react";
 import { cuisines } from "@/data/formOptions";
 
 interface StepCuisineProps {
@@ -9,6 +11,8 @@ interface StepCuisineProps {
 }
 
 const StepCuisine = ({ selectedCuisines, onCuisinesChange }: StepCuisineProps) => {
+  const [search, setSearch] = useState("");
+
   const toggleCuisine = (id: string) => {
     if (selectedCuisines.includes(id)) {
       onCuisinesChange(selectedCuisines.filter((c) => c !== id));
@@ -16,6 +20,38 @@ const StepCuisine = ({ selectedCuisines, onCuisinesChange }: StepCuisineProps) =
       onCuisinesChange([...selectedCuisines, id]);
     }
   };
+
+  const filteredCuisines = cuisines.filter((c) =>
+    c.label.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const isCustomEntry =
+    search.trim() !== "" &&
+    !cuisines.some((c) => c.label.toLowerCase() === search.trim().toLowerCase()) &&
+    !selectedCuisines.some((s) => s.toLowerCase() === search.trim().toLowerCase());
+
+  const handleAddCustom = () => {
+    if (isCustomEntry) {
+      onCuisinesChange([...selectedCuisines, search.trim().toLowerCase()]);
+      setSearch("");
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (isCustomEntry) handleAddCustom();
+      else if (filteredCuisines.length === 1) {
+        toggleCuisine(filteredCuisines[0].id);
+        setSearch("");
+      }
+    }
+  };
+
+  // Custom-added cuisines not in predefined list
+  const customCuisines = selectedCuisines.filter(
+    (id) => !cuisines.some((c) => c.id === id)
+  );
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -37,9 +73,30 @@ const StepCuisine = ({ selectedCuisines, onCuisinesChange }: StepCuisineProps) =
             What type of cuisines do you enjoy cooking and eating?
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Search or type to add custom cuisine..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className="pl-9 pr-3"
+            />
+          </div>
+
+          {isCustomEntry && (
+            <button
+              onClick={handleAddCustom}
+              className="flex items-center gap-2 w-full p-3 rounded-lg border border-dashed border-primary/50 bg-primary/5 text-sm font-medium text-primary hover:bg-primary/10 transition-colors"
+            >
+              <Plus className="w-4 h-4" />
+              Add "{search.trim()}"
+            </button>
+          )}
+
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            {cuisines.map((cuisine) => (
+            {filteredCuisines.map((cuisine) => (
               <button
                 key={cuisine.id}
                 onClick={() => toggleCuisine(cuisine.id)}
@@ -57,7 +114,20 @@ const StepCuisine = ({ selectedCuisines, onCuisinesChange }: StepCuisineProps) =
                 </span>
               </button>
             ))}
+            {customCuisines.map((id) => (
+              <button
+                key={id}
+                onClick={() => toggleCuisine(id)}
+                className="p-4 rounded-xl border border-primary bg-primary/10 shadow-soft text-center transition-all duration-200"
+              >
+                <span className="text-2xl mb-2 block">🍴</span>
+                <span className="text-sm font-medium text-primary capitalize">{id}</span>
+              </button>
+            ))}
           </div>
+          {search && filteredCuisines.length === 0 && !isCustomEntry && (
+            <p className="text-sm text-muted-foreground text-center">No matches found</p>
+          )}
         </CardContent>
       </Card>
 
