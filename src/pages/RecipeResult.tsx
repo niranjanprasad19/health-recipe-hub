@@ -21,7 +21,7 @@ const formatRecipeText = (recipe: Recipe): string => {
 };
 
 const RecipeResult = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth();
