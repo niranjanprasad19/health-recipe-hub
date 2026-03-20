@@ -14,6 +14,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Header } from "@/components/Header";
 
+const formatRecipeText = (recipe: Recipe): string => {
+  const ingredients = recipe.ingredients.map(i => `• ${i.amount} ${i.item}${i.notes ? ` (${i.notes})` : ''}`).join('\n');
+  const steps = recipe.instructions.map(s => `${s.step}. ${s.instruction}${s.tip ? ` (Tip: ${s.tip})` : ''}`).join('\n');
+  return `${recipe.title}\n\n${recipe.description}\n\n🥗 Ingredients:\n${ingredients}\n\n👨‍🍳 Instructions:\n${steps}\n\n📊 Nutrition: ${recipe.nutritionInfo.calories} cal | ${recipe.nutritionInfo.protein} protein | ${recipe.nutritionInfo.carbs} carbs | ${recipe.nutritionInfo.fat} fat`;
+};
+
 const RecipeResult = () => {
   const { t } = useTranslation();
   const location = useLocation();
