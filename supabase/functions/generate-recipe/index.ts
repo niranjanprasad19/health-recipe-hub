@@ -110,6 +110,7 @@ serve(async (req) => {
       indianSpices: sanitizeArray(parsed.data.formData.indianSpices || []),
       indianMealType: sanitizeString(parsed.data.formData.indianMealType || ""),
       indianDietaryStyles: sanitizeArray(parsed.data.formData.indianDietaryStyles || []),
+      mode: parsed.data.formData.mode || "standard",
     };
 
     const language = sanitizeString(parsed.data.language || "en");
