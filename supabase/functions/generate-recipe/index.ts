@@ -26,6 +26,7 @@ const RecipeFormSchema = z.object({
     indianSpices: z.array(z.string().max(100)).max(12).optional().default([]),
     indianMealType: z.string().max(50).optional().default(""),
     indianDietaryStyles: z.array(z.string().max(100)).max(5).optional().default([]),
+    mode: z.enum(["standard", "leftover"]).optional().default("standard"),
   }),
   language: z.string().max(20).optional().default("en"),
 });
