@@ -45,7 +45,8 @@
     "automatedShoppingDesc": "ਚੁਣੇ ਹੋਏ ਪਕਵਾਨਾਂ ਤੋਂ ਆਪਣੇ ਆਪ ਖਰੀਦਦਾਰੀ ਸੂਚੀਆਂ ਬਣਾਓ.",
     "nutritionFocused": "ਪੋਸ਼ਣ ਕੇਂਦਰਿਤ",
     "nutritionFocusedDesc": "ਹਰ ਪਕਵਾਨ ਲਈ ਮੈਕਰੋ ਅਤੇ ਪੋਸ਼ਣ ਜਾਣਕਾਰੀ ਟਰੈਕ ਕਰੋ.",
-    "footer": "2024 NutriChef. ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ."
+    "footer": "2024 NutriChef. ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ.",
+    "useLeftovers": "Use Leftovers"
   },
   "auth": {
     "title": "ਸਿਹਤਮੰਦ ਪਕਵਾਨ ਜਨਰੇਟਰ",
@@ -125,7 +126,8 @@
     "search": "ਖੋਜੋ",
     "savedRecipes": "ਸੇਵ ਕੀਤੇ ਪਕਵਾਨ",
     "mealPlanning": "ਖੁਰਾਕ ਯੋਜਨਾ",
-    "shoppingList": "ਖਰੀਦਦਾਰੀ ਸੂਚੀ"
+    "shoppingList": "ਖਰੀਦਦਾਰੀ ਸੂਚੀ",
+    "leftoverRecipe": "Use Leftovers"
   },
   "preferences": {
     "title": "ਪਕਵਾਨ ਤਰਜੀਹਾਂ",
@@ -208,5 +210,24 @@
     "noResults": "ਤੁਹਾਡੀ ਖੋਜ ਨਾਲ ਮੇਲ ਖਾਂਦੀਆਂ ਰੈਸਿਪੀਆਂ ਨਹੀਂ ਮਿਲੀਆਂ",
     "noRecipes": "ਅਜੇ ਕੋਈ ਸੇਵ ਕੀਤੀਆਂ ਰੈਸਿਪੀਆਂ ਨਹੀਂ",
     "generateFirst": "ਆਪਣੀ ਪਹਿਲੀ ਰੈਸਿਪੀ ਬਣਾਓ"
+  },
+  "cooking": {
+    "startCooking": "Start Cooking",
+    "step": "Step",
+    "of": "of",
+    "startTimer": "Start Timer",
+    "timerDone": "Timer done!",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish",
+    "exitCooking": "Exit Cooking"
+  },
+  "leftover": {
+    "title": "Leftover Recipe Generator",
+    "subtitle": "Enter the ingredients you have and get a recipe!",
+    "placeholder": "Type an ingredient and press Enter",
+    "commonIngredients": "Quick add common ingredients",
+    "generate": "Generate Recipe",
+    "usingOnly": "Using only your ingredients"
   }
 }

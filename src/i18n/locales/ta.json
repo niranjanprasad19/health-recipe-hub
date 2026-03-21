@@ -45,7 +45,8 @@
     "automatedShoppingDesc": "தேர்ந்தெடுக்கப்பட்ட குறிப்புகளிலிருந்து தானாகவே கடை பட்டியலை உருவாக்குங்கள்.",
     "nutritionFocused": "ஊட்டச்சத்து மையம்",
     "nutritionFocusedDesc": "ஒவ்வொரு குறிப்புக்கும் மேக்ரோக்கள் மற்றும் ஊட்டச்சத்து தகவல்களைக் கண்காணிக்கவும்.",
-    "footer": "2024 NutriChef. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
+    "footer": "2024 NutriChef. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.",
+    "useLeftovers": "Use Leftovers"
   },
   "auth": {
     "title": "ஆரோக்கிய சமையல் குறிப்பு ஜெனரேட்டர்",
@@ -125,7 +126,8 @@
     "search": "தேடு",
     "savedRecipes": "சேமித்த குறிப்புகள்",
     "mealPlanning": "உணவு திட்டம்",
-    "shoppingList": "கடை பட்டியல்"
+    "shoppingList": "கடை பட்டியல்",
+    "leftoverRecipe": "Use Leftovers"
   },
   "preferences": {
     "title": "சமையல் விருப்பங்கள்",
@@ -208,5 +210,24 @@
     "noResults": "உங்கள் தேடலுக்குப் பொருந்தும் குறிப்புகள் இல்லை",
     "noRecipes": "இன்னும் சேமிக்கப்பட்ட குறிப்புகள் இல்லை",
     "generateFirst": "உங்கள் முதல் சமையல் குறிப்பை உருவாக்குங்கள்"
+  },
+  "cooking": {
+    "startCooking": "Start Cooking",
+    "step": "Step",
+    "of": "of",
+    "startTimer": "Start Timer",
+    "timerDone": "Timer done!",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish",
+    "exitCooking": "Exit Cooking"
+  },
+  "leftover": {
+    "title": "Leftover Recipe Generator",
+    "subtitle": "Enter the ingredients you have and get a recipe!",
+    "placeholder": "Type an ingredient and press Enter",
+    "commonIngredients": "Quick add common ingredients",
+    "generate": "Generate Recipe",
+    "usingOnly": "Using only your ingredients"
   }
 }

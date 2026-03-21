@@ -45,7 +45,8 @@
     "automatedShoppingDesc": "निवडलेल्या रेसिपींमधून स्वयंचलितपणे खरेदी याद्या तयार करा.",
     "nutritionFocused": "पोषण केंद्रित",
     "nutritionFocusedDesc": "प्रत्येक रेसिपीसाठी मॅक्रो आणि पोषण माहिती ट्रॅक करा.",
-    "footer": "2024 NutriChef. सर्व हक्क राखीव."
+    "footer": "2024 NutriChef. सर्व हक्क राखीव.",
+    "useLeftovers": "Use Leftovers"
   },
   "auth": {
     "title": "आरोग्यदायी रेसिपी जनरेटर",
@@ -125,7 +126,8 @@
     "search": "शोधा",
     "savedRecipes": "जतन केलेल्या रेसिपी",
     "mealPlanning": "जेवण नियोजन",
-    "shoppingList": "खरेदी यादी"
+    "shoppingList": "खरेदी यादी",
+    "leftoverRecipe": "Use Leftovers"
   },
   "preferences": {
     "title": "रेसिपी प्राधान्ये",
@@ -208,5 +210,24 @@
     "noResults": "तुमच्या शोधाशी जुळणाऱ्या रेसिपी सापडल्या नाहीत",
     "noRecipes": "अजून जतन केलेल्या रेसिपी नाहीत",
     "generateFirst": "तुमची पहिली रेसिपी तयार करा"
+  },
+  "cooking": {
+    "startCooking": "Start Cooking",
+    "step": "Step",
+    "of": "of",
+    "startTimer": "Start Timer",
+    "timerDone": "Timer done!",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish",
+    "exitCooking": "Exit Cooking"
+  },
+  "leftover": {
+    "title": "Leftover Recipe Generator",
+    "subtitle": "Enter the ingredients you have and get a recipe!",
+    "placeholder": "Type an ingredient and press Enter",
+    "commonIngredients": "Quick add common ingredients",
+    "generate": "Generate Recipe",
+    "usingOnly": "Using only your ingredients"
   }
 }
