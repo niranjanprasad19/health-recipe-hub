@@ -45,7 +45,8 @@
     "automatedShoppingDesc": "પસંદ કરેલી રેસીપીમાંથી આપમેળે ખરીદી યાદી બનાવો.",
     "nutritionFocused": "પોષણ કેન્દ્રિત",
     "nutritionFocusedDesc": "દરેક રેસીપી માટે મેક્રો અને પોષણ માહિતી ટ્રેક કરો.",
-    "footer": "2024 NutriChef. બધા હકો અનામત."
+    "footer": "2024 NutriChef. બધા હકો અનામત.",
+    "useLeftovers": "Use Leftovers"
   },
   "auth": {
     "title": "સ્વસ્થ રેસીપી જનરેટર",
@@ -125,7 +126,8 @@
     "search": "શોધો",
     "savedRecipes": "સાચવેલી રેસીપી",
     "mealPlanning": "ભોજન યોજના",
-    "shoppingList": "ખરીદી યાદી"
+    "shoppingList": "ખરીદી યાદી",
+    "leftoverRecipe": "Use Leftovers"
   },
   "preferences": {
     "title": "રેસીપી પસંદગીઓ",
@@ -208,5 +210,24 @@
     "noResults": "તમારી શોધ સાથે મેળ ખાતી રેસીપીઓ મળી નથી",
     "noRecipes": "હજુ કોઈ સાચવેલી રેસીપીઓ નથી",
     "generateFirst": "તમારી પ્રથમ રેસીપી બનાવો"
+  },
+  "cooking": {
+    "startCooking": "Start Cooking",
+    "step": "Step",
+    "of": "of",
+    "startTimer": "Start Timer",
+    "timerDone": "Timer done!",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish",
+    "exitCooking": "Exit Cooking"
+  },
+  "leftover": {
+    "title": "Leftover Recipe Generator",
+    "subtitle": "Enter the ingredients you have and get a recipe!",
+    "placeholder": "Type an ingredient and press Enter",
+    "commonIngredients": "Quick add common ingredients",
+    "generate": "Generate Recipe",
+    "usingOnly": "Using only your ingredients"
   }
 }

@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import QuickRecipe from "./pages/QuickRecipe";
 import ResetPassword from "./pages/ResetPassword";
+import LeftoverRecipe from "./pages/LeftoverRecipe";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
             <Route path="/search" element={<RecipeSearch />} />
             <Route path="/shared/:shareToken" element={<SharedRecipe />} />
             <Route path="/quick-recipe" element={<QuickRecipe />} />
+            <Route path="/leftover-recipe" element={<LeftoverRecipe />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

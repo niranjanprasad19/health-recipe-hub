@@ -13,6 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Header } from "@/components/Header";
+import { CookingMode } from "@/components/CookingMode";
 
 const formatRecipeText = (recipe: Recipe): string => {
   const ingredients = recipe.ingredients.map(i => `• ${i.amount} ${i.item}${i.notes ? ` (${i.notes})` : ''}`).join('\n');
@@ -36,6 +37,7 @@ const RecipeResult = () => {
   const [isSharing, setIsSharing] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [cookingMode, setCookingMode] = useState(false);
 
   const formData = location.state?.formData;
 
@@ -162,6 +164,10 @@ const RecipeResult = () => {
 
   if (!recipe) return null;
 
+  if (cookingMode) {
+    return <CookingMode recipe={recipe} onClose={() => setCookingMode(false)} />;
+  }
+
   return (
     <div className="min-h-screen gradient-hero">
       <Header actions={recipeActions} />
@@ -242,6 +248,9 @@ const RecipeResult = () => {
         )}
 
         <div className="flex justify-center gap-4 mt-12">
+          <Button variant="outline" size="lg" onClick={() => setCookingMode(true)}>
+            <Sparkles className="w-4 h-4 mr-2" />{t('cooking.startCooking')}
+          </Button>
           <Link to="/preferences"><Button variant="outline" size="lg"><ArrowLeft className="w-4 h-4 mr-2" />{t('common.back')}</Button></Link>
           {isAuthenticated && (
             <Link to="/profile"><Button variant="secondary" size="lg">{t('profile.savedRecipes')}</Button></Link>

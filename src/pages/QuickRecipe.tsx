@@ -11,6 +11,7 @@ import {
 import { Header } from "@/components/Header";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Recipe } from "@/types/recipe";
+import { CookingMode } from "@/components/CookingMode";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -38,6 +39,7 @@ const QuickRecipe = () => {
   const [shareToken, setShareToken] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [cookingMode, setCookingMode] = useState(false);
 
   useEffect(() => {
     if (!prompt) {
@@ -178,9 +180,13 @@ const QuickRecipe = () => {
 
   if (!recipe) return null;
 
+  if (cookingMode) {
+    return <CookingMode recipe={recipe} onClose={() => setCookingMode(false)} />;
+  }
+
   return (
     <div className="min-h-screen gradient-hero">
-      <Header 
+      <Header
         actions={
           <div className="flex items-center gap-1">
             <Button variant="outline" size="icon" onClick={generateRecipe} disabled={isLoading}>
@@ -281,6 +287,9 @@ const QuickRecipe = () => {
         )}
 
         <div className="flex justify-center gap-4 mt-12">
+          <Button variant="outline" size="lg" onClick={() => setCookingMode(true)}>
+            <Sparkles className="w-4 h-4 mr-2" />{t('cooking.startCooking')}
+          </Button>
           <Link to="/"><Button variant="outline" size="lg"><ArrowLeft className="w-4 h-4 mr-2" />{t('common.backToHome')}</Button></Link>
           <Link to="/preferences"><Button variant="secondary" size="lg">{t('recipe.customizePreferences')}</Button></Link>
         </div>

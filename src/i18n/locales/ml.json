@@ -45,7 +45,8 @@
     "automatedShoppingDesc": "തിരഞ്ഞെടുത്ത കുറിപ്പുകളിൽ നിന്ന് സ്വയമേവ ഷോപ്പിംഗ് ലിസ്റ്റുകൾ സൃഷ്ടിക്കുക.",
     "nutritionFocused": "പോഷക കേന്ദ്രീകൃതം",
     "nutritionFocusedDesc": "ഓരോ കുറിപ്പിനും മാക്രോകളും പോഷക വിവരങ്ങളും ട്രാക്ക് ചെയ്യുക.",
-    "footer": "2024 NutriChef. എല്ലാ അവകാശങ്ങളും സംരക്ഷിതം."
+    "footer": "2024 NutriChef. എല്ലാ അവകാശങ്ങളും സംരക്ഷിതം.",
+    "useLeftovers": "Use Leftovers"
   },
   "auth": {
     "title": "ആരോഗ്യകരമായ പാചക കുറിപ്പ് ജനറേറ്റർ",
@@ -125,7 +126,8 @@
     "search": "തിരയുക",
     "savedRecipes": "സേവ് ചെയ്ത കുറിപ്പുകൾ",
     "mealPlanning": "ഭക്ഷണ ആസൂത്രണം",
-    "shoppingList": "ഷോപ്പിംഗ് ലിസ്റ്റ്"
+    "shoppingList": "ഷോപ്പിംഗ് ലിസ്റ്റ്",
+    "leftoverRecipe": "Use Leftovers"
   },
   "preferences": {
     "title": "പാചക മുൻഗണനകൾ",
@@ -208,5 +210,24 @@
     "noResults": "നിങ്ങളുടെ തിരയലുമായി പൊരുത്തപ്പെടുന്ന കുറിപ്പുകൾ കണ്ടെത്തിയില്ല",
     "noRecipes": "ഇതുവരെ സേവ് ചെയ്ത കുറിപ്പുകളില്ല",
     "generateFirst": "നിങ്ങളുടെ ആദ്യ പാചകക്കുറിപ്പ് സൃഷ്ടിക്കുക"
+  },
+  "cooking": {
+    "startCooking": "Start Cooking",
+    "step": "Step",
+    "of": "of",
+    "startTimer": "Start Timer",
+    "timerDone": "Timer done!",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish",
+    "exitCooking": "Exit Cooking"
+  },
+  "leftover": {
+    "title": "Leftover Recipe Generator",
+    "subtitle": "Enter the ingredients you have and get a recipe!",
+    "placeholder": "Type an ingredient and press Enter",
+    "commonIngredients": "Quick add common ingredients",
+    "generate": "Generate Recipe",
+    "usingOnly": "Using only your ingredients"
   }
 }

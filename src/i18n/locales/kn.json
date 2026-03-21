@@ -45,7 +45,8 @@
     "automatedShoppingDesc": "ಆಯ್ಕೆ ಮಾಡಿದ ವಿಧಾನಗಳಿಂದ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಖರೀದಿ ಪಟ್ಟಿಗಳನ್ನು ರಚಿಸಿ.",
     "nutritionFocused": "ಪೋಷಣೆ ಕೇಂದ್ರಿತ",
     "nutritionFocusedDesc": "ಪ್ರತಿ ವಿಧಾನಕ್ಕೆ ಮ್ಯಾಕ್ರೋಗಳು ಮತ್ತು ಪೋಷಣೆ ಮಾಹಿತಿಯನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಿ.",
-    "footer": "2024 NutriChef. ಎಲ್ಲಾ ಹಕ್ಕುಗಳು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ."
+    "footer": "2024 NutriChef. ಎಲ್ಲಾ ಹಕ್ಕುಗಳು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.",
+    "useLeftovers": "Use Leftovers"
   },
   "auth": {
     "title": "ಆರೋಗ್ಯಕರ ಅಡುಗೆ ವಿಧಾನ ಜನರೇಟರ್",
@@ -125,7 +126,8 @@
     "search": "ಹುಡುಕಿ",
     "savedRecipes": "ಉಳಿಸಿದ ವಿಧಾನಗಳು",
     "mealPlanning": "ಊಟದ ಯೋಜನೆ",
-    "shoppingList": "ಖರೀದಿ ಪಟ್ಟಿ"
+    "shoppingList": "ಖರೀದಿ ಪಟ್ಟಿ",
+    "leftoverRecipe": "Use Leftovers"
   },
   "preferences": {
     "title": "ಅಡುಗೆ ಆದ್ಯತೆಗಳು",
@@ -208,5 +210,24 @@
     "noResults": "ನಿಮ್ಮ ಹುಡುಕಾಟಕ್ಕೆ ಹೊಂದಿಕೆಯಾಗುವ ಅಡುಗೆಗಳು ಕಂಡುಬಂದಿಲ್ಲ",
     "noRecipes": "ಇನ್ನೂ ಉಳಿಸಿದ ಅಡುಗೆಗಳಿಲ್ಲ",
     "generateFirst": "ನಿಮ್ಮ ಮೊದಲ ಅಡುಗೆ ರಚಿಸಿ"
+  },
+  "cooking": {
+    "startCooking": "Start Cooking",
+    "step": "Step",
+    "of": "of",
+    "startTimer": "Start Timer",
+    "timerDone": "Timer done!",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish",
+    "exitCooking": "Exit Cooking"
+  },
+  "leftover": {
+    "title": "Leftover Recipe Generator",
+    "subtitle": "Enter the ingredients you have and get a recipe!",
+    "placeholder": "Type an ingredient and press Enter",
+    "commonIngredients": "Quick add common ingredients",
+    "generate": "Generate Recipe",
+    "usingOnly": "Using only your ingredients"
   }
 }

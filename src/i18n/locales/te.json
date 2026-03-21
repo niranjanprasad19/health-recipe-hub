@@ -45,7 +45,8 @@
     "automatedShoppingDesc": "ఎంచుకున్న వంటకాల నుండి ఆటోమేటిక్‌గా షాపింగ్ జాబితాలను రూపొందించండి.",
     "nutritionFocused": "పోషకాహార కేంద్రం",
     "nutritionFocusedDesc": "ప్రతి వంటకం కోసం మాక్రోలు మరియు పోషకాహార సమాచారాన్ని ట్రాక్ చేయండి.",
-    "footer": "2024 NutriChef. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి."
+    "footer": "2024 NutriChef. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి.",
+    "useLeftovers": "Use Leftovers"
   },
   "auth": {
     "title": "ఆరోగ్యకర వంటకాల జనరేటర్",
@@ -125,7 +126,8 @@
     "search": "వెతుకు",
     "savedRecipes": "సేవ్ చేసిన వంటకాలు",
     "mealPlanning": "భోజన ప్రణాళిక",
-    "shoppingList": "షాపింగ్ జాబితా"
+    "shoppingList": "షాపింగ్ జాబితా",
+    "leftoverRecipe": "Use Leftovers"
   },
   "preferences": {
     "title": "వంటకాల ప్రాధాన్యతలు",
@@ -208,5 +210,24 @@
     "noResults": "మీ శోధనకు సరిపోయే వంటకాలు కనుగొనబడలేదు",
     "noRecipes": "ఇంకా సేవ్ చేసిన వంటకాలు లేవు",
     "generateFirst": "మీ మొదటి వంటకాన్ని సృష్టించండి"
+  },
+  "cooking": {
+    "startCooking": "Start Cooking",
+    "step": "Step",
+    "of": "of",
+    "startTimer": "Start Timer",
+    "timerDone": "Timer done!",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish",
+    "exitCooking": "Exit Cooking"
+  },
+  "leftover": {
+    "title": "Leftover Recipe Generator",
+    "subtitle": "Enter the ingredients you have and get a recipe!",
+    "placeholder": "Type an ingredient and press Enter",
+    "commonIngredients": "Quick add common ingredients",
+    "generate": "Generate Recipe",
+    "usingOnly": "Using only your ingredients"
   }
 }

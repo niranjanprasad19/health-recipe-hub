@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Utensils, Sparkles, ShoppingCart, Heart, Leaf, Calendar, Search, ArrowRight, Clock, ChefHat, Star } from "lucide-react";
+import { Utensils, Sparkles, ShoppingCart, Heart, Leaf, Calendar, Search, ArrowRight, Clock, ChefHat, Star, Refrigerator } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Header } from "@/components/Header";
 import { useState, useEffect } from "react";
@@ -102,7 +102,7 @@ const Landing = () => {
     }
   };
 
-  const trendingTags = ["High Protein", "Plant Based", "Quick Meals", "Low Carb", "Mediterranean", "Paneer Recipes", "South Indian Breakfast", "Biryani"];
+  const trendingTags = ["High Protein", "Plant Based", "Quick Meals", "Low Carb", "Mediterranean", "Paneer Recipes", "South Indian Breakfast", "Biryani", "Leftover Recipe"];
 
   return (
     <div className="min-h-screen bg-background">
@@ -166,6 +166,12 @@ const Landing = () => {
               <Button size="default" variant="outline" className="rounded-lg text-sm sm:text-base">
                 <Utensils className="w-4 h-4 mr-2" />
                 {t('landing.setPreferences')}
+              </Button>
+            </Link>
+            <Link to="/leftover-recipe">
+              <Button size="default" variant="outline" className="rounded-lg text-sm sm:text-base">
+                <Refrigerator className="w-4 h-4 mr-2" />
+                {t('landing.useLeftovers')}
               </Button>
             </Link>
             {isAuthenticated && (
