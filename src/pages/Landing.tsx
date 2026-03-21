@@ -168,6 +168,12 @@ const Landing = () => {
                 {t('landing.setPreferences')}
               </Button>
             </Link>
+            <Link to="/leftover-recipe">
+              <Button size="default" variant="outline" className="rounded-lg text-sm sm:text-base">
+                <Refrigerator className="w-4 h-4 mr-2" />
+                {t('landing.useLeftovers')}
+              </Button>
+            </Link>
             {isAuthenticated && (
               <>
                 <Link to="/meal-planning">

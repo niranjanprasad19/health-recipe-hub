@@ -132,11 +132,14 @@ serve(async (req) => {
     };
     const outputLanguage = languageMap[language] || "English";
 
+    const isLeftover = formData.mode === "leftover";
+
     const systemPrompt = `You are a professional nutritionist and chef who creates personalized, healthy recipes. 
 Generate a complete, detailed recipe based on the user's preferences, dietary restrictions, and health goals.
 Always provide accurate nutritional information and clear cooking instructions.
 ${language !== "en" ? `IMPORTANT: Generate ALL text content (title, description, ingredient names, instructions, tips, tags, health benefits) in ${outputLanguage} language. Use ${outputLanguage} script. Only keep measurement units and nutritional values in English/numbers.` : ""}
-${isIndian ? "When Indian cuisine is selected, use authentic Indian cooking techniques, traditional spice combinations (tadka, tempering, etc.), and regional specialties. Ensure the recipe reflects the specific regional cuisine if provided (e.g., South Indian uses coconut and curry leaves, Punjabi uses ghee and cream, Bengali uses mustard oil and panch phoron)." : ""}`;
+${isIndian ? "When Indian cuisine is selected, use authentic Indian cooking techniques, traditional spice combinations (tadka, tempering, etc.), and regional specialties. Ensure the recipe reflects the specific regional cuisine if provided (e.g., South Indian uses coconut and curry leaves, Punjabi uses ghee and cream, Bengali uses mustard oil and panch phoron)." : ""}
+${isLeftover ? "IMPORTANT: The user wants a recipe using ONLY their available ingredients. Focus exclusively on the ingredients they have. You may suggest minimal pantry staples (salt, pepper, cooking oil, water) but do NOT require any significant ingredients they haven't listed." : ""}`;
 
     const userPrompt = `Create a personalized healthy recipe based on these preferences:
 

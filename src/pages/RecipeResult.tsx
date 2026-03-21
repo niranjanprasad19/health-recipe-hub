@@ -248,6 +248,9 @@ const RecipeResult = () => {
         )}
 
         <div className="flex justify-center gap-4 mt-12">
+          <Button variant="outline" size="lg" onClick={() => setCookingMode(true)}>
+            <Sparkles className="w-4 h-4 mr-2" />{t('cooking.startCooking')}
+          </Button>
           <Link to="/preferences"><Button variant="outline" size="lg"><ArrowLeft className="w-4 h-4 mr-2" />{t('common.back')}</Button></Link>
           {isAuthenticated && (
             <Link to="/profile"><Button variant="secondary" size="lg">{t('profile.savedRecipes')}</Button></Link>
