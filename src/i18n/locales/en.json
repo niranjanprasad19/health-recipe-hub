@@ -240,8 +240,5 @@
     "commonIngredients": "Quick add common ingredients",
     "generate": "Generate Recipe",
     "usingOnly": "Using only your ingredients"
-  },
-  "landing": {
-    "useLeftovers": "Use Leftovers"
   }
 }
