@@ -164,6 +164,10 @@ const RecipeResult = () => {
 
   if (!recipe) return null;
 
+  if (cookingMode) {
+    return <CookingMode recipe={recipe} onClose={() => setCookingMode(false)} />;
+  }
+
   return (
     <div className="min-h-screen gradient-hero">
       <Header actions={recipeActions} />
