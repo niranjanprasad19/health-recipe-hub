@@ -39,6 +39,7 @@ const QuickRecipe = () => {
   const [shareToken, setShareToken] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [cookingMode, setCookingMode] = useState(false);
 
   useEffect(() => {
     if (!prompt) {
