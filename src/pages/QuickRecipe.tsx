@@ -11,6 +11,7 @@ import {
 import { Header } from "@/components/Header";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Recipe } from "@/types/recipe";
+import { CookingMode } from "@/components/CookingMode";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
