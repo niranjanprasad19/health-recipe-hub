@@ -102,7 +102,7 @@ const Landing = () => {
     }
   };
 
-  const trendingTags = ["High Protein", "Plant Based", "Quick Meals", "Low Carb", "Mediterranean", "Paneer Recipes", "South Indian Breakfast", "Biryani"];
+  const trendingTags = ["High Protein", "Plant Based", "Quick Meals", "Low Carb", "Mediterranean", "Paneer Recipes", "South Indian Breakfast", "Biryani", "Leftover Recipe"];
 
   return (
     <div className="min-h-screen bg-background">
