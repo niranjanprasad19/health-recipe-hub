@@ -45,7 +45,8 @@
     "automatedShoppingDesc": "Generate shopping lists automatically from your selected recipes.",
     "nutritionFocused": "Nutrition Focused",
     "nutritionFocusedDesc": "Track macros and nutritional information for every recipe.",
-    "footer": "2024 NutriChef. All rights reserved."
+    "footer": "2024 NutriChef. All rights reserved.",
+    "useLeftovers": "Use Leftovers"
   },
   "auth": {
     "title": "Healthy Recipe Generator",
