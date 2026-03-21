@@ -126,7 +126,8 @@
     "search": "Search",
     "savedRecipes": "Saved Recipes",
     "mealPlanning": "Meal Planning",
-    "shoppingList": "Shopping List"
+    "shoppingList": "Shopping List",
+    "leftoverRecipe": "Use Leftovers"
   },
   "preferences": {
     "title": "Recipe Preferences",
