@@ -180,9 +180,13 @@ const QuickRecipe = () => {
 
   if (!recipe) return null;
 
+  if (cookingMode) {
+    return <CookingMode recipe={recipe} onClose={() => setCookingMode(false)} />;
+  }
+
   return (
     <div className="min-h-screen gradient-hero">
-      <Header 
+      <Header
         actions={
           <div className="flex items-center gap-1">
             <Button variant="outline" size="icon" onClick={generateRecipe} disabled={isLoading}>
