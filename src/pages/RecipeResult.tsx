@@ -37,6 +37,7 @@ const RecipeResult = () => {
   const [isSharing, setIsSharing] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [cookingMode, setCookingMode] = useState(false);
 
   const formData = location.state?.formData;
 
