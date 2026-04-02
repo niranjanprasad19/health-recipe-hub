@@ -46,7 +46,14 @@
     "nutritionFocused": "पोषण केंद्रित",
     "nutritionFocusedDesc": "हर रेसिपी के लिए मैक्रोज़ और पोषण जानकारी ट्रैक करें।",
     "footer": "2024 NutriChef. सर्वाधिकार सुरक्षित।",
-    "useLeftovers": "Use Leftovers"
+    "useLeftovers": "Use Leftovers",
+    "freshSalads": "ताज़ी सलाद",
+    "warmBowls": "गरम बाउल",
+    "festivalSpecials": "त्योहार स्पेशल",
+    "mealPrep": "मील प्रेप",
+    "upcomingFestivals": "आगामी त्योहार",
+    "nutritionDashboard": "पोषण डैशबोर्ड",
+    "nutritionDashboardDesc": "अपनी साप्ताहिक कैलोरी, प्रोटीन, कार्ब्स और फैट का विज़ुअल ट्रैकिंग"
   },
   "auth": {
     "title": "स्वस्थ रेसिपी जनरेटर",
@@ -127,7 +134,9 @@
     "savedRecipes": "सहेजी गई रेसिपी",
     "mealPlanning": "भोजन योजना",
     "shoppingList": "खरीदारी सूची",
-    "leftoverRecipe": "Use Leftovers"
+    "leftoverRecipe": "Use Leftovers",
+    "festivalRecipes": "त्योहार रेसिपी",
+    "nutrition": "पोषण"
   },
   "preferences": {
     "title": "रेसिपी प्राथमिकताएं",
@@ -229,5 +238,28 @@
     "commonIngredients": "Quick add common ingredients",
     "generate": "Generate Recipe",
     "usingOnly": "Using only your ingredients"
+  },
+  "festival": {
+    "title": "त्योहार और मौसमी रेसिपी",
+    "subtitle": "दुनिया भर के त्योहारों से पारंपरिक रेसिपी खोजें",
+    "searchPlaceholder": "त्योहार, क्षेत्र या व्यंजन खोजें...",
+    "upcoming": "आगामी त्योहार",
+    "allFestivals": "सभी त्योहार",
+    "results": "खोज परिणाम",
+    "noResults": "कोई त्योहार नहीं मिला",
+    "tryThese": "ये व्यंजन आज़माएं:"
+  },
+  "nutrition": {
+    "title": "पोषण डैशबोर्ड",
+    "subtitle": "सहेजी गई रेसिपी से अपने पोषण सेवन को ट्रैक करें",
+    "week": "इस सप्ताह",
+    "month": "इस महीने",
+    "caloriesByDay": "दिन के अनुसार कैलोरी",
+    "macroBreakdown": "मैक्रो विश्लेषण",
+    "macroTrend": "समय के साथ मैक्रो ट्रेंड",
+    "noData": "अभी तक कोई पोषण डेटा नहीं",
+    "noDataDesc": "पोषण ट्रैकिंग शुरू करने के लिए रेसिपी बनाएं और सहेजें!",
+    "generateRecipe": "एक रेसिपी बनाएं",
+    "signInRequired": "अपना पोषण डैशबोर्ड देखने के लिए साइन इन करें"
   }
 }

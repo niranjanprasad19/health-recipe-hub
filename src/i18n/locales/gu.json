@@ -46,7 +46,14 @@
     "nutritionFocused": "પોષણ કેન્દ્રિત",
     "nutritionFocusedDesc": "દરેક રેસીપી માટે મેક્રો અને પોષણ માહિતી ટ્રેક કરો.",
     "footer": "2024 NutriChef. બધા હકો અનામત.",
-    "useLeftovers": "Use Leftovers"
+    "useLeftovers": "Use Leftovers",
+    "freshSalads": "તાજા સલાડ",
+    "warmBowls": "ગરમ બાઉલ",
+    "festivalSpecials": "તહેવાર સ્પેશિયલ",
+    "mealPrep": "મીલ પ્રેપ",
+    "upcomingFestivals": "આગામી તહેવારો",
+    "nutritionDashboard": "પોષણ ડેશબોર્ડ",
+    "nutritionDashboardDesc": "તમારી સાપ્તાહિક કેલરી, પ્રોટીન, કાર્બ્સ અને ફેટનું ટ્રેકિંગ"
   },
   "auth": {
     "title": "સ્વસ્થ રેસીપી જનરેટર",
@@ -127,7 +134,9 @@
     "savedRecipes": "સાચવેલી રેસીપી",
     "mealPlanning": "ભોજન યોજના",
     "shoppingList": "ખરીદી યાદી",
-    "leftoverRecipe": "Use Leftovers"
+    "leftoverRecipe": "Use Leftovers",
+    "festivalRecipes": "તહેવાર રેસિપી",
+    "nutrition": "પોષણ"
   },
   "preferences": {
     "title": "રેસીપી પસંદગીઓ",
@@ -229,5 +238,28 @@
     "commonIngredients": "Quick add common ingredients",
     "generate": "Generate Recipe",
     "usingOnly": "Using only your ingredients"
+  },
+  "festival": {
+    "title": "તહેવાર અને મોસમી રેસિપી",
+    "subtitle": "વિશ્વના તહેવારોમાંથી પરંપરાગત રેસિપી શોધો",
+    "searchPlaceholder": "તહેવાર, પ્રદેશ અથવા વાનગી શોધો...",
+    "upcoming": "આગામી તહેવારો",
+    "allFestivals": "બધા તહેવારો",
+    "results": "શોધ પરિણામો",
+    "noResults": "કોઈ તહેવાર મળ્યો નથી",
+    "tryThese": "આ વાનગીઓ અજમાવો:"
+  },
+  "nutrition": {
+    "title": "પોષણ ડેશબોર્ડ",
+    "subtitle": "સાચવેલી રેસિપીમાંથી તમારા પોષણ સેવનને ટ્રેક કરો",
+    "week": "આ અઠવાડિયે",
+    "month": "આ મહિને",
+    "caloriesByDay": "દિવસ મુજબ કેલરી",
+    "macroBreakdown": "મેક્રો વિશ્લેષણ",
+    "macroTrend": "સમય સાથે મેક્રો ટ્રેન્ડ",
+    "noData": "હજુ સુધી કોઈ પોષણ ડેટા નથી",
+    "noDataDesc": "પોષણ ટ્રેકિંગ શરૂ કરવા રેસિપી બનાવો અને સાચવો!",
+    "generateRecipe": "એક રેસિપી બનાવો",
+    "signInRequired": "તમારું પોષણ ડેશબોર્ડ જોવા સાઇન ઇન કરો"
   }
 }

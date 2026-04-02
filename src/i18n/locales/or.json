@@ -46,7 +46,14 @@
     "nutritionFocused": "ପୋଷଣ କେନ୍ଦ୍ରିତ",
     "nutritionFocusedDesc": "ପ୍ରତ୍ୟେକ ରେସିପି ପାଇଁ ମ୍ୟାକ୍ରୋ ଏବଂ ପୋଷଣ ତଥ୍ୟ ଟ୍ରାକ୍ କରନ୍ତୁ.",
     "footer": "2024 NutriChef. ସମସ୍ତ ଅଧିକାର ସଂରକ୍ଷିତ.",
-    "useLeftovers": "Use Leftovers"
+    "useLeftovers": "Use Leftovers",
+    "freshSalads": "ତାଜା ସାଲାଡ",
+    "warmBowls": "ଗରମ ବାଉଲ",
+    "festivalSpecials": "ପର୍ବ ସ୍ପେସିଆଲ",
+    "mealPrep": "ମିଲ ପ୍ରେପ",
+    "upcomingFestivals": "ଆସନ୍ତା ପର୍ବ",
+    "nutritionDashboard": "ପୋଷଣ ଡ୍ୟାସବୋର୍ଡ",
+    "nutritionDashboardDesc": "ଆପଣଙ୍କ ସାପ୍ତାହିକ କ୍ୟାଲୋରି, ପ୍ରୋଟିନ୍, କାର୍ବସ୍ ଏବଂ ଫ୍ୟାଟ ଟ୍ରାକିଂ"
   },
   "auth": {
     "title": "ସ୍ବାସ୍ଥ୍ୟକର ରେସିପି ଜେନେରେଟର୍",
@@ -127,7 +134,9 @@
     "savedRecipes": "ସେଭ୍ ରେସିପି",
     "mealPlanning": "ଭୋଜନ ଯୋଜନା",
     "shoppingList": "କେଣାକାଟା ତାଲିକା",
-    "leftoverRecipe": "Use Leftovers"
+    "leftoverRecipe": "Use Leftovers",
+    "festivalRecipes": "ପର୍ବ ରେସିପି",
+    "nutrition": "ପୋଷଣ"
   },
   "preferences": {
     "title": "ରେସିପି ପସନ୍ଦ",
@@ -229,5 +238,28 @@
     "commonIngredients": "Quick add common ingredients",
     "generate": "Generate Recipe",
     "usingOnly": "Using only your ingredients"
+  },
+  "festival": {
+    "title": "ପର୍ବ ଓ ଋତୁକାଳୀନ ରେସିପି",
+    "subtitle": "ବିଶ୍ୱର ପର୍ବରୁ ପାରମ୍ପରିକ ରେସିପି ଖୋଜନ୍ତୁ",
+    "searchPlaceholder": "ପର୍ବ, ଅଞ୍ଚଳ ବା ଖାଦ୍ୟ ଖୋଜନ୍ତୁ...",
+    "upcoming": "ଆସନ୍ତା ପର୍ବ",
+    "allFestivals": "ସମସ୍ତ ପର୍ବ",
+    "results": "ସନ୍ଧାନ ଫଳାଫଳ",
+    "noResults": "କୌଣସି ପର୍ବ ମିଳିଲା ନାହିଁ",
+    "tryThese": "ଏହି ଖାଦ୍ୟ ଚେଷ୍ଟା କରନ୍ତୁ:"
+  },
+  "nutrition": {
+    "title": "ପୋଷଣ ଡ୍ୟାସବୋର୍ଡ",
+    "subtitle": "ସଞ୍ଚିତ ରେସିପିରୁ ଆପଣଙ୍କ ପୋଷଣ ସେବନ ଟ୍ରାକ୍ କରନ୍ତୁ",
+    "week": "ଏହି ସପ୍ତାହ",
+    "month": "ଏହି ମାସ",
+    "caloriesByDay": "ଦିନ ଅନୁସାରେ କ୍ୟାଲୋରି",
+    "macroBreakdown": "ମ୍ୟାକ୍ରୋ ବିଶ୍ଳେଷଣ",
+    "macroTrend": "ସମୟ ସହ ମ୍ୟାକ୍ରୋ ଟ୍ରେଣ୍ଡ",
+    "noData": "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ପୋଷଣ ଡାଟା ନାହିଁ",
+    "noDataDesc": "ପୋଷଣ ଟ୍ରାକିଂ ଆରମ୍ଭ କରିବାକୁ ରେସିପି ସୃଷ୍ଟି ଏବଂ ସଞ୍ଚୟ କରନ୍ତୁ!",
+    "generateRecipe": "ଏକ ରେସିପି ସୃଷ୍ଟି କରନ୍ତୁ",
+    "signInRequired": "ଆପଣଙ୍କ ପୋଷଣ ଡ୍ୟାସବୋର୍ଡ ଦେଖିବାକୁ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ"
   }
 }

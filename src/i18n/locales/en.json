@@ -45,8 +45,15 @@
     "automatedShoppingDesc": "Generate shopping lists automatically from your selected recipes.",
     "nutritionFocused": "Nutrition Focused",
     "nutritionFocusedDesc": "Track macros and nutritional information for every recipe.",
+    "nutritionDashboard": "Nutrition Dashboard",
+    "nutritionDashboardDesc": "Visual tracking of your weekly calories, protein, carbs and fats.",
     "footer": "2024 NutriChef. All rights reserved.",
-    "useLeftovers": "Use Leftovers"
+    "useLeftovers": "Use Leftovers",
+    "freshSalads": "Fresh Salads",
+    "warmBowls": "Warm Bowls",
+    "festivalSpecials": "Festival Specials",
+    "mealPrep": "Meal Prep",
+    "upcomingFestivals": "Upcoming Festivals"
   },
   "auth": {
     "title": "Healthy Recipe Generator",
@@ -128,7 +135,9 @@
     "savedRecipes": "Saved Recipes",
     "mealPlanning": "Meal Planning",
     "shoppingList": "Shopping List",
-    "leftoverRecipe": "Use Leftovers"
+    "leftoverRecipe": "Use Leftovers",
+    "festivalRecipes": "Festival Recipes",
+    "nutrition": "Nutrition"
   },
   "preferences": {
     "title": "Recipe Preferences",
@@ -240,5 +249,28 @@
     "commonIngredients": "Quick add common ingredients",
     "generate": "Generate Recipe",
     "usingOnly": "Using only your ingredients"
+  },
+  "festival": {
+    "title": "Festival & Seasonal Recipes",
+    "subtitle": "Discover traditional recipes from festivals around the world",
+    "searchPlaceholder": "Search festivals, regions, or dishes...",
+    "upcoming": "Upcoming Festivals",
+    "allFestivals": "All Festivals",
+    "results": "Search Results",
+    "noResults": "No festivals found matching your search",
+    "tryThese": "Try these dishes:"
+  },
+  "nutrition": {
+    "title": "Nutrition Dashboard",
+    "subtitle": "Track your nutritional intake from saved recipes",
+    "week": "This Week",
+    "month": "This Month",
+    "caloriesByDay": "Calories by Day",
+    "macroBreakdown": "Macro Breakdown",
+    "macroTrend": "Macro Trends Over Time",
+    "noData": "No nutrition data yet",
+    "noDataDesc": "Generate and save recipes to start tracking your nutrition!",
+    "generateRecipe": "Generate a Recipe",
+    "signInRequired": "Sign in to view your nutrition dashboard"
   }
 }

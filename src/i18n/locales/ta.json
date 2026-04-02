@@ -46,7 +46,14 @@
     "nutritionFocused": "ஊட்டச்சத்து மையம்",
     "nutritionFocusedDesc": "ஒவ்வொரு குறிப்புக்கும் மேக்ரோக்கள் மற்றும் ஊட்டச்சத்து தகவல்களைக் கண்காணிக்கவும்.",
     "footer": "2024 NutriChef. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.",
-    "useLeftovers": "Use Leftovers"
+    "useLeftovers": "Use Leftovers",
+    "freshSalads": "புதிய சாலட்",
+    "warmBowls": "சூடான பவுல்",
+    "festivalSpecials": "திருவிழா சிறப்பு",
+    "mealPrep": "மீல் பிரெப்",
+    "upcomingFestivals": "வரவிருக்கும் திருவிழாக்கள்",
+    "nutritionDashboard": "ஊட்டச்சத்து டாஷ்போர்டு",
+    "nutritionDashboardDesc": "உங்கள் வாராந்திர கலோரி, புரதம், கார்ப்ஸ் மற்றும் கொழுப்பு கண்காணிப்பு"
   },
   "auth": {
     "title": "ஆரோக்கிய சமையல் குறிப்பு ஜெனரேட்டர்",
@@ -127,7 +134,9 @@
     "savedRecipes": "சேமித்த குறிப்புகள்",
     "mealPlanning": "உணவு திட்டம்",
     "shoppingList": "கடை பட்டியல்",
-    "leftoverRecipe": "Use Leftovers"
+    "leftoverRecipe": "Use Leftovers",
+    "festivalRecipes": "திருவிழா ரெசிபி",
+    "nutrition": "ஊட்டச்சத்து"
   },
   "preferences": {
     "title": "சமையல் விருப்பங்கள்",
@@ -229,5 +238,28 @@
     "commonIngredients": "Quick add common ingredients",
     "generate": "Generate Recipe",
     "usingOnly": "Using only your ingredients"
+  },
+  "festival": {
+    "title": "திருவிழா & பருவகால ரெசிபிகள்",
+    "subtitle": "உலகெங்கிலும் உள்ள திருவிழாக்களின் பாரம்பரிய ரெசிபிகள்",
+    "searchPlaceholder": "திருவிழா, பகுதி அல்லது உணவு தேடுங்கள்...",
+    "upcoming": "வரவிருக்கும் திருவிழாக்கள்",
+    "allFestivals": "அனைத்து திருவிழாக்கள்",
+    "results": "தேடல் முடிவுகள்",
+    "noResults": "திருவிழாக்கள் எதுவும் கிடைக்கவில்லை",
+    "tryThese": "இந்த உணவுகளை முயற்சிக்கவும்:"
+  },
+  "nutrition": {
+    "title": "ஊட்டச்சத்து டாஷ்போர்டு",
+    "subtitle": "சேமித்த ரெசிபிகளிலிருந்து உங்கள் ஊட்டச்சத்து உட்கொள்ளலைக் கண்காணிக்கவும்",
+    "week": "இந்த வாரம்",
+    "month": "இந்த மாதம்",
+    "caloriesByDay": "நாளுக்கு கலோரி",
+    "macroBreakdown": "மேக்ரோ பகுப்பாய்வு",
+    "macroTrend": "காலப்போக்கில் மேக்ரோ போக்குகள்",
+    "noData": "இதுவரை ஊட்டச்சத்து தரவு இல்லை",
+    "noDataDesc": "ஊட்டச்சத்து கண்காணிப்பைத் தொடங்க ரெசிபிகளை உருவாக்கி சேமியுங்கள்!",
+    "generateRecipe": "ஒரு ரெசிபி உருவாக்கவும்",
+    "signInRequired": "உங்கள் ஊட்டச்சத்து டாஷ்போர்டைப் பார்க்க உள்நுழையவும்"
   }
 }

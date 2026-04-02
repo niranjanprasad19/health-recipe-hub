@@ -46,7 +46,14 @@
     "nutritionFocused": "पोषण केंद्रित",
     "nutritionFocusedDesc": "प्रत्येक रेसिपीसाठी मॅक्रो आणि पोषण माहिती ट्रॅक करा.",
     "footer": "2024 NutriChef. सर्व हक्क राखीव.",
-    "useLeftovers": "Use Leftovers"
+    "useLeftovers": "Use Leftovers",
+    "freshSalads": "ताजे सॅलड",
+    "warmBowls": "गरम बाउल",
+    "festivalSpecials": "सणाचे स्पेशल",
+    "mealPrep": "मील प्रेप",
+    "upcomingFestivals": "आगामी सण",
+    "nutritionDashboard": "पोषण डॅशबोर्ड",
+    "nutritionDashboardDesc": "तुमच्या साप्ताहिक कॅलरी, प्रोटीन, कार्ब्स आणि फॅट ट्रॅकिंग"
   },
   "auth": {
     "title": "आरोग्यदायी रेसिपी जनरेटर",
@@ -127,7 +134,9 @@
     "savedRecipes": "जतन केलेल्या रेसिपी",
     "mealPlanning": "जेवण नियोजन",
     "shoppingList": "खरेदी यादी",
-    "leftoverRecipe": "Use Leftovers"
+    "leftoverRecipe": "Use Leftovers",
+    "festivalRecipes": "सणाच्या रेसिपी",
+    "nutrition": "पोषण"
   },
   "preferences": {
     "title": "रेसिपी प्राधान्ये",
@@ -229,5 +238,28 @@
     "commonIngredients": "Quick add common ingredients",
     "generate": "Generate Recipe",
     "usingOnly": "Using only your ingredients"
+  },
+  "festival": {
+    "title": "सण आणि हंगामी रेसिपी",
+    "subtitle": "जगभरातील सणांमधून पारंपरिक रेसिपी शोधा",
+    "searchPlaceholder": "सण, प्रदेश किंवा पदार्थ शोधा...",
+    "upcoming": "आगामी सण",
+    "allFestivals": "सर्व सण",
+    "results": "शोध परिणाम",
+    "noResults": "कोणताही सण सापडला नाही",
+    "tryThese": "हे पदार्थ वापरून बघा:"
+  },
+  "nutrition": {
+    "title": "पोषण डॅशबोर्ड",
+    "subtitle": "सेव्ह केलेल्या रेसिपींमधून तुमचे पोषण सेवन ट्रॅक करा",
+    "week": "या आठवड्यात",
+    "month": "या महिन्यात",
+    "caloriesByDay": "दिवसानुसार कॅलरी",
+    "macroBreakdown": "मॅक्रो विश्लेषण",
+    "macroTrend": "कालांतराने मॅक्रो ट्रेंड",
+    "noData": "अजून पोषण डेटा नाही",
+    "noDataDesc": "पोषण ट्रॅकिंग सुरू करण्यासाठी रेसिपी बनवा आणि सेव्ह करा!",
+    "generateRecipe": "एक रेसिपी तयार करा",
+    "signInRequired": "तुमचे पोषण डॅशबोर्ड पाहण्यासाठी साइन इन करा"
   }
 }

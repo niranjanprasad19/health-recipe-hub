@@ -17,6 +17,8 @@ import NotFound from "./pages/NotFound";
 import QuickRecipe from "./pages/QuickRecipe";
 import ResetPassword from "./pages/ResetPassword";
 import LeftoverRecipe from "./pages/LeftoverRecipe";
+import FestivalRecipes from "./pages/FestivalRecipes";
+import NutritionDashboard from "./pages/NutritionDashboard";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +43,8 @@ const App = () => (
             <Route path="/shared/:shareToken" element={<SharedRecipe />} />
             <Route path="/quick-recipe" element={<QuickRecipe />} />
             <Route path="/leftover-recipe" element={<LeftoverRecipe />} />
+            <Route path="/festival-recipes" element={<FestivalRecipes />} />
+            <Route path="/nutrition" element={<NutritionDashboard />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
