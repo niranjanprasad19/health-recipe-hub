@@ -46,7 +46,14 @@
     "nutritionFocused": "പോഷക കേന്ദ്രീകൃതം",
     "nutritionFocusedDesc": "ഓരോ കുറിപ്പിനും മാക്രോകളും പോഷക വിവരങ്ങളും ട്രാക്ക് ചെയ്യുക.",
     "footer": "2024 NutriChef. എല്ലാ അവകാശങ്ങളും സംരക്ഷിതം.",
-    "useLeftovers": "Use Leftovers"
+    "useLeftovers": "Use Leftovers",
+    "freshSalads": "പുതിയ സാലഡ്",
+    "warmBowls": "ചൂടുള്ള ബൗൾ",
+    "festivalSpecials": "ഉത്സവ സ്പെഷ്യൽ",
+    "mealPrep": "മീൽ പ്രെപ്പ്",
+    "upcomingFestivals": "വരാനിരിക്കുന്ന ഉത്സവങ്ങൾ",
+    "nutritionDashboard": "പോഷകാഹാര ഡാഷ്‌ബോർഡ്",
+    "nutritionDashboardDesc": "നിങ്ങളുടെ പ്രതിവാര കലോറി, പ്രോട്ടീൻ, കാർബ്സ്, ഫാറ്റ് ട്രാക്കിംഗ്"
   },
   "auth": {
     "title": "ആരോഗ്യകരമായ പാചക കുറിപ്പ് ജനറേറ്റർ",
@@ -127,7 +134,9 @@
     "savedRecipes": "സേവ് ചെയ്ത കുറിപ്പുകൾ",
     "mealPlanning": "ഭക്ഷണ ആസൂത്രണം",
     "shoppingList": "ഷോപ്പിംഗ് ലിസ്റ്റ്",
-    "leftoverRecipe": "Use Leftovers"
+    "leftoverRecipe": "Use Leftovers",
+    "festivalRecipes": "ഉത്സവ റെസിപ്പി",
+    "nutrition": "പോഷകാഹാരം"
   },
   "preferences": {
     "title": "പാചക മുൻഗണനകൾ",
@@ -229,5 +238,28 @@
     "commonIngredients": "Quick add common ingredients",
     "generate": "Generate Recipe",
     "usingOnly": "Using only your ingredients"
+  },
+  "festival": {
+    "title": "ഉത്സവ & സീസണൽ റെസിപ്പികൾ",
+    "subtitle": "ലോകമെമ്പാടുമുള്ള ഉത്സവങ്ങളിൽ നിന്ന് പരമ്പരാഗത റെസിപ്പികൾ",
+    "searchPlaceholder": "ഉത്സവം, പ്രദേശം അല്ലെങ്കിൽ വിഭവം തിരയുക...",
+    "upcoming": "വരാനിരിക്കുന്ന ഉത്സവങ്ങൾ",
+    "allFestivals": "എല്ലാ ഉത്സവങ്ങളും",
+    "results": "തിരയൽ ഫലങ്ങൾ",
+    "noResults": "ഉത്സവങ്ങളൊന്നും കണ്ടെത്തിയില്ല",
+    "tryThese": "ഈ വിഭവങ്ങൾ പരീക്ഷിക്കുക:"
+  },
+  "nutrition": {
+    "title": "പോഷകാഹാര ഡാഷ്‌ബോർഡ്",
+    "subtitle": "സേവ് ചെയ്ത റെസിപ്പികളിൽ നിന്ന് നിങ്ങളുടെ പോഷക ഉപഭോഗം ട്രാക്ക് ചെയ്യുക",
+    "week": "ഈ ആഴ്ച",
+    "month": "ഈ മാസം",
+    "caloriesByDay": "ദിവസം അനുസരിച്ച് കലോറി",
+    "macroBreakdown": "മാക്രോ വിശകലനം",
+    "macroTrend": "കാലക്രമേണ മാക്രോ ട്രെൻഡ്",
+    "noData": "ഇതുവരെ പോഷകാഹാര ഡാറ്റ ഇല്ല",
+    "noDataDesc": "പോഷകാഹാര ട്രാക്കിംഗ് ആരംഭിക്കാൻ റെസിപ്പികൾ സൃഷ്ടിച്ച് സേവ് ചെയ്യുക!",
+    "generateRecipe": "ഒരു റെസിപ്പി സൃഷ്ടിക്കുക",
+    "signInRequired": "നിങ്ങളുടെ പോഷകാഹാര ഡാഷ്‌ബോർഡ് കാണാൻ സൈൻ ഇൻ ചെയ്യുക"
   }
 }

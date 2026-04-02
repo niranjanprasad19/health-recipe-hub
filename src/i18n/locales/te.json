@@ -46,7 +46,14 @@
     "nutritionFocused": "పోషకాహార కేంద్రం",
     "nutritionFocusedDesc": "ప్రతి వంటకం కోసం మాక్రోలు మరియు పోషకాహార సమాచారాన్ని ట్రాక్ చేయండి.",
     "footer": "2024 NutriChef. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి.",
-    "useLeftovers": "Use Leftovers"
+    "useLeftovers": "Use Leftovers",
+    "freshSalads": "తాజా సలాడ్",
+    "warmBowls": "వేడి బౌల్",
+    "festivalSpecials": "పండుగ స్పెషల్",
+    "mealPrep": "మీల్ ప్రెప్",
+    "upcomingFestivals": "రాబోయే పండుగలు",
+    "nutritionDashboard": "పోషణ డాష్‌బోర్డ్",
+    "nutritionDashboardDesc": "మీ వారపు కేలరీలు, ప్రోటీన్, కార్బ్స్ మరియు ఫ్యాట్ ట్రాకింగ్"
   },
   "auth": {
     "title": "ఆరోగ్యకర వంటకాల జనరేటర్",
@@ -127,7 +134,9 @@
     "savedRecipes": "సేవ్ చేసిన వంటకాలు",
     "mealPlanning": "భోజన ప్రణాళిక",
     "shoppingList": "షాపింగ్ జాబితా",
-    "leftoverRecipe": "Use Leftovers"
+    "leftoverRecipe": "Use Leftovers",
+    "festivalRecipes": "పండుగ రెసిపీ",
+    "nutrition": "పోషణ"
   },
   "preferences": {
     "title": "వంటకాల ప్రాధాన్యతలు",
@@ -229,5 +238,28 @@
     "commonIngredients": "Quick add common ingredients",
     "generate": "Generate Recipe",
     "usingOnly": "Using only your ingredients"
+  },
+  "festival": {
+    "title": "పండుగ & సీజనల్ రెసిపీలు",
+    "subtitle": "ప్రపంచవ్యాప్త పండుగల నుండి సంప్రదాయ రెసిపీలు",
+    "searchPlaceholder": "పండుగ, ప్రాంతం లేదా వంటకం వెతకండి...",
+    "upcoming": "రాబోయే పండుగలు",
+    "allFestivals": "అన్ని పండుగలు",
+    "results": "శోధన ఫలితాలు",
+    "noResults": "పండుగలు ఏవీ కనుగొనబడలేదు",
+    "tryThese": "ఈ వంటకాలను ప్రయత్నించండి:"
+  },
+  "nutrition": {
+    "title": "పోషణ డాష్‌బోర్డ్",
+    "subtitle": "సేవ్ చేసిన రెసిపీల నుండి మీ పోషణ తీసుకోవడాన్ని ట్రాక్ చేయండి",
+    "week": "ఈ వారం",
+    "month": "ఈ నెల",
+    "caloriesByDay": "రోజుకు కేలరీలు",
+    "macroBreakdown": "మాక్రో విశ్లేషణ",
+    "macroTrend": "కాలక్రమేణా మాక్రో ట్రెండ్‌లు",
+    "noData": "ఇంకా పోషణ డేటా లేదు",
+    "noDataDesc": "పోషణ ట్రాకింగ్ ప్రారంభించడానికి రెసిపీలను సృష్టించి సేవ్ చేయండి!",
+    "generateRecipe": "ఒక రెసిపీ రూపొందించండి",
+    "signInRequired": "మీ పోషణ డాష్‌బోర్డ్ చూడటానికి సైన్ ఇన్ చేయండి"
   }
 }

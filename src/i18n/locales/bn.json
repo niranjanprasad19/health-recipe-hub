@@ -46,7 +46,14 @@
     "nutritionFocused": "পুষ্টি কেন্দ্রিক",
     "nutritionFocusedDesc": "প্রতিটি রেসিপির জন্য ম্যাক্রো এবং পুষ্টি তথ্য ট্র্যাক করুন।",
     "footer": "2024 NutriChef. সমস্ত অধিকার সংরক্ষিত।",
-    "useLeftovers": "Use Leftovers"
+    "useLeftovers": "Use Leftovers",
+    "freshSalads": "তাজা সালাদ",
+    "warmBowls": "গরম বাটি",
+    "festivalSpecials": "উৎসব বিশেষ",
+    "mealPrep": "মিল প্রেপ",
+    "upcomingFestivals": "আসন্ন উৎসব",
+    "nutritionDashboard": "পুষ্টি ড্যাশবোর্ড",
+    "nutritionDashboardDesc": "আপনার সাপ্তাহিক ক্যালোরি, প্রোটিন, কার্বস এবং ফ্যাট ট্র্যাকিং"
   },
   "auth": {
     "title": "স্বাস্থ্যকর রেসিপি জেনারেটর",
@@ -127,7 +134,9 @@
     "savedRecipes": "সংরক্ষিত রেসিপি",
     "mealPlanning": "খাবার পরিকল্পনা",
     "shoppingList": "কেনাকাটার তালিকা",
-    "leftoverRecipe": "Use Leftovers"
+    "leftoverRecipe": "Use Leftovers",
+    "festivalRecipes": "উৎসব রেসিপি",
+    "nutrition": "পুষ্টি"
   },
   "preferences": {
     "title": "রেসিপি পছন্দ",
@@ -229,5 +238,28 @@
     "commonIngredients": "Quick add common ingredients",
     "generate": "Generate Recipe",
     "usingOnly": "Using only your ingredients"
+  },
+  "festival": {
+    "title": "উৎসব ও মৌসুমী রেসিপি",
+    "subtitle": "বিশ্বের উৎসব থেকে ঐতিহ্যবাহী রেসিপি আবিষ্কার করুন",
+    "searchPlaceholder": "উৎসব, অঞ্চল বা খাবার খুঁজুন...",
+    "upcoming": "আসন্ন উৎসব",
+    "allFestivals": "সব উৎসব",
+    "results": "অনুসন্ধান ফলাফল",
+    "noResults": "কোন উৎসব পাওয়া যায়নি",
+    "tryThese": "এই খাবার চেষ্টা করুন:"
+  },
+  "nutrition": {
+    "title": "পুষ্টি ড্যাশবোর্ড",
+    "subtitle": "সংরক্ষিত রেসিপি থেকে আপনার পুষ্টি গ্রহণ ট্র্যাক করুন",
+    "week": "এই সপ্তাহ",
+    "month": "এই মাস",
+    "caloriesByDay": "দিনের হিসাবে ক্যালোরি",
+    "macroBreakdown": "ম্যাক্রো বিশ্লেষণ",
+    "macroTrend": "সময়ের সাথে ম্যাক্রো ট্রেন্ড",
+    "noData": "এখনো কোন পুষ্টি ডেটা নেই",
+    "noDataDesc": "পুষ্টি ট্র্যাকিং শুরু করতে রেসিপি তৈরি ও সংরক্ষণ করুন!",
+    "generateRecipe": "একটি রেসিপি তৈরি করুন",
+    "signInRequired": "আপনার পুষ্টি ড্যাশবোর্ড দেখতে সাইন ইন করুন"
   }
 }

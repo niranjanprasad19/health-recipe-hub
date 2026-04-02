@@ -46,7 +46,14 @@
     "nutritionFocused": "ਪੋਸ਼ਣ ਕੇਂਦਰਿਤ",
     "nutritionFocusedDesc": "ਹਰ ਪਕਵਾਨ ਲਈ ਮੈਕਰੋ ਅਤੇ ਪੋਸ਼ਣ ਜਾਣਕਾਰੀ ਟਰੈਕ ਕਰੋ.",
     "footer": "2024 NutriChef. ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ.",
-    "useLeftovers": "Use Leftovers"
+    "useLeftovers": "Use Leftovers",
+    "freshSalads": "ਤਾਜ਼ੇ ਸਲਾਦ",
+    "warmBowls": "ਗਰਮ ਬਾਊਲ",
+    "festivalSpecials": "ਤਿਉਹਾਰ ਸਪੈਸ਼ਲ",
+    "mealPrep": "ਮੀਲ ਪ੍ਰੈਪ",
+    "upcomingFestivals": "ਆਉਣ ਵਾਲੇ ਤਿਉਹਾਰ",
+    "nutritionDashboard": "ਪੋਸ਼ਣ ਡੈਸ਼ਬੋਰਡ",
+    "nutritionDashboardDesc": "ਤੁਹਾਡੀ ਹਫ਼ਤਾਵਾਰੀ ਕੈਲੋਰੀ, ਪ੍ਰੋਟੀਨ, ਕਾਰਬਸ ਅਤੇ ਫੈਟ ਟਰੈਕਿੰਗ"
   },
   "auth": {
     "title": "ਸਿਹਤਮੰਦ ਪਕਵਾਨ ਜਨਰੇਟਰ",
@@ -127,7 +134,9 @@
     "savedRecipes": "ਸੇਵ ਕੀਤੇ ਪਕਵਾਨ",
     "mealPlanning": "ਖੁਰਾਕ ਯੋਜਨਾ",
     "shoppingList": "ਖਰੀਦਦਾਰੀ ਸੂਚੀ",
-    "leftoverRecipe": "Use Leftovers"
+    "leftoverRecipe": "Use Leftovers",
+    "festivalRecipes": "ਤਿਉਹਾਰ ਰੈਸਿਪੀ",
+    "nutrition": "ਪੋਸ਼ਣ"
   },
   "preferences": {
     "title": "ਪਕਵਾਨ ਤਰਜੀਹਾਂ",
@@ -229,5 +238,28 @@
     "commonIngredients": "Quick add common ingredients",
     "generate": "Generate Recipe",
     "usingOnly": "Using only your ingredients"
+  },
+  "festival": {
+    "title": "ਤਿਉਹਾਰ ਅਤੇ ਮੌਸਮੀ ਰੈਸਿਪੀ",
+    "subtitle": "ਦੁਨੀਆ ਭਰ ਦੇ ਤਿਉਹਾਰਾਂ ਤੋਂ ਰਵਾਇਤੀ ਰੈਸਿਪੀ",
+    "searchPlaceholder": "ਤਿਉਹਾਰ, ਖੇਤਰ ਜਾਂ ਪਕਵਾਨ ਲੱਭੋ...",
+    "upcoming": "ਆਉਣ ਵਾਲੇ ਤਿਉਹਾਰ",
+    "allFestivals": "ਸਾਰੇ ਤਿਉਹਾਰ",
+    "results": "ਖੋਜ ਨਤੀਜੇ",
+    "noResults": "ਕੋਈ ਤਿਉਹਾਰ ਨਹੀਂ ਮਿਲਿਆ",
+    "tryThese": "ਇਹ ਪਕਵਾਨ ਅਜ਼ਮਾਓ:"
+  },
+  "nutrition": {
+    "title": "ਪੋਸ਼ਣ ਡੈਸ਼ਬੋਰਡ",
+    "subtitle": "ਸੇਵ ਕੀਤੀਆਂ ਰੈਸਿਪੀਆਂ ਤੋਂ ਆਪਣੀ ਪੋਸ਼ਣ ਖਪਤ ਟਰੈਕ ਕਰੋ",
+    "week": "ਇਸ ਹਫ਼ਤੇ",
+    "month": "ਇਸ ਮਹੀਨੇ",
+    "caloriesByDay": "ਦਿਨ ਅਨੁਸਾਰ ਕੈਲੋਰੀ",
+    "macroBreakdown": "ਮੈਕਰੋ ਵਿਸ਼ਲੇਸ਼ਣ",
+    "macroTrend": "ਸਮੇਂ ਨਾਲ ਮੈਕਰੋ ਰੁਝਾਨ",
+    "noData": "ਅਜੇ ਕੋਈ ਪੋਸ਼ਣ ਡਾਟਾ ਨਹੀਂ",
+    "noDataDesc": "ਪੋਸ਼ਣ ਟਰੈਕਿੰਗ ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਰੈਸਿਪੀ ਬਣਾਓ ਅਤੇ ਸੇਵ ਕਰੋ!",
+    "generateRecipe": "ਇੱਕ ਰੈਸਿਪੀ ਬਣਾਓ",
+    "signInRequired": "ਆਪਣਾ ਪੋਸ਼ਣ ਡੈਸ਼ਬੋਰਡ ਦੇਖਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ"
   }
 }
