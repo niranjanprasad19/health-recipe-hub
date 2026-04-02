@@ -73,6 +73,8 @@ export const Header = ({
     { to: "/", label: t('nav.home'), icon: Home },
     { to: "/search", label: t('nav.search'), icon: Search },
     { to: "/leftover-recipe", label: t('nav.leftoverRecipe'), icon: Refrigerator },
+    { to: "/festival-recipes", label: t('nav.festivalRecipes'), icon: PartyPopper },
+    { to: "/nutrition", label: t('nav.nutrition'), icon: TrendingUp },
     { to: "/profile", label: t('nav.savedRecipes'), icon: Heart },
     { to: "/meal-planning", label: t('nav.mealPlanning'), icon: Calendar },
     { to: "/shopping-list", label: t('nav.shoppingList'), icon: ShoppingCart },
