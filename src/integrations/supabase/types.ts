@@ -14,6 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
+      collection_items: {
+        Row: {
+          added_at: string
+          collection_id: string
+          id: string
+          recipe_id: string
+        }
+        Insert: {
+          added_at?: string
+          collection_id: string
+          id?: string
+          recipe_id: string
+        }
+        Update: {
+          added_at?: string
+          collection_id?: string
+          id?: string
+          recipe_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collection_items_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "recipe_collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collection_items_recipe_id_fkey"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "saved_recipes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      family_profiles: {
+        Row: {
+          age_range: string | null
+          allergies: string[] | null
+          avatar_emoji: string | null
+          created_at: string
+          dietary_preferences: string[] | null
+          favorite_cuisines: string[] | null
+          id: string
+          name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          age_range?: string | null
+          allergies?: string[] | null
+          avatar_emoji?: string | null
+          created_at?: string
+          dietary_preferences?: string[] | null
+          favorite_cuisines?: string[] | null
+          id?: string
+          name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          age_range?: string | null
+          allergies?: string[] | null
+          avatar_emoji?: string | null
+          created_at?: string
+          dietary_preferences?: string[] | null
+          favorite_cuisines?: string[] | null
+          id?: string
+          name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       meal_plan_items: {
         Row: {
           created_at: string
@@ -118,6 +193,74 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      recipe_collections: {
+        Row: {
+          created_at: string
+          description: string | null
+          emoji: string | null
+          id: string
+          name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          emoji?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          emoji?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      recipe_ratings: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          rating: number | null
+          recipe_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          rating?: number | null
+          recipe_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          rating?: number | null
+          recipe_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recipe_ratings_recipe_id_fkey"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "saved_recipes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       saved_recipes: {
         Row: {
