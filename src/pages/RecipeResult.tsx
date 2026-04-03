@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   ArrowLeft, Bookmark, BookmarkCheck, Clock, Flame, Leaf, Loader2, RefreshCw,
-  Users, UtensilsCrossed, Sparkles, Check, AlertCircle, Share2, CheckCircle,
+  Users, UtensilsCrossed, Sparkles, Check, AlertCircle, Share2, CheckCircle, FolderPlus,
 } from "lucide-react";
 import { Recipe } from "@/types/recipe";
 import { supabase } from "@/integrations/supabase/client";
