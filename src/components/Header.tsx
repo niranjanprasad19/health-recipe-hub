@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Leaf, LogOut, User, ArrowLeft, Menu, Home, Calendar, ShoppingCart, Search, Heart, Upload, Refrigerator, PartyPopper, TrendingUp } from "lucide-react";
+import { Leaf, LogOut, User, ArrowLeft, Menu, Home, Calendar, ShoppingCart, Search, Heart, Upload, Refrigerator, PartyPopper, TrendingUp, BookOpen, Users } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageSelector } from "@/components/LanguageSelector";
@@ -76,6 +76,8 @@ export const Header = ({
     { to: "/festival-recipes", label: t('nav.festivalRecipes'), icon: PartyPopper },
     { to: "/nutrition", label: t('nav.nutrition'), icon: TrendingUp },
     { to: "/profile", label: t('nav.savedRecipes'), icon: Heart },
+    { to: "/collections", label: t('nav.collections'), icon: BookOpen },
+    { to: "/family-profiles", label: t('nav.familyProfiles'), icon: Users },
     { to: "/meal-planning", label: t('nav.mealPlanning'), icon: Calendar },
     { to: "/shopping-list", label: t('nav.shoppingList'), icon: ShoppingCart },
   ];

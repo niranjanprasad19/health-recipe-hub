@@ -19,6 +19,9 @@ import ResetPassword from "./pages/ResetPassword";
 import LeftoverRecipe from "./pages/LeftoverRecipe";
 import FestivalRecipes from "./pages/FestivalRecipes";
 import NutritionDashboard from "./pages/NutritionDashboard";
+import Collections from "./pages/Collections";
+import FamilyProfiles from "./pages/FamilyProfiles";
+import { OnboardingWalkthrough } from "./components/OnboardingWalkthrough";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +31,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <OnboardingWalkthrough />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Landing />} />
@@ -45,6 +49,8 @@ const App = () => (
             <Route path="/leftover-recipe" element={<LeftoverRecipe />} />
             <Route path="/festival-recipes" element={<FestivalRecipes />} />
             <Route path="/nutrition" element={<NutritionDashboard />} />
+            <Route path="/collections" element={<Collections />} />
+            <Route path="/family-profiles" element={<FamilyProfiles />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

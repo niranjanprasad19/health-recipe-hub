@@ -136,7 +136,9 @@
     "shoppingList": "షాపింగ్ జాబితా",
     "leftoverRecipe": "Use Leftovers",
     "festivalRecipes": "పండుగ రెసిపీ",
-    "nutrition": "పోషణ"
+    "nutrition": "పోషణ",
+    "collections": "Collections",
+    "familyProfiles": "Family Profiles"
   },
   "preferences": {
     "title": "వంటకాల ప్రాధాన్యతలు",
@@ -261,5 +263,69 @@
     "noDataDesc": "పోషణ ట్రాకింగ్ ప్రారంభించడానికి రెసిపీలను సృష్టించి సేవ్ చేయండి!",
     "generateRecipe": "ఒక రెసిపీ రూపొందించండి",
     "signInRequired": "మీ పోషణ డాష్‌బోర్డ్ చూడటానికి సైన్ ఇన్ చేయండి"
+  },
+  "collections": {
+    "title": "My Cookbooks",
+    "create": "Create",
+    "createNew": "Create New Collection",
+    "namePlaceholder": "e.g., Sunday Specials",
+    "descPlaceholder": "Description (optional)",
+    "noCollections": "No collections yet",
+    "noCollectionsDesc": "Organize your saved recipes into collections!",
+    "recipes": "recipes",
+    "deleteConfirm": "Delete this collection?",
+    "deleteDesc": "This will permanently remove \"{{name}}\".",
+    "created": "Collection created!",
+    "deleted": "Collection deleted",
+    "empty": "No recipes in this collection yet.",
+    "addFromSaved": "Go to Saved Recipes",
+    "addTo": "Add to Collection",
+    "addedTo": "Added to {{name}}",
+    "newQuick": "New collection name..."
+  },
+  "rating": {
+    "title": "Your Rating & Notes",
+    "saved": "Rating saved!",
+    "notesLabel": "Personal Notes",
+    "notesPlaceholder": "e.g., Added extra garlic — was perfect!"
+  },
+  "substitutions": {
+    "title": "Ingredient Substitutions",
+    "noItem": "No {{item}}?"
+  },
+  "family": {
+    "title": "Family Profiles",
+    "subtitle": "Add family members for personalized meal plans",
+    "addMember": "Add Member",
+    "editMember": "Edit Member",
+    "namePlaceholder": "e.g., Kiddo, Spouse",
+    "ageRange": "Age Range",
+    "dietaryPrefs": "Dietary Preferences",
+    "addPref": "Add preference + Enter",
+    "allergiesLabel": "Allergies",
+    "addAllergy": "Add allergy + Enter",
+    "favCuisines": "Favorite Cuisines",
+    "addCuisine": "Add cuisine + Enter",
+    "noMembers": "No family members yet",
+    "noMembersDesc": "Add members for personalized plans!",
+    "added": "Family member added!",
+    "updated": "Family member updated!",
+    "removed": "Family member removed",
+    "deleteConfirm": "Remove this member?",
+    "deleteDesc": "Remove \"{{name}}\"?"
+  },
+  "onboarding": {
+    "welcome": "Welcome to NutriChef! 🎉",
+    "welcomeDesc": "Your AI-powered recipe assistant for personalized meals.",
+    "preferences": "Set Your Preferences",
+    "preferencesDesc": "Tell us about dietary needs and favorite cuisines.",
+    "aiRecipes": "AI-Powered Recipes",
+    "aiRecipesDesc": "Type what you're craving — get complete recipes instantly.",
+    "mealPlan": "Plan Your Week",
+    "mealPlanDesc": "Organize meals and auto-generate shopping lists.",
+    "nutrition": "Track Your Nutrition",
+    "nutritionDesc": "Visual charts for calories, protein, carbs, and fats.",
+    "getStarted": "Get Started",
+    "skip": "Skip walkthrough"
   }
 }

@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
-import { Clock, Flame, Loader2, Trash2, UtensilsCrossed, User, Users } from "lucide-react";
+import { Clock, Flame, Loader2, Trash2, UtensilsCrossed, User, Users, BookOpen } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -152,6 +152,32 @@ const Profile = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Quick Links */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-8">
+          <Link to="/collections">
+            <Card className="shadow-card hover:shadow-elevated hover:border-primary/30 transition-all cursor-pointer">
+              <CardContent className="py-4 flex items-center gap-3">
+                <BookOpen className="w-8 h-8 text-primary" />
+                <div>
+                  <h3 className="font-semibold text-foreground">{t("collections.title")}</h3>
+                  <p className="text-sm text-muted-foreground">{t("collections.noCollectionsDesc")}</p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link to="/family-profiles">
+            <Card className="shadow-card hover:shadow-elevated hover:border-primary/30 transition-all cursor-pointer">
+              <CardContent className="py-4 flex items-center gap-3">
+                <Users className="w-8 h-8 text-primary" />
+                <div>
+                  <h3 className="font-semibold text-foreground">{t("family.title")}</h3>
+                  <p className="text-sm text-muted-foreground">{t("family.subtitle")}</p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
 
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">

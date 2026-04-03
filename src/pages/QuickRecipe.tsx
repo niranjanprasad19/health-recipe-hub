@@ -12,6 +12,9 @@ import { Header } from "@/components/Header";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Recipe } from "@/types/recipe";
 import { CookingMode } from "@/components/CookingMode";
+import { RecipeRating } from "@/components/RecipeRating";
+import { IngredientSubstitutions } from "@/components/IngredientSubstitutions";
+import { AddToCollectionDialog } from "@/components/AddToCollectionDialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -196,6 +199,7 @@ const QuickRecipe = () => {
               className={isSaved ? "bg-success text-success-foreground" : "gradient-primary text-primary-foreground"}>
               {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : isSaved ? <BookmarkCheck className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}
             </Button>
+            {isSaved && savedRecipeId && <AddToCollectionDialog recipeId={savedRecipeId} />}
             <Button variant="outline" size="icon" onClick={handleShare}>
               {copied ? <CheckCircle className="w-4 h-4 text-success" /> : <Share2 className="w-4 h-4" />}
             </Button>
@@ -285,6 +289,10 @@ const QuickRecipe = () => {
             </CardContent>
           </Card>
         )}
+
+        <IngredientSubstitutions ingredients={recipe.ingredients} />
+
+        {isSaved && savedRecipeId && <RecipeRating recipeId={savedRecipeId} />}
 
         <div className="flex justify-center gap-4 mt-12">
           <Button variant="outline" size="lg" onClick={() => setCookingMode(true)}>
