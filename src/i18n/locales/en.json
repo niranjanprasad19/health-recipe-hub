@@ -137,7 +137,9 @@
     "shoppingList": "Shopping List",
     "leftoverRecipe": "Use Leftovers",
     "festivalRecipes": "Festival Recipes",
-    "nutrition": "Nutrition"
+    "nutrition": "Nutrition",
+    "collections": "Collections",
+    "familyProfiles": "Family Profiles"
   },
   "preferences": {
     "title": "Recipe Preferences",
@@ -272,5 +274,69 @@
     "noDataDesc": "Generate and save recipes to start tracking your nutrition!",
     "generateRecipe": "Generate a Recipe",
     "signInRequired": "Sign in to view your nutrition dashboard"
+  },
+  "collections": {
+    "title": "My Cookbooks",
+    "create": "Create",
+    "createNew": "Create New Collection",
+    "namePlaceholder": "e.g., Sunday Specials",
+    "descPlaceholder": "Description (optional)",
+    "noCollections": "No collections yet",
+    "noCollectionsDesc": "Create your first cookbook to organize your saved recipes!",
+    "recipes": "recipes",
+    "deleteConfirm": "Delete this collection?",
+    "deleteDesc": "This will permanently remove \"{{name}}\" and unlink all recipes from it.",
+    "created": "Collection created!",
+    "deleted": "Collection deleted",
+    "empty": "No recipes in this collection yet.",
+    "addFromSaved": "Go to Saved Recipes",
+    "addTo": "Add to Collection",
+    "addedTo": "Added to {{name}}",
+    "newQuick": "New collection name..."
+  },
+  "rating": {
+    "title": "Your Rating & Notes",
+    "saved": "Rating saved!",
+    "notesLabel": "Personal Notes",
+    "notesPlaceholder": "e.g., Added extra garlic — was perfect!"
+  },
+  "substitutions": {
+    "title": "Ingredient Substitutions",
+    "noItem": "No {{item}}?"
+  },
+  "family": {
+    "title": "Family Profiles",
+    "subtitle": "Add family members so meal plans accommodate everyone's preferences",
+    "addMember": "Add Member",
+    "editMember": "Edit Member",
+    "namePlaceholder": "e.g., Kiddo, Spouse",
+    "ageRange": "Age Range",
+    "dietaryPrefs": "Dietary Preferences",
+    "addPref": "Add preference + Enter",
+    "allergiesLabel": "Allergies",
+    "addAllergy": "Add allergy + Enter",
+    "favCuisines": "Favorite Cuisines",
+    "addCuisine": "Add cuisine + Enter",
+    "noMembers": "No family members yet",
+    "noMembersDesc": "Add family members to personalize meal plans for everyone!",
+    "added": "Family member added!",
+    "updated": "Family member updated!",
+    "removed": "Family member removed",
+    "deleteConfirm": "Remove this member?",
+    "deleteDesc": "This will remove \"{{name}}\" from your family profiles."
+  },
+  "onboarding": {
+    "welcome": "Welcome to NutriChef! 🎉",
+    "welcomeDesc": "Your personal AI-powered recipe assistant that creates delicious meals tailored to your taste and nutritional needs.",
+    "preferences": "Set Your Preferences",
+    "preferencesDesc": "Tell us about your dietary needs, allergies, and favorite cuisines. We'll remember everything for perfect recipes every time.",
+    "aiRecipes": "AI-Powered Recipes",
+    "aiRecipesDesc": "Just type what you're craving or use your leftovers — our AI generates complete recipes with nutrition info instantly.",
+    "mealPlan": "Plan Your Week",
+    "mealPlanDesc": "Drag and drop meals across your weekly calendar. Auto-generate shopping lists from your plan.",
+    "nutrition": "Track Your Nutrition",
+    "nutritionDesc": "Visual charts show your daily calories, protein, carbs, and fats. Stay on top of your health goals effortlessly.",
+    "getStarted": "Get Started",
+    "skip": "Skip walkthrough"
   }
 }
