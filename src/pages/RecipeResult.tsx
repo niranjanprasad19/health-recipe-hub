@@ -14,6 +14,9 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Header } from "@/components/Header";
 import { CookingMode } from "@/components/CookingMode";
+import { RecipeRating } from "@/components/RecipeRating";
+import { IngredientSubstitutions } from "@/components/IngredientSubstitutions";
+import { AddToCollectionDialog } from "@/components/AddToCollectionDialog";
 
 const formatRecipeText = (recipe: Recipe): string => {
   const ingredients = recipe.ingredients.map(i => `• ${i.amount} ${i.item}${i.notes ? ` (${i.notes})` : ''}`).join('\n');
