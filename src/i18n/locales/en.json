@@ -53,7 +53,13 @@
     "warmBowls": "Warm Bowls",
     "festivalSpecials": "Festival Specials",
     "mealPrep": "Meal Prep",
-    "upcomingFestivals": "Upcoming Festivals"
+    "upcomingFestivals": "Upcoming Festivals",
+    "recipesGenerated": "Recipes Generated",
+    "cuisines": "Global Cuisines",
+    "ingredients": "Ingredients",
+    "languages": "Languages",
+    "ctaTitle": "Ready to Cook Something Amazing?",
+    "ctaDescription": "Join thousands of food lovers and start generating personalized recipes today."
   },
   "auth": {
     "title": "Healthy Recipe Generator",
