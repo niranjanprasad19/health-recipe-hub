@@ -1,62 +1,73 @@
 
 
-# Feature Plan: Cooking Timer + Leftover Recipe Generator
+# Award-Winning Visual Redesign for NutriCheff
 
-## Feature 1: Cooking Timer & Step-by-Step Mode
+## What We're Building
 
-Add a "Start Cooking" button on recipe pages that opens a full-screen cooking mode with one step at a time, navigation arrows, and built-in countdown timers.
+A complete visual overhaul inspired by award-winning website patterns: immersive hero with scroll animations, glassmorphism cards, micro-interactions on every element, AI-generated food photography, storytelling scroll sections, conversion-focused CTAs, and polished typography throughout. The goal is to make NutriCheff feel like a premium, magazine-quality food platform.
 
-### Changes
+## Changes
 
-**New component: `src/components/CookingMode.tsx`**
-- Full-screen overlay/dialog that takes a `Recipe` as prop
-- Shows one instruction step at a time with large text for kitchen readability
-- Previous/Next navigation buttons + step counter (e.g., "Step 3 of 8")
-- Auto-detect time mentions in instructions (e.g., "cook for 5 minutes") and show a "Start Timer" button
-- Countdown timer with audio beep when complete (using `new Audio()` with a simple tone)
-- Progress bar across the top showing completion
-- "Keep screen awake" using Wake Lock API where supported
-- Large tap targets for greasy-finger-friendly interaction
-- Close/exit button to return to normal view
+### 1. Landing Page -- Immersive Hero Redesign
+**File: `src/pages/Landing.tsx`**
+- Replace static hero with a full-viewport cinematic hero featuring animated text reveal (word-by-word), floating food elements, and a pulsing CTA button with glow effect
+- Add a smooth scroll-triggered storytelling section: as user scrolls, content fades/slides in with staggered timing -- stats counter ("10,000+ recipes generated"), testimonial-style quote blocks, and feature showcases with parallax food images
+- Replace flat feature cards with glassmorphism cards (backdrop-blur, semi-transparent backgrounds, subtle borders) with hover lift + glow animations
+- Add an animated "How it Works" section with a connecting line/path between steps (SVG animated on scroll)
+- Horizontal auto-scrolling recipe inspiration ticker/marquee
+- Conversion-focused CTA section at bottom with gradient background and animated arrow
 
-**Update `src/pages/QuickRecipe.tsx` and `src/pages/RecipeResult.tsx`**
-- Add a prominent "Start Cooking" button (with a Play icon) next to existing action buttons
-- Import and render `CookingMode` as a dialog/overlay when activated
+### 2. Global Design System Upgrade
+**File: `src/index.css`**
+- Add glassmorphism utility classes (`.glass-card`, `.glass-dark`)
+- Add text gradient utilities for headings
+- Add shimmer/skeleton loading animation
+- Add smooth page transition classes
+- Enhance glow effects and add hover-lift utility
 
-**Update `src/i18n/locales/*.json` (all 11 files)**
-- Add keys: `cooking.startCooking`, `cooking.step`, `cooking.of`, `cooking.startTimer`, `cooking.timerDone`, `cooking.previous`, `cooking.next`, `cooking.finish`, `cooking.exitCooking`
+**File: `tailwind.config.ts`**
+- Add new keyframes: `shimmer`, `float-slow`, `text-reveal`, `marquee`, `counter-up`
+- Add backdrop-blur utilities and glass effect presets
 
----
+### 3. Header -- Sticky with Blur Effect
+**File: `src/components/Header.tsx`**
+- Make header sticky with `backdrop-blur-xl` glassmorphism effect on scroll
+- Add scroll-aware background opacity (transparent at top, blurred when scrolled)
+- Subtle bottom border that appears on scroll
 
-## Feature 2: Leftover Recipe Generator
+### 4. Recipe Cards -- Visual Upgrade
+**File: `src/pages/Landing.tsx` (RecipeCard component)**
+- Add gradient overlay on hover
+- Animated icon transitions
+- Subtle scale + shadow on hover with spring animation
 
-A new page where users input ingredients they already have and get AI-generated recipes using only those ingredients.
+### 5. Auth Page -- Premium Feel
+**File: `src/pages/Auth.tsx`**
+- Add decorative food illustration/pattern in background
+- Glassmorphism card for the login form
+- Animated form field focus states with glow borders
 
-### Changes
+### 6. Page Transitions
+**File: `src/App.tsx`**
+- Wrap routes with framer-motion `AnimatePresence` for smooth page enter/exit transitions (fade + slight slide up)
 
-**New page: `src/pages/LeftoverRecipe.tsx`**
-- Input area with tag-style ingredient entry (type + Enter to add, click X to remove)
-- Common ingredient quick-add chips (Onion, Tomato, Rice, Eggs, Potato, Bread, Chicken, Paneer, etc.)
-- "Generate Recipe" button that calls the existing `generate-recipe` edge function with a specialized prompt like "Create a recipe using ONLY these ingredients: [list]. Suggest minimal additional pantry staples if needed."
-- Shows the generated recipe in the same card format as QuickRecipe
-- Same save/share functionality as QuickRecipe
+### 7. AI-Generated Food Hero Images
+**File: `supabase/functions/generate-recipe/index.ts`** (or new edge function)
+- Use Lovable AI image generation (Nano banana) to generate a dish photo when a recipe is created
+- Display generated image at top of recipe result pages
 
-**Update `src/App.tsx`**
-- Add route: `/leftover-recipe` -> `LeftoverRecipe`
+### 8. Interactive Elements Throughout
+- Animated counters on landing page stats
+- Hover-reveal descriptions on feature cards
+- Smooth accordion animations on recipe instructions
+- Button ripple effects on click
+- Loading states with branded skeleton screens instead of spinners
 
-**Update `src/pages/Landing.tsx`**
-- Add a new quick action button: "Use Leftovers" with a Refrigerator icon
-- Add "Leftover Recipe" to trending tags
-
-**Update `src/components/Header.tsx`**
-- Add navigation link to leftover recipe page
-
-**Update `supabase/functions/generate-recipe/index.ts`**
-- Add optional `mode` field to Zod schema (`"standard" | "leftover"`)
-- When mode is "leftover", modify the AI prompt to emphasize using only the provided ingredients and suggest minimal extras
-
-**Update `src/i18n/locales/*.json` (all 11 files)**
-- Add keys: `leftover.title`, `leftover.subtitle`, `leftover.addIngredient`, `leftover.placeholder`, `leftover.commonIngredients`, `leftover.generate`, `leftover.usingOnly`
-
-### No database changes needed -- both features use existing tables and edge functions.
+## Technical Notes
+- All animations use `framer-motion` (already installed) for performance
+- Glassmorphism uses CSS `backdrop-filter: blur()` with fallbacks
+- No new dependencies needed beyond what's already installed
+- AI image generation uses the existing Lovable AI gateway
+- All new classes follow the existing design token system (CSS variables)
+- Dark mode support maintained for every new visual element
 
