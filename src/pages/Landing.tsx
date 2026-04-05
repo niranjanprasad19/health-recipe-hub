@@ -449,7 +449,7 @@ const Landing = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-2xl sm:text-3xl font-bold text-center text-foreground mb-4"
+            className="text-2xl sm:text-3xl font-black text-center text-foreground mb-4"
           >
             {t('landing.smartRecommendations')}
           </motion.h2>
@@ -462,20 +462,20 @@ const Landing = () => {
           </div>
         </motion.section>
 
-        {/* How It Works - with connecting line */}
+        {/* How It Works */}
         <motion.section
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="py-20 max-w-4xl mx-auto"
         >
-          <h2 className="text-2xl sm:text-3xl font-bold text-center text-foreground mb-3 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-black text-center text-foreground mb-3 tracking-tight">
             {t('landing.howItWorks')}
           </h2>
           <p className="text-center text-muted-foreground mb-14">{t('landing.howItWorksSubtitle')}</p>
           <div className="relative">
-            {/* Connecting line */}
-            <div className="hidden sm:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-primary/20 via-primary/60 to-primary/20" />
+            {/* Connecting gradient line */}
+            <div className="hidden sm:block absolute top-12 left-[16%] right-[16%] h-0.5 gradient-fun rounded-full" />
             <div className="grid sm:grid-cols-3 gap-10">
               {[1, 2, 3].map((n, i) => (
                 <StepCard key={n} number={n} title={t(`landing.step${n}Title`)} description={t(`landing.step${n}Desc`)} href={n === 3 && isAuthenticated ? "/meal-planning" : n === 3 ? "/auth" : "/preferences"} delay={i * 0.15} />
