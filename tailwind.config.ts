@@ -86,8 +86,13 @@ export default {
   				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
   				border: 'hsl(var(--sidebar-border))',
   				ring: 'hsl(var(--sidebar-ring))'
-  			}
-  		},
+			},
+			'fun-yellow': 'hsl(var(--fun-yellow))',
+			'fun-orange': 'hsl(var(--fun-orange))',
+			'fun-pink': 'hsl(var(--fun-pink))',
+			'fun-green': 'hsl(var(--fun-green))',
+			'fun-teal': 'hsl(var(--fun-teal))',
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
