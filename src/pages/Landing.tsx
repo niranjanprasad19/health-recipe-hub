@@ -487,40 +487,43 @@ const Landing = () => {
 
       {/* CTA Section */}
       <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0 gradient-primary opacity-90" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(152_80%_60%/0.3),transparent_50%)]" />
+        <div className="absolute inset-0 gradient-fun opacity-90" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(45_95%_55%/0.3),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,hsl(340_75%_60%/0.2),transparent_50%)]" />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="relative z-10 container mx-auto px-4 text-center"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-primary-foreground mb-4">
+          <h2 className="text-3xl sm:text-4xl font-black text-primary-foreground mb-4">
             {t('landing.ctaTitle') || "Ready to Cook Something Amazing?"}
           </h2>
           <p className="text-primary-foreground/80 mb-8 text-lg max-w-xl mx-auto">
             {t('landing.ctaDescription') || "Join thousands of food lovers and start generating personalized recipes today."}
           </p>
           <Link to={isAuthenticated ? "/preferences" : "/auth"}>
-            <Button size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-xl px-10 py-6 text-lg font-semibold shadow-elevated">
-              {isAuthenticated ? t('landing.setPreferences') : t('common.signUp')}
-              <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </motion.span>
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+              <Button size="lg" className="bg-primary-foreground text-foreground hover:bg-primary-foreground/90 rounded-2xl px-10 py-6 text-lg font-black shadow-elevated ripple-container">
+                {isAuthenticated ? t('landing.setPreferences') : t('common.signUp')}
+                <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </motion.span>
+              </Button>
+            </motion.div>
           </Link>
         </motion.div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border/50 bg-card/50">
+      <footer className="border-t border-border/30 bg-card/50">
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl gradient-fun flex items-center justify-center shadow-soft">
                 <Leaf className="w-4 h-4 text-primary-foreground" />
               </div>
-              <span className="font-semibold text-foreground">NutriChef</span>
+              <span className="font-bold text-foreground">NutriChef</span>
             </div>
             <p className="text-sm text-muted-foreground">{t('landing.footer')}</p>
           </div>
