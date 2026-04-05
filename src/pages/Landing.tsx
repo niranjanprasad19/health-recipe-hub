@@ -140,17 +140,19 @@ const Landing = () => {
       <Header />
 
       {/* Cinematic Hero */}
-      <section ref={heroRef} className="relative min-h-[90vh] flex items-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[90vh] flex items-center overflow-hidden blob-bg">
         {/* Parallax background */}
         <motion.div style={{ y: heroY, scale: heroScale }} className="absolute inset-0 z-0">
           <img src={heroFoodImg} alt="Delicious food spread" className="w-full h-full object-cover" width={1920} height={1080} />
           <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background" />
         </motion.div>
 
-        {/* Floating food elements */}
-        <motion.div animate={{ y: [-10, 10, -10], rotate: [0, 5, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute top-20 right-10 text-5xl opacity-20 hidden lg:block">🥗</motion.div>
-        <motion.div animate={{ y: [10, -15, 10], rotate: [0, -3, 0] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute bottom-40 left-10 text-4xl opacity-20 hidden lg:block">🍛</motion.div>
-        <motion.div animate={{ y: [-5, 12, -5] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-40 left-20 text-3xl opacity-15 hidden lg:block">🌿</motion.div>
+        {/* Floating food elements - bigger, more playful */}
+        <motion.div animate={{ y: [-10, 10, -10], rotate: [0, 15, -5, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute top-20 right-10 text-6xl opacity-30 hidden lg:block drop-shadow-lg">🥗</motion.div>
+        <motion.div animate={{ y: [10, -15, 10], rotate: [0, -8, 5, 0] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute bottom-40 left-10 text-5xl opacity-30 hidden lg:block drop-shadow-lg">🍛</motion.div>
+        <motion.div animate={{ y: [-5, 12, -5], rotate: [0, 10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-40 left-20 text-4xl opacity-25 hidden lg:block">🌿</motion.div>
+        <motion.div animate={{ y: [5, -10, 5], x: [-5, 5, -5] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 0.5 }} className="absolute top-32 right-[30%] text-5xl opacity-20 hidden lg:block">🥑</motion.div>
+        <motion.div animate={{ y: [-8, 8, -8] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 3 }} className="absolute bottom-60 right-20 text-4xl opacity-25 hidden lg:block">🍊</motion.div>
 
         <motion.div style={{ opacity: heroOpacity }} className="relative z-10 container mx-auto px-4 pt-8 pb-20">
           <div className="text-center max-w-4xl mx-auto">
@@ -158,7 +160,7 @@ const Landing = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-sm font-semibold text-primary tracking-[0.2em] uppercase mb-6"
+              className="text-sm font-extrabold text-fun-orange tracking-[0.2em] uppercase mb-6"
             >
               ✦ {t('landing.tagline')} ✦
             </motion.p>
@@ -168,14 +170,14 @@ const Landing = () => {
               variants={wordReveal}
               initial="hidden"
               animate="visible"
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 tracking-tight leading-[1.1]"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-6 tracking-tight leading-[1.05]"
             >
               {heroTitle.split(" ").map((word, i) => (
                 <motion.span key={i} variants={wordChild} className="inline-block mr-[0.3em]">
                   {word}
                 </motion.span>
               ))}{" "}
-              <motion.span variants={wordChild} className="text-gradient inline-block">
+              <motion.span variants={wordChild} className="text-gradient-fun inline-block">
                 {heroHighlight}
               </motion.span>
             </motion.h1>
@@ -197,18 +199,18 @@ const Landing = () => {
               onSubmit={handleSearch}
               className="relative max-w-2xl mx-auto mb-10"
             >
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center glass-card rounded-2xl overflow-hidden shadow-elevated focus-glow transition-all duration-300">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center glass-card rounded-2xl overflow-hidden shadow-fun focus-glow transition-all duration-300">
                 <div className="flex items-center flex-1">
-                  <Search className="w-5 h-5 text-muted-foreground ml-5" />
+                  <Search className="w-5 h-5 text-fun-orange ml-5" />
                   <Input
                     type="text"
                     placeholder={t('landing.searchPlaceholder')}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="flex-1 border-0 text-base py-7 px-3 bg-transparent focus-visible:ring-0 placeholder:text-muted-foreground/50"
+                    className="flex-1 border-0 text-base py-7 px-3 bg-transparent focus-visible:ring-0 placeholder:text-muted-foreground/50 font-medium"
                   />
                 </div>
-                <Button type="submit" className="mx-2 mb-2 sm:mb-0 sm:mr-2 px-8 rounded-xl h-12 text-base font-semibold gradient-primary hover:opacity-90 transition-opacity animate-glow-pulse">
+                <Button type="submit" className="mx-2 mb-2 sm:mb-0 sm:mr-2 px-8 rounded-xl h-12 text-base font-bold gradient-fun hover:opacity-90 transition-opacity ripple-container shadow-fun">
                   {t('common.generate')}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
@@ -275,14 +277,14 @@ const Landing = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="relative py-16 border-y border-border/50">
+      <section className="relative py-16 border-y border-border/30 dots-pattern">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-center">
             {[
-              { value: 10000, suffix: "+", label: t("landing.recipesGenerated") || "Recipes Generated" },
-              { value: 50, suffix: "+", label: t("landing.cuisines") || "Global Cuisines" },
-              { value: 500, suffix: "+", label: t("landing.ingredients") || "Ingredients" },
-              { value: 15, suffix: "", label: t("landing.languages") || "Languages" },
+              { value: 10000, suffix: "+", label: t("landing.recipesGenerated") || "Recipes Generated", color: "text-gradient-fun" },
+              { value: 50, suffix: "+", label: t("landing.cuisines") || "Global Cuisines", color: "text-gradient-warm" },
+              { value: 500, suffix: "+", label: t("landing.ingredients") || "Ingredients", color: "text-gradient" },
+              { value: 15, suffix: "", label: t("landing.languages") || "Languages", color: "text-gradient-fun" },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -290,12 +292,13 @@ const Landing = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
+                whileHover={{ scale: 1.05 }}
                 className="space-y-1"
               >
-                <p className="text-3xl sm:text-4xl font-bold text-gradient">
+                <p className={`text-3xl sm:text-5xl font-black ${stat.color}`}>
                   <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                 </p>
-                <p className="text-sm text-muted-foreground">{stat.label}</p>
+                <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -446,7 +449,7 @@ const Landing = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-2xl sm:text-3xl font-bold text-center text-foreground mb-4"
+            className="text-2xl sm:text-3xl font-black text-center text-foreground mb-4"
           >
             {t('landing.smartRecommendations')}
           </motion.h2>
@@ -459,20 +462,20 @@ const Landing = () => {
           </div>
         </motion.section>
 
-        {/* How It Works - with connecting line */}
+        {/* How It Works */}
         <motion.section
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="py-20 max-w-4xl mx-auto"
         >
-          <h2 className="text-2xl sm:text-3xl font-bold text-center text-foreground mb-3 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-black text-center text-foreground mb-3 tracking-tight">
             {t('landing.howItWorks')}
           </h2>
           <p className="text-center text-muted-foreground mb-14">{t('landing.howItWorksSubtitle')}</p>
           <div className="relative">
-            {/* Connecting line */}
-            <div className="hidden sm:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-primary/20 via-primary/60 to-primary/20" />
+            {/* Connecting gradient line */}
+            <div className="hidden sm:block absolute top-12 left-[16%] right-[16%] h-0.5 gradient-fun rounded-full" />
             <div className="grid sm:grid-cols-3 gap-10">
               {[1, 2, 3].map((n, i) => (
                 <StepCard key={n} number={n} title={t(`landing.step${n}Title`)} description={t(`landing.step${n}Desc`)} href={n === 3 && isAuthenticated ? "/meal-planning" : n === 3 ? "/auth" : "/preferences"} delay={i * 0.15} />
@@ -484,40 +487,43 @@ const Landing = () => {
 
       {/* CTA Section */}
       <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0 gradient-primary opacity-90" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(152_80%_60%/0.3),transparent_50%)]" />
+        <div className="absolute inset-0 gradient-fun opacity-90" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(45_95%_55%/0.3),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,hsl(340_75%_60%/0.2),transparent_50%)]" />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="relative z-10 container mx-auto px-4 text-center"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-primary-foreground mb-4">
+          <h2 className="text-3xl sm:text-4xl font-black text-primary-foreground mb-4">
             {t('landing.ctaTitle') || "Ready to Cook Something Amazing?"}
           </h2>
           <p className="text-primary-foreground/80 mb-8 text-lg max-w-xl mx-auto">
             {t('landing.ctaDescription') || "Join thousands of food lovers and start generating personalized recipes today."}
           </p>
           <Link to={isAuthenticated ? "/preferences" : "/auth"}>
-            <Button size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-xl px-10 py-6 text-lg font-semibold shadow-elevated">
-              {isAuthenticated ? t('landing.setPreferences') : t('common.signUp')}
-              <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </motion.span>
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+              <Button size="lg" className="bg-primary-foreground text-foreground hover:bg-primary-foreground/90 rounded-2xl px-10 py-6 text-lg font-black shadow-elevated ripple-container">
+                {isAuthenticated ? t('landing.setPreferences') : t('common.signUp')}
+                <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </motion.span>
+              </Button>
+            </motion.div>
           </Link>
         </motion.div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border/50 bg-card/50">
+      <footer className="border-t border-border/30 bg-card/50">
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl gradient-fun flex items-center justify-center shadow-soft">
                 <Leaf className="w-4 h-4 text-primary-foreground" />
               </div>
-              <span className="font-semibold text-foreground">NutriChef</span>
+              <span className="font-bold text-foreground">NutriChef</span>
             </div>
             <p className="text-sm text-muted-foreground">{t('landing.footer')}</p>
           </div>
@@ -527,32 +533,56 @@ const Landing = () => {
   );
 };
 
-const FeatureCard = ({ icon, title, description, href, delay = 0 }: { icon: React.ReactNode; title: string; description: string; href: string; delay?: number }) => (
-  <Link to={href}>
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay }}
-      whileHover={{ y: -8, scale: 1.02 }}
-      className="h-full"
-    >
-      <Card className="glass-card border-border/50 hover:glow-border transition-all cursor-pointer h-full group">
-        <CardContent className="pt-8 pb-8 px-6">
+const FeatureCard = ({ icon, title, description, href, delay = 0 }: { icon: React.ReactNode; title: string; description: string; href: string; delay?: number }) => {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <Link to={href}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay }}
+        whileHover={{ y: -8, scale: 1.03 }}
+        onHoverStart={() => setHovered(true)}
+        onHoverEnd={() => setHovered(false)}
+        className="h-full"
+      >
+        <Card className="glass-card border-border/50 hover:shadow-fun transition-all duration-300 cursor-pointer h-full group overflow-hidden relative">
+          {/* Gradient overlay on hover */}
           <motion.div
-            whileHover={{ rotate: [0, -10, 10, 0] }}
-            transition={{ duration: 0.5 }}
-            className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center text-primary-foreground mb-5 shadow-soft"
-          >
-            {icon}
-          </motion.div>
-          <h3 className="text-lg font-semibold text-foreground mb-3 group-hover:text-gradient transition-all">{title}</h3>
-          <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
-        </CardContent>
-      </Card>
-    </motion.div>
-  </Link>
-);
+            initial={{ opacity: 0 }}
+            animate={{ opacity: hovered ? 1 : 0 }}
+            className="absolute inset-0 bg-gradient-to-br from-primary/5 via-fun-orange/5 to-fun-yellow/5 pointer-events-none"
+          />
+          <CardContent className="pt-8 pb-8 px-6 relative z-10">
+            <motion.div
+              animate={hovered ? { rotate: [0, -10, 10, 0], scale: 1.1 } : { rotate: 0, scale: 1 }}
+              transition={{ duration: 0.5, type: "spring" }}
+              className="w-14 h-14 rounded-2xl gradient-fun flex items-center justify-center text-primary-foreground mb-5 shadow-fun"
+            >
+              {icon}
+            </motion.div>
+            <h3 className="text-lg font-bold text-foreground mb-3 group-hover:text-gradient-fun transition-all">{title}</h3>
+            {/* Hover-reveal description with smooth expand */}
+            <motion.p
+              initial={{ opacity: 0.7 }}
+              animate={{ opacity: hovered ? 1 : 0.7 }}
+              className="text-muted-foreground text-sm leading-relaxed"
+            >
+              {description}
+            </motion.p>
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: hovered ? "100%" : 0 }}
+              transition={{ duration: 0.3 }}
+              className="h-0.5 gradient-fun mt-4 rounded-full"
+            />
+          </CardContent>
+        </Card>
+      </motion.div>
+    </Link>
+  );
+};
 
 const StepCard = ({ number, title, description, href, delay = 0 }: { number: number; title: string; description: string; href: string; delay?: number }) => (
   <Link to={href} className="text-center group">
@@ -564,44 +594,56 @@ const StepCard = ({ number, title, description, href, delay = 0 }: { number: num
     >
       <motion.div
         whileHover={{ scale: 1.15, rotate: 5 }}
-        className="w-14 h-14 rounded-2xl gradient-primary text-primary-foreground flex items-center justify-center font-bold text-xl mx-auto mb-5 shadow-soft relative"
+        className="w-16 h-16 rounded-2xl gradient-fun text-primary-foreground flex items-center justify-center font-black text-2xl mx-auto mb-5 shadow-fun relative"
       >
         {number}
-        <div className="absolute inset-0 rounded-2xl animate-glow-pulse opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="absolute inset-0 rounded-2xl pulse-glow opacity-0 group-hover:opacity-100 transition-opacity" />
       </motion.div>
-      <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">{title}</h3>
+      <h3 className="text-base font-bold text-foreground mb-2 group-hover:text-fun-orange transition-colors">{title}</h3>
       <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
     </motion.div>
   </Link>
 );
 
 const RecipeCard = ({ recipe, onToggleFavorite }: { recipe: SavedRecipe; onToggleFavorite?: (id: string, currentStatus: boolean) => void }) => (
-  <motion.div whileHover={{ y: -4, scale: 1.02 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-    <Card className="glass-card border-border/50 hover:glow-border transition-all h-full group">
-      <CardContent className="p-4">
-        <div className="flex items-center justify-between mb-2">
+  <motion.div
+    whileHover={{ y: -6, scale: 1.03 }}
+    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+  >
+    <Card className="glass-card border-border/50 hover:shadow-fun transition-all duration-300 h-full group overflow-hidden relative">
+      {/* Gradient overlay on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-fun-orange/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      <CardContent className="p-5 relative z-10">
+        <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <ChefHat className="w-4 h-4 text-primary" />
-            {recipe.cuisine && <span className="text-xs text-muted-foreground">{recipe.cuisine}</span>}
+            <motion.div
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.5 }}
+            >
+              <ChefHat className="w-4 h-4 text-fun-orange" />
+            </motion.div>
+            {recipe.cuisine && (
+              <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground">{recipe.cuisine}</span>
+            )}
           </div>
           {onToggleFavorite && (
             <motion.button
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.3 }}
+              whileTap={{ scale: 0.8 }}
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); onToggleFavorite(recipe.id, recipe.is_favorite); }}
-              className="p-1 rounded-full hover:bg-secondary transition-colors"
+              className="p-1.5 rounded-full hover:bg-secondary transition-colors"
             >
-              <Star className={`w-4 h-4 transition-colors ${recipe.is_favorite ? "text-warning fill-warning" : "text-muted-foreground hover:text-warning"}`} />
+              <Star className={`w-4 h-4 transition-all duration-300 ${recipe.is_favorite ? "text-fun-orange fill-fun-orange drop-shadow-sm" : "text-muted-foreground hover:text-fun-orange"}`} />
             </motion.button>
           )}
         </div>
         <Link to={`/search?recipe=${recipe.id}`}>
-          <h3 className="font-medium text-foreground text-sm mb-1 line-clamp-2 hover:text-primary transition-colors cursor-pointer">{recipe.title}</h3>
+          <h3 className="font-semibold text-foreground text-sm mb-1.5 line-clamp-2 hover:text-primary transition-colors cursor-pointer">{recipe.title}</h3>
         </Link>
-        {recipe.description && <p className="text-xs text-muted-foreground line-clamp-2 mb-2">{recipe.description}</p>}
+        {recipe.description && <p className="text-xs text-muted-foreground line-clamp-2 mb-3">{recipe.description}</p>}
         {(recipe.prep_time || recipe.cook_time) && (
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <Clock className="w-3 h-3" />
+          <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+            <Clock className="w-3.5 h-3.5 text-primary" />
             <span>{(recipe.prep_time || 0) + (recipe.cook_time || 0)} min</span>
           </div>
         )}
