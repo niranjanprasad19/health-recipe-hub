@@ -170,14 +170,14 @@ const Landing = () => {
               variants={wordReveal}
               initial="hidden"
               animate="visible"
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 tracking-tight leading-[1.1]"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-6 tracking-tight leading-[1.05]"
             >
               {heroTitle.split(" ").map((word, i) => (
                 <motion.span key={i} variants={wordChild} className="inline-block mr-[0.3em]">
                   {word}
                 </motion.span>
               ))}{" "}
-              <motion.span variants={wordChild} className="text-gradient inline-block">
+              <motion.span variants={wordChild} className="text-gradient-fun inline-block">
                 {heroHighlight}
               </motion.span>
             </motion.h1>
@@ -199,18 +199,18 @@ const Landing = () => {
               onSubmit={handleSearch}
               className="relative max-w-2xl mx-auto mb-10"
             >
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center glass-card rounded-2xl overflow-hidden shadow-elevated focus-glow transition-all duration-300">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center glass-card rounded-2xl overflow-hidden shadow-fun focus-glow transition-all duration-300">
                 <div className="flex items-center flex-1">
-                  <Search className="w-5 h-5 text-muted-foreground ml-5" />
+                  <Search className="w-5 h-5 text-fun-orange ml-5" />
                   <Input
                     type="text"
                     placeholder={t('landing.searchPlaceholder')}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="flex-1 border-0 text-base py-7 px-3 bg-transparent focus-visible:ring-0 placeholder:text-muted-foreground/50"
+                    className="flex-1 border-0 text-base py-7 px-3 bg-transparent focus-visible:ring-0 placeholder:text-muted-foreground/50 font-medium"
                   />
                 </div>
-                <Button type="submit" className="mx-2 mb-2 sm:mb-0 sm:mr-2 px-8 rounded-xl h-12 text-base font-semibold gradient-primary hover:opacity-90 transition-opacity animate-glow-pulse">
+                <Button type="submit" className="mx-2 mb-2 sm:mb-0 sm:mr-2 px-8 rounded-xl h-12 text-base font-bold gradient-fun hover:opacity-90 transition-opacity ripple-container shadow-fun">
                   {t('common.generate')}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
