@@ -140,17 +140,19 @@ const Landing = () => {
       <Header />
 
       {/* Cinematic Hero */}
-      <section ref={heroRef} className="relative min-h-[90vh] flex items-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[90vh] flex items-center overflow-hidden blob-bg">
         {/* Parallax background */}
         <motion.div style={{ y: heroY, scale: heroScale }} className="absolute inset-0 z-0">
           <img src={heroFoodImg} alt="Delicious food spread" className="w-full h-full object-cover" width={1920} height={1080} />
           <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background" />
         </motion.div>
 
-        {/* Floating food elements */}
-        <motion.div animate={{ y: [-10, 10, -10], rotate: [0, 5, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute top-20 right-10 text-5xl opacity-20 hidden lg:block">🥗</motion.div>
-        <motion.div animate={{ y: [10, -15, 10], rotate: [0, -3, 0] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute bottom-40 left-10 text-4xl opacity-20 hidden lg:block">🍛</motion.div>
-        <motion.div animate={{ y: [-5, 12, -5] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-40 left-20 text-3xl opacity-15 hidden lg:block">🌿</motion.div>
+        {/* Floating food elements - bigger, more playful */}
+        <motion.div animate={{ y: [-10, 10, -10], rotate: [0, 15, -5, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute top-20 right-10 text-6xl opacity-30 hidden lg:block drop-shadow-lg">🥗</motion.div>
+        <motion.div animate={{ y: [10, -15, 10], rotate: [0, -8, 5, 0] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute bottom-40 left-10 text-5xl opacity-30 hidden lg:block drop-shadow-lg">🍛</motion.div>
+        <motion.div animate={{ y: [-5, 12, -5], rotate: [0, 10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-40 left-20 text-4xl opacity-25 hidden lg:block">🌿</motion.div>
+        <motion.div animate={{ y: [5, -10, 5], x: [-5, 5, -5] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 0.5 }} className="absolute top-32 right-[30%] text-5xl opacity-20 hidden lg:block">🥑</motion.div>
+        <motion.div animate={{ y: [-8, 8, -8] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 3 }} className="absolute bottom-60 right-20 text-4xl opacity-25 hidden lg:block">🍊</motion.div>
 
         <motion.div style={{ opacity: heroOpacity }} className="relative z-10 container mx-auto px-4 pt-8 pb-20">
           <div className="text-center max-w-4xl mx-auto">
@@ -158,7 +160,7 @@ const Landing = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-sm font-semibold text-primary tracking-[0.2em] uppercase mb-6"
+              className="text-sm font-extrabold text-fun-orange tracking-[0.2em] uppercase mb-6"
             >
               ✦ {t('landing.tagline')} ✦
             </motion.p>
