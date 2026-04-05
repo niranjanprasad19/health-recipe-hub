@@ -527,32 +527,56 @@ const Landing = () => {
   );
 };
 
-const FeatureCard = ({ icon, title, description, href, delay = 0 }: { icon: React.ReactNode; title: string; description: string; href: string; delay?: number }) => (
-  <Link to={href}>
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay }}
-      whileHover={{ y: -8, scale: 1.02 }}
-      className="h-full"
-    >
-      <Card className="glass-card border-border/50 hover:glow-border transition-all cursor-pointer h-full group">
-        <CardContent className="pt-8 pb-8 px-6">
+const FeatureCard = ({ icon, title, description, href, delay = 0 }: { icon: React.ReactNode; title: string; description: string; href: string; delay?: number }) => {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <Link to={href}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay }}
+        whileHover={{ y: -8, scale: 1.03 }}
+        onHoverStart={() => setHovered(true)}
+        onHoverEnd={() => setHovered(false)}
+        className="h-full"
+      >
+        <Card className="glass-card border-border/50 hover:shadow-fun transition-all duration-300 cursor-pointer h-full group overflow-hidden relative">
+          {/* Gradient overlay on hover */}
           <motion.div
-            whileHover={{ rotate: [0, -10, 10, 0] }}
-            transition={{ duration: 0.5 }}
-            className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center text-primary-foreground mb-5 shadow-soft"
-          >
-            {icon}
-          </motion.div>
-          <h3 className="text-lg font-semibold text-foreground mb-3 group-hover:text-gradient transition-all">{title}</h3>
-          <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
-        </CardContent>
-      </Card>
-    </motion.div>
-  </Link>
-);
+            initial={{ opacity: 0 }}
+            animate={{ opacity: hovered ? 1 : 0 }}
+            className="absolute inset-0 bg-gradient-to-br from-primary/5 via-fun-orange/5 to-fun-yellow/5 pointer-events-none"
+          />
+          <CardContent className="pt-8 pb-8 px-6 relative z-10">
+            <motion.div
+              animate={hovered ? { rotate: [0, -10, 10, 0], scale: 1.1 } : { rotate: 0, scale: 1 }}
+              transition={{ duration: 0.5, type: "spring" }}
+              className="w-14 h-14 rounded-2xl gradient-fun flex items-center justify-center text-primary-foreground mb-5 shadow-fun"
+            >
+              {icon}
+            </motion.div>
+            <h3 className="text-lg font-bold text-foreground mb-3 group-hover:text-gradient-fun transition-all">{title}</h3>
+            {/* Hover-reveal description with smooth expand */}
+            <motion.p
+              initial={{ opacity: 0.7 }}
+              animate={{ opacity: hovered ? 1 : 0.7 }}
+              className="text-muted-foreground text-sm leading-relaxed"
+            >
+              {description}
+            </motion.p>
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: hovered ? "100%" : 0 }}
+              transition={{ duration: 0.3 }}
+              className="h-0.5 gradient-fun mt-4 rounded-full"
+            />
+          </CardContent>
+        </Card>
+      </motion.div>
+    </Link>
+  );
+};
 
 const StepCard = ({ number, title, description, href, delay = 0 }: { number: number; title: string; description: string; href: string; delay?: number }) => (
   <Link to={href} className="text-center group">
@@ -564,44 +588,56 @@ const StepCard = ({ number, title, description, href, delay = 0 }: { number: num
     >
       <motion.div
         whileHover={{ scale: 1.15, rotate: 5 }}
-        className="w-14 h-14 rounded-2xl gradient-primary text-primary-foreground flex items-center justify-center font-bold text-xl mx-auto mb-5 shadow-soft relative"
+        className="w-16 h-16 rounded-2xl gradient-fun text-primary-foreground flex items-center justify-center font-black text-2xl mx-auto mb-5 shadow-fun relative"
       >
         {number}
-        <div className="absolute inset-0 rounded-2xl animate-glow-pulse opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="absolute inset-0 rounded-2xl pulse-glow opacity-0 group-hover:opacity-100 transition-opacity" />
       </motion.div>
-      <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">{title}</h3>
+      <h3 className="text-base font-bold text-foreground mb-2 group-hover:text-fun-orange transition-colors">{title}</h3>
       <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
     </motion.div>
   </Link>
 );
 
 const RecipeCard = ({ recipe, onToggleFavorite }: { recipe: SavedRecipe; onToggleFavorite?: (id: string, currentStatus: boolean) => void }) => (
-  <motion.div whileHover={{ y: -4, scale: 1.02 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-    <Card className="glass-card border-border/50 hover:glow-border transition-all h-full group">
-      <CardContent className="p-4">
-        <div className="flex items-center justify-between mb-2">
+  <motion.div
+    whileHover={{ y: -6, scale: 1.03 }}
+    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+  >
+    <Card className="glass-card border-border/50 hover:shadow-fun transition-all duration-300 h-full group overflow-hidden relative">
+      {/* Gradient overlay on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-fun-orange/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      <CardContent className="p-5 relative z-10">
+        <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <ChefHat className="w-4 h-4 text-primary" />
-            {recipe.cuisine && <span className="text-xs text-muted-foreground">{recipe.cuisine}</span>}
+            <motion.div
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.5 }}
+            >
+              <ChefHat className="w-4 h-4 text-fun-orange" />
+            </motion.div>
+            {recipe.cuisine && (
+              <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground">{recipe.cuisine}</span>
+            )}
           </div>
           {onToggleFavorite && (
             <motion.button
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.3 }}
+              whileTap={{ scale: 0.8 }}
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); onToggleFavorite(recipe.id, recipe.is_favorite); }}
-              className="p-1 rounded-full hover:bg-secondary transition-colors"
+              className="p-1.5 rounded-full hover:bg-secondary transition-colors"
             >
-              <Star className={`w-4 h-4 transition-colors ${recipe.is_favorite ? "text-warning fill-warning" : "text-muted-foreground hover:text-warning"}`} />
+              <Star className={`w-4 h-4 transition-all duration-300 ${recipe.is_favorite ? "text-fun-orange fill-fun-orange drop-shadow-sm" : "text-muted-foreground hover:text-fun-orange"}`} />
             </motion.button>
           )}
         </div>
         <Link to={`/search?recipe=${recipe.id}`}>
-          <h3 className="font-medium text-foreground text-sm mb-1 line-clamp-2 hover:text-primary transition-colors cursor-pointer">{recipe.title}</h3>
+          <h3 className="font-semibold text-foreground text-sm mb-1.5 line-clamp-2 hover:text-primary transition-colors cursor-pointer">{recipe.title}</h3>
         </Link>
-        {recipe.description && <p className="text-xs text-muted-foreground line-clamp-2 mb-2">{recipe.description}</p>}
+        {recipe.description && <p className="text-xs text-muted-foreground line-clamp-2 mb-3">{recipe.description}</p>}
         {(recipe.prep_time || recipe.cook_time) && (
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <Clock className="w-3 h-3" />
+          <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+            <Clock className="w-3.5 h-3.5 text-primary" />
             <span>{(recipe.prep_time || 0) + (recipe.cook_time || 0)} min</span>
           </div>
         )}
