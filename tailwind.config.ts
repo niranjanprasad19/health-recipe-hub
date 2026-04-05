@@ -13,42 +13,29 @@ export default {
   		}
   	},
   	extend: {
-  		fontFamily: {
-  			sans: [
-  				'Poppins',
-  				'ui-sans-serif',
-  				'system-ui',
-  				'sans-serif',
-  				'Apple Color Emoji',
-  				'Segoe UI Emoji',
-  				'Segoe UI Symbol',
-  				'Noto Color Emoji'
-  			],
-  			heading: [
-  				'Plus Jakarta Sans',
-  				'system-ui',
-  				'sans-serif'
-  			],
-  			serif: [
-  				'ui-serif',
-  				'Georgia',
-  				'Cambria',
-  				'Times New Roman',
-  				'Times',
-  				'serif'
-  			],
-  			mono: [
-  				'ui-monospace',
-  				'SFMono-Regular',
-  				'Menlo',
-  				'Monaco',
-  				'Consolas',
-  				'Liberation Mono',
-  				'Courier New',
-  				'monospace'
-  			]
-  		},
-  		colors: {
+		fontFamily: {
+			sans: [
+				'Poppins',
+				'system-ui',
+				'sans-serif',
+			],
+			heading: [
+				'Poppins',
+				'system-ui',
+				'sans-serif'
+			],
+			serif: [
+				'ui-serif',
+				'Georgia',
+				'serif'
+			],
+			mono: [
+				'ui-monospace',
+				'SFMono-Regular',
+				'monospace'
+			]
+		},
+		colors: {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
@@ -99,8 +86,13 @@ export default {
   				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
   				border: 'hsl(var(--sidebar-border))',
   				ring: 'hsl(var(--sidebar-ring))'
-  			}
-  		},
+			},
+			'fun-yellow': 'hsl(var(--fun-yellow))',
+			'fun-orange': 'hsl(var(--fun-orange))',
+			'fun-pink': 'hsl(var(--fun-pink))',
+			'fun-green': 'hsl(var(--fun-green))',
+			'fun-teal': 'hsl(var(--fun-teal))',
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
