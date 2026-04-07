@@ -122,6 +122,11 @@ const RecipeResult = () => {
       const response = await supabase.functions.invoke("generate-recipe-image", {
         body: { title, cuisine },
       });
+
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+
       if (response.data?.imageUrl) {
         setHeroImage(response.data.imageUrl);
       }
