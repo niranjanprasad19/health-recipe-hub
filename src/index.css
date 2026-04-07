@@ -5,9 +5,11 @@
 @tailwind utilities;
 
 /* NutriCheff — Fun, Vibrant, Yogabar-inspired Design System */
+/* Color Theme System — each [data-color-theme] overrides primary/accent/fun tokens */
 
 @layer base {
-  :root {
+  :root,
+  [data-color-theme="fresh"] {
     --background: 45 50% 98%;
     --foreground: 20 30% 12%;
 
@@ -74,6 +76,103 @@
     --font-sans: Poppins, system-ui, sans-serif;
   }
 
+  /* Sunset Orange Theme */
+  [data-color-theme="sunset"] {
+    --primary: 20 90% 50%;
+    --ring: 20 90% 50%;
+    --success: 152 58% 42%;
+    --fun-orange: 20 90% 55%;
+    --fun-green: 38 92% 50%;
+    --fun-teal: 45 95% 50%;
+    --gradient-primary: linear-gradient(135deg, hsl(20, 90%, 50%) 0%, hsl(38, 92%, 50%) 100%);
+    --gradient-fun: linear-gradient(135deg, hsl(20, 90%, 55%) 0%, hsl(38, 92%, 50%) 50%, hsl(45, 95%, 55%) 100%);
+    --gradient-neon: linear-gradient(135deg, hsl(20, 90%, 55%) 0%, hsl(38, 92%, 55%) 50%, hsl(340, 75%, 60%) 100%);
+    --gradient-glow: linear-gradient(90deg, hsl(20, 90%, 60%) 0%, hsl(38, 92%, 55%) 100%);
+    --shadow-fun: 0 8px 30px -6px hsl(20 90% 50% / 0.25), 0 4px 12px -4px hsl(38 92% 50% / 0.15);
+    --sidebar-primary: 20 90% 50%;
+    --sidebar-ring: 20 90% 50%;
+  }
+
+  /* Ocean Blue Theme */
+  [data-color-theme="ocean"] {
+    --primary: 217 91% 60%;
+    --ring: 217 91% 60%;
+    --accent: 192 91% 50%;
+    --fun-orange: 192 91% 50%;
+    --fun-green: 217 91% 60%;
+    --fun-teal: 192 91% 50%;
+    --fun-pink: 270 70% 60%;
+    --gradient-primary: linear-gradient(135deg, hsl(217, 91%, 60%) 0%, hsl(192, 91%, 50%) 100%);
+    --gradient-fun: linear-gradient(135deg, hsl(217, 91%, 60%) 0%, hsl(192, 91%, 50%) 50%, hsl(170, 80%, 50%) 100%);
+    --gradient-neon: linear-gradient(135deg, hsl(217, 91%, 65%) 0%, hsl(192, 91%, 55%) 50%, hsl(170, 80%, 55%) 100%);
+    --gradient-glow: linear-gradient(90deg, hsl(217, 91%, 65%) 0%, hsl(192, 91%, 55%) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(217, 91%, 60%) 0%, hsl(270, 70%, 60%) 100%);
+    --shadow-fun: 0 8px 30px -6px hsl(217 91% 60% / 0.25), 0 4px 12px -4px hsl(192 91% 50% / 0.15);
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-ring: 217 91% 60%;
+  }
+
+  /* Berry Purple Theme */
+  [data-color-theme="berry"] {
+    --primary: 263 70% 50%;
+    --ring: 263 70% 50%;
+    --accent: 330 80% 55%;
+    --fun-orange: 330 80% 55%;
+    --fun-green: 263 70% 50%;
+    --fun-teal: 290 60% 55%;
+    --fun-pink: 330 80% 55%;
+    --fun-yellow: 290 60% 55%;
+    --gradient-primary: linear-gradient(135deg, hsl(263, 70%, 50%) 0%, hsl(330, 80%, 55%) 100%);
+    --gradient-fun: linear-gradient(135deg, hsl(263, 70%, 55%) 0%, hsl(330, 80%, 55%) 50%, hsl(290, 60%, 55%) 100%);
+    --gradient-neon: linear-gradient(135deg, hsl(263, 80%, 60%) 0%, hsl(290, 60%, 55%) 50%, hsl(330, 80%, 60%) 100%);
+    --gradient-glow: linear-gradient(90deg, hsl(263, 80%, 60%) 0%, hsl(330, 80%, 60%) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(330, 80%, 55%) 0%, hsl(263, 70%, 50%) 100%);
+    --shadow-fun: 0 8px 30px -6px hsl(263 70% 50% / 0.25), 0 4px 12px -4px hsl(330 80% 55% / 0.15);
+    --sidebar-primary: 263 70% 50%;
+    --sidebar-ring: 263 70% 50%;
+  }
+
+  /* Earth Tone Theme */
+  [data-color-theme="earth"] {
+    --primary: 28 75% 35%;
+    --primary-foreground: 0 0% 100%;
+    --ring: 28 75% 35%;
+    --accent: 38 70% 45%;
+    --fun-orange: 28 75% 45%;
+    --fun-green: 38 70% 45%;
+    --fun-teal: 45 60% 40%;
+    --fun-yellow: 45 60% 50%;
+    --fun-pink: 15 60% 50%;
+    --gradient-primary: linear-gradient(135deg, hsl(28, 75%, 35%) 0%, hsl(38, 70%, 45%) 100%);
+    --gradient-fun: linear-gradient(135deg, hsl(28, 75%, 45%) 0%, hsl(38, 70%, 50%) 50%, hsl(45, 60%, 50%) 100%);
+    --gradient-neon: linear-gradient(135deg, hsl(28, 75%, 45%) 0%, hsl(38, 70%, 50%) 50%, hsl(15, 60%, 50%) 100%);
+    --gradient-glow: linear-gradient(90deg, hsl(28, 75%, 50%) 0%, hsl(38, 70%, 50%) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(28, 75%, 45%) 0%, hsl(15, 60%, 50%) 100%);
+    --shadow-fun: 0 8px 30px -6px hsl(28 75% 35% / 0.25), 0 4px 12px -4px hsl(38 70% 45% / 0.15);
+    --sidebar-primary: 28 75% 35%;
+    --sidebar-ring: 28 75% 35%;
+  }
+
+  /* Candy Pop Theme */
+  [data-color-theme="candy"] {
+    --primary: 340 82% 52%;
+    --ring: 340 82% 52%;
+    --accent: 38 92% 50%;
+    --fun-orange: 38 92% 55%;
+    --fun-green: 340 82% 52%;
+    --fun-teal: 310 70% 55%;
+    --fun-pink: 340 82% 55%;
+    --fun-yellow: 38 92% 55%;
+    --gradient-primary: linear-gradient(135deg, hsl(340, 82%, 52%) 0%, hsl(38, 92%, 50%) 100%);
+    --gradient-fun: linear-gradient(135deg, hsl(340, 82%, 55%) 0%, hsl(38, 92%, 55%) 50%, hsl(310, 70%, 55%) 100%);
+    --gradient-neon: linear-gradient(135deg, hsl(340, 82%, 58%) 0%, hsl(310, 70%, 55%) 50%, hsl(38, 92%, 58%) 100%);
+    --gradient-glow: linear-gradient(90deg, hsl(340, 82%, 60%) 0%, hsl(38, 92%, 55%) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(340, 82%, 55%) 0%, hsl(38, 92%, 55%) 100%);
+    --shadow-fun: 0 8px 30px -6px hsl(340 82% 52% / 0.25), 0 4px 12px -4px hsl(38 92% 50% / 0.15);
+    --sidebar-primary: 340 82% 52%;
+    --sidebar-ring: 340 82% 52%;
+  }
+
   .dark {
     --background: 20 20% 8%;
     --foreground: 40 20% 92%;
@@ -137,6 +236,52 @@
     --sidebar-border: 20 10% 22%;
     --sidebar-ring: 152 58% 48%;
     --font-sans: Poppins, system-ui, sans-serif;
+  }
+
+  /* Dark mode overrides for color themes */
+  .dark[data-color-theme="sunset"] {
+    --primary: 20 90% 55%;
+    --ring: 20 90% 55%;
+    --gradient-primary: linear-gradient(135deg, hsl(20, 90%, 55%) 0%, hsl(38, 92%, 55%) 100%);
+    --gradient-fun: linear-gradient(135deg, hsl(20, 90%, 58%) 0%, hsl(38, 92%, 55%) 50%, hsl(45, 95%, 58%) 100%);
+    --shadow-fun: 0 8px 30px -6px hsl(20 90% 55% / 0.3), 0 4px 12px -4px hsl(38 92% 55% / 0.2);
+    --sidebar-primary: 20 90% 55%;
+  }
+  .dark[data-color-theme="ocean"] {
+    --primary: 217 91% 65%;
+    --ring: 217 91% 65%;
+    --accent: 192 91% 55%;
+    --gradient-primary: linear-gradient(135deg, hsl(217, 91%, 65%) 0%, hsl(192, 91%, 55%) 100%);
+    --gradient-fun: linear-gradient(135deg, hsl(217, 91%, 65%) 0%, hsl(192, 91%, 55%) 50%, hsl(170, 80%, 55%) 100%);
+    --shadow-fun: 0 8px 30px -6px hsl(217 91% 65% / 0.3), 0 4px 12px -4px hsl(192 91% 55% / 0.2);
+    --sidebar-primary: 217 91% 65%;
+  }
+  .dark[data-color-theme="berry"] {
+    --primary: 263 70% 58%;
+    --ring: 263 70% 58%;
+    --accent: 330 80% 60%;
+    --gradient-primary: linear-gradient(135deg, hsl(263, 70%, 58%) 0%, hsl(330, 80%, 60%) 100%);
+    --gradient-fun: linear-gradient(135deg, hsl(263, 70%, 60%) 0%, hsl(330, 80%, 60%) 50%, hsl(290, 60%, 60%) 100%);
+    --shadow-fun: 0 8px 30px -6px hsl(263 70% 58% / 0.3), 0 4px 12px -4px hsl(330 80% 60% / 0.2);
+    --sidebar-primary: 263 70% 58%;
+  }
+  .dark[data-color-theme="earth"] {
+    --primary: 28 75% 45%;
+    --ring: 28 75% 45%;
+    --accent: 38 70% 50%;
+    --gradient-primary: linear-gradient(135deg, hsl(28, 75%, 45%) 0%, hsl(38, 70%, 50%) 100%);
+    --gradient-fun: linear-gradient(135deg, hsl(28, 75%, 50%) 0%, hsl(38, 70%, 55%) 50%, hsl(45, 60%, 55%) 100%);
+    --shadow-fun: 0 8px 30px -6px hsl(28 75% 45% / 0.3), 0 4px 12px -4px hsl(38 70% 50% / 0.2);
+    --sidebar-primary: 28 75% 45%;
+  }
+  .dark[data-color-theme="candy"] {
+    --primary: 340 82% 58%;
+    --ring: 340 82% 58%;
+    --accent: 38 92% 55%;
+    --gradient-primary: linear-gradient(135deg, hsl(340, 82%, 58%) 0%, hsl(38, 92%, 55%) 100%);
+    --gradient-fun: linear-gradient(135deg, hsl(340, 82%, 60%) 0%, hsl(38, 92%, 58%) 50%, hsl(310, 70%, 58%) 100%);
+    --shadow-fun: 0 8px 30px -6px hsl(340 82% 58% / 0.3), 0 4px 12px -4px hsl(38 92% 55% / 0.2);
+    --sidebar-primary: 340 82% 58%;
   }
 }
 
