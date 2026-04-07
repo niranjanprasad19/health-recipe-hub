@@ -209,7 +209,7 @@ const QuickRecipe = () => {
 
       <div className="container mx-auto px-4 mb-4">
         <div className="max-w-4xl mx-auto">
-          <Breadcrumb items={[{ label: t('common.search'), href: "/recipe-search" }, { label: prompt }]} />
+          <Breadcrumb items={[{ label: t('common.search'), href: "/search" }, { label: prompt }]} />
         </div>
       </div>
 

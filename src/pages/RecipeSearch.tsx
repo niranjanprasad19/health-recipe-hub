@@ -105,7 +105,7 @@ const RecipeSearch = () => {
 
   return (
     <div className="min-h-screen gradient-hero">
-      <Header showBackButton backTo="/" backLabel="Back to Home" />
+      <Header showBackButton backTo="/" backLabel={t('common.backToHome')} />
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8 max-w-4xl">
