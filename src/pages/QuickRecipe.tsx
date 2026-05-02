@@ -63,6 +63,14 @@ const QuickRecipe = () => {
     generateRecipe();
   }, [prompt]);
 
+  useEffect(() => {
+    if (savedRecipeId && heroImage) {
+      supabase.from("saved_recipes").update({ image_url: heroImage }).eq("id", savedRecipeId).then(({ error }) => {
+        if (error) console.error("Error persisting recipe image:", error);
+      });
+    }
+  }, [savedRecipeId, heroImage]);
+
   const generateRecipe = async () => {
     if (!prompt) return;
     setIsLoading(true);
