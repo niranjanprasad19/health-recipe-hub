@@ -12,6 +12,7 @@ interface RecipeHeroImageProps {
   initialImage?: string | null;
   onImageGenerated?: (url: string) => void;
   autoGenerate?: boolean;
+  showTextOverlay?: boolean;
 }
 
 export const RecipeHeroImage = ({
@@ -21,6 +22,7 @@ export const RecipeHeroImage = ({
   initialImage,
   onImageGenerated,
   autoGenerate = true,
+  showTextOverlay = false,
 }: RecipeHeroImageProps) => {
   const { t } = useTranslation();
   const [heroImage, setHeroImage] = useState<string | null>(initialImage || null);
@@ -64,15 +66,19 @@ export const RecipeHeroImage = ({
       >
         <div className="relative aspect-[16/7]">
           <img src={heroImage} alt={title} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-            <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-primary-foreground mb-2 drop-shadow-lg">
-              {title}
-            </h1>
-            {description && (
-              <p className="text-sm sm:text-base text-primary-foreground/85 max-w-2xl">{description}</p>
-            )}
-          </div>
+          {showTextOverlay && (
+            <>
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+                <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-primary-foreground mb-2 drop-shadow-lg">
+                  {title}
+                </h1>
+                {description && (
+                  <p className="text-sm sm:text-base text-primary-foreground/85 max-w-2xl">{description}</p>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </motion.div>
     );
