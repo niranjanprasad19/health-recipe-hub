@@ -63,6 +63,14 @@ const QuickRecipe = () => {
     generateRecipe();
   }, [prompt]);
 
+  useEffect(() => {
+    if (savedRecipeId && heroImage) {
+      supabase.from("saved_recipes").update({ image_url: heroImage }).eq("id", savedRecipeId).then(({ error }) => {
+        if (error) console.error("Error persisting recipe image:", error);
+      });
+    }
+  }, [savedRecipeId, heroImage]);
+
   const generateRecipe = async () => {
     if (!prompt) return;
     setIsLoading(true);
@@ -119,6 +127,13 @@ const QuickRecipe = () => {
       toast({ title: t('recipe.failedToSave'), description: t('recipe.pleaseTryAgain'), variant: "destructive" });
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleHeroImageGenerated = async (url: string) => {
+    setHeroImage(url);
+    if (savedRecipeId) {
+      await supabase.from("saved_recipes").update({ image_url: url }).eq("id", savedRecipeId);
     }
   };
 
@@ -223,7 +238,7 @@ const QuickRecipe = () => {
           cuisine={recipe.cuisine}
           description={recipe.description}
           initialImage={heroImage}
-          onImageGenerated={(url) => setHeroImage(url)}
+          onImageGenerated={handleHeroImageGenerated}
         />
 
         <div className="text-center mb-8">

@@ -13,7 +13,7 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { FolderPlus, Plus, Trash2, BookOpen, Loader2, ArrowRight, Clock, Flame } from "lucide-react";
+import { FolderPlus, Plus, Trash2, BookOpen, Loader2, Clock, ImageIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -34,6 +34,19 @@ interface CollectionRecipe {
   cuisine: string | null;
   prep_time: number | null;
   cook_time: number | null;
+  image_url: string | null;
+}
+
+interface CollectionItemRow {
+  id: string;
+  recipe_id: string;
+  saved_recipes?: {
+    title: string | null;
+    cuisine: string | null;
+    prep_time: number | null;
+    cook_time: number | null;
+    image_url: string | null;
+  } | null;
 }
 
 const EMOJI_OPTIONS = ["📁", "🍽️", "🌮", "🍝", "🥗", "🍜", "🎉", "❤️", "⭐", "🔥", "🌿", "🍰", "☀️", "🌙"];
@@ -121,18 +134,19 @@ const Collections = () => {
     setLoadingRecipes(true);
     const { data } = await supabase
       .from("collection_items")
-      .select("id, recipe_id, saved_recipes(title, cuisine, prep_time, cook_time)")
+      .select("id, recipe_id, saved_recipes(title, cuisine, prep_time, cook_time, image_url)")
       .eq("collection_id", collection.id);
 
     if (data) {
       setCollectionRecipes(
-        data.map((d: any) => ({
+        (data as CollectionItemRow[]).map((d) => ({
           id: d.id,
           recipe_id: d.recipe_id,
           title: d.saved_recipes?.title || "Untitled",
           cuisine: d.saved_recipes?.cuisine,
           prep_time: d.saved_recipes?.prep_time,
           cook_time: d.saved_recipes?.cook_time,
+          image_url: d.saved_recipes?.image_url,
         }))
       );
     }
@@ -206,13 +220,24 @@ const Collections = () => {
                   <div className="grid gap-3">
                     {collectionRecipes.map((r) => (
                       <div key={r.id} className="flex items-center justify-between p-3 rounded-lg border border-border hover:border-primary/30 transition-colors">
-                        <Link to={`/recipe/${r.recipe_id}`} className="flex-1 min-w-0">
-                          <h3 className="font-medium text-foreground text-sm truncate hover:text-primary transition-colors">{r.title}</h3>
-                          <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
-                            {r.cuisine && <span>{r.cuisine}</span>}
-                            {(r.prep_time || r.cook_time) && (
-                              <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{(r.prep_time || 0) + (r.cook_time || 0)} min</span>
+                        <Link to={`/recipe/${r.recipe_id}`} className="flex items-center gap-3 flex-1 min-w-0">
+                          <div className="w-16 h-16 rounded-lg overflow-hidden bg-secondary flex-shrink-0 shadow-soft">
+                            {r.image_url ? (
+                              <img src={r.image_url} alt={r.title} className="w-full h-full object-cover" loading="lazy" />
+                            ) : (
+                              <div className="w-full h-full gradient-primary flex items-center justify-center">
+                                <ImageIcon className="w-5 h-5 text-primary-foreground/80" />
+                              </div>
                             )}
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <h3 className="font-medium text-foreground text-sm truncate hover:text-primary transition-colors">{r.title}</h3>
+                            <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
+                              {r.cuisine && <span>{r.cuisine}</span>}
+                              {(r.prep_time || r.cook_time) && (
+                                <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{(r.prep_time || 0) + (r.cook_time || 0)} min</span>
+                              )}
+                            </div>
                           </div>
                         </Link>
                         <Button variant="ghost" size="sm" onClick={() => removeFromCollection(r.id)} className="text-destructive hover:text-destructive"><Trash2 className="w-4 h-4" /></Button>

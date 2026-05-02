@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
-import { Clock, Flame, Loader2, Trash2, UtensilsCrossed, User, Users, BookOpen } from "lucide-react";
+import { Clock, Flame, Loader2, Trash2, UtensilsCrossed, User, Users, BookOpen, ImageIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -72,6 +72,7 @@ const Profile = () => {
         instructions: r.instructions as unknown as SavedRecipe["instructions"],
         nutritionInfo: r.nutrition_info as unknown as SavedRecipe["nutritionInfo"],
         tags: r.tags || [], healthBenefits: [], created_at: r.created_at,
+        imageUrl: r.image_url,
       }));
       setSavedRecipes(recipes);
     } catch (err) {
@@ -207,7 +208,16 @@ const Profile = () => {
               {savedRecipes.map((recipe) => (
                 <Card key={recipe.id} className="shadow-card hover:shadow-elevated transition-shadow">
                   <CardContent className="py-4">
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <Link to={`/recipe/${recipe.id}`} state={{ recipe, fromProfile: true }} className="w-full sm:w-36 md:w-44 aspect-[4/3] rounded-xl overflow-hidden bg-secondary flex-shrink-0 shadow-soft">
+                        {recipe.imageUrl ? (
+                          <img src={recipe.imageUrl} alt={recipe.title} className="w-full h-full object-cover" loading="lazy" />
+                        ) : (
+                          <div className="w-full h-full gradient-primary flex items-center justify-center">
+                            <ImageIcon className="w-7 h-7 text-primary-foreground/80" />
+                          </div>
+                        )}
+                      </Link>
                       <div className="flex-1">
                         <h3 className="font-heading text-base sm:text-lg font-semibold text-foreground line-clamp-2">{recipe.title}</h3>
                         <p className="text-muted-foreground text-sm line-clamp-2">{recipe.description}</p>
@@ -218,7 +228,7 @@ const Profile = () => {
                           {recipe.cuisine && <Badge variant="secondary" className="text-xs">{recipe.cuisine}</Badge>}
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 pt-2 border-t sm:border-t-0 sm:pt-0">
+                      <div className="flex items-center gap-2 pt-2 border-t sm:border-t-0 sm:pt-0 sm:self-start">
                         <Link to={`/recipe/${recipe.id}`} state={{ recipe, fromProfile: true }}>
                           <Button variant="outline" size="sm">{t('profile.viewRecipe')}</Button>
                         </Link>

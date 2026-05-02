@@ -23,6 +23,7 @@ export interface Recipe {
   id?: string;
   title: string;
   description: string;
+  imageUrl?: string | null;
   prepTime: number;
   cookTime: number;
   servings: number;
@@ -38,4 +39,5 @@ export interface SavedRecipe extends Recipe {
   id: string;
   user_id: string;
   created_at: string;
+  imageUrl?: string | null;
 }
