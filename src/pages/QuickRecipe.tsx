@@ -122,6 +122,13 @@ const QuickRecipe = () => {
     }
   };
 
+  const handleHeroImageGenerated = async (url: string) => {
+    setHeroImage(url);
+    if (savedRecipeId) {
+      await supabase.from("saved_recipes").update({ image_url: url }).eq("id", savedRecipeId);
+    }
+  };
+
   const handleShare = async () => {
     if (!recipe) return;
     const recipeText = formatRecipeText(recipe);
@@ -223,7 +230,7 @@ const QuickRecipe = () => {
           cuisine={recipe.cuisine}
           description={recipe.description}
           initialImage={heroImage}
-          onImageGenerated={(url) => setHeroImage(url)}
+          onImageGenerated={handleHeroImageGenerated}
         />
 
         <div className="text-center mb-8">
