@@ -25,12 +25,12 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    const prompt = `A beautiful, professional food photography shot of "${title}" (${cuisine || "international"} cuisine). 
-The dish is plated elegantly on a stylish plate with garnishes. 
-Warm, appetizing lighting with soft shadows. Shallow depth of field. 
-Top-down or 45-degree angle. Restaurant-quality presentation. 
-Clean background with subtle props like fresh herbs or spices. 
-High resolution, food magazine style.`;
+    const prompt = `Professional food photography of ${title} (${cuisine || "international"} cuisine). Elegantly plated dish with fresh garnishes, warm appetizing lighting, soft shadows, shallow depth of field, 45-degree angle, restaurant-quality presentation, clean neutral background with subtle props like fresh herbs or spices, high resolution, food magazine style.
+
+CRITICAL REQUIREMENTS:
+- ABSOLUTELY NO text, letters, words, numbers, labels, captions, watermarks, logos, signs, menus, or written characters of any kind anywhere in the image
+- NO writing on plates, napkins, packaging, or backgrounds
+- Pure photographic image of food only — no typography whatsoever`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
