@@ -224,41 +224,14 @@ const RecipeResult = () => {
       <Header actions={recipeActions} />
       <main className="container mx-auto px-4 py-8 max-w-4xl relative z-10">
 
-        {/* AI-Generated Hero Image */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="relative rounded-3xl overflow-hidden mb-8 shadow-fun"
-        >
-          {heroImage ? (
-            <div className="relative aspect-[16/7]">
-              <img src={heroImage} alt={recipe.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-2xl sm:text-3xl md:text-4xl font-black text-primary-foreground mb-2 drop-shadow-lg"
-                >
-                  {recipe.title}
-                </motion.h1>
-                <p className="text-sm sm:text-base text-primary-foreground/80 max-w-2xl">{recipe.description}</p>
-              </div>
-            </div>
-          ) : imageLoading ? (
-            <div className="aspect-[16/7] skeleton-brand flex items-center justify-center">
-              <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2, ease: "linear" }}>
-                <ImageIcon className="w-10 h-10 text-muted-foreground/40" />
-              </motion.div>
-            </div>
-          ) : (
-            <div className="gradient-fun p-8 sm:p-10">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-primary-foreground mb-2">{recipe.title}</h1>
-              <p className="text-sm sm:text-base text-primary-foreground/80 max-w-2xl">{recipe.description}</p>
-            </div>
-          )}
-        </motion.div>
+        {/* AI-Generated Hero Image with retry/fallback */}
+        <RecipeHeroImage
+          title={recipe.title}
+          cuisine={recipe.cuisine}
+          description={recipe.description}
+          initialImage={heroImage}
+          onImageGenerated={(url) => setHeroImage(url)}
+        />
 
         {/* Quick Stats Cards with spring animation */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
