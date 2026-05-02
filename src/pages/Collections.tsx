@@ -37,6 +37,18 @@ interface CollectionRecipe {
   image_url: string | null;
 }
 
+interface CollectionItemRow {
+  id: string;
+  recipe_id: string;
+  saved_recipes?: {
+    title: string | null;
+    cuisine: string | null;
+    prep_time: number | null;
+    cook_time: number | null;
+    image_url: string | null;
+  } | null;
+}
+
 const EMOJI_OPTIONS = ["📁", "🍽️", "🌮", "🍝", "🥗", "🍜", "🎉", "❤️", "⭐", "🔥", "🌿", "🍰", "☀️", "🌙"];
 
 const Collections = () => {
@@ -127,7 +139,7 @@ const Collections = () => {
 
     if (data) {
       setCollectionRecipes(
-        data.map((d: any) => ({
+        (data as CollectionItemRow[]).map((d) => ({
           id: d.id,
           recipe_id: d.recipe_id,
           title: d.saved_recipes?.title || "Untitled",
