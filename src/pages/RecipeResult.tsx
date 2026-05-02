@@ -18,6 +18,7 @@ import { CookingMode } from "@/components/CookingMode";
 import { RecipeRating } from "@/components/RecipeRating";
 import { IngredientSubstitutions } from "@/components/IngredientSubstitutions";
 import { AddToCollectionDialog } from "@/components/AddToCollectionDialog";
+import { RecipeHeroImage } from "@/components/RecipeHeroImage";
 
 const formatRecipeText = (recipe: Recipe): string => {
   const ingredients = recipe.ingredients.map(i => `• ${i.amount} ${i.item}${i.notes ? ` (${i.notes})` : ''}`).join('\n');
@@ -99,8 +100,7 @@ const RecipeResult = () => {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cookingMode, setCookingMode] = useState(false);
-  const [heroImage, setHeroImage] = useState<string | null>(null);
-  const [imageLoading, setImageLoading] = useState(false);
+  const [heroImage, setHeroImage] = useState<string | null>(location.state?.imageUrl || null);
 
   const formData = location.state?.formData;
 
