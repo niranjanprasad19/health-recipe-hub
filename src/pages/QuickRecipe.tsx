@@ -45,7 +45,6 @@ const QuickRecipe = () => {
   const [error, setError] = useState<string | null>(null);
   const [cookingMode, setCookingMode] = useState(false);
   const [heroImage, setHeroImage] = useState<string | null>(null);
-  const [imageLoading, setImageLoading] = useState(false);
 
   useEffect(() => {
     if (!prompt) {
@@ -63,33 +62,6 @@ const QuickRecipe = () => {
     }
     generateRecipe();
   }, [prompt]);
-
-  useEffect(() => {
-    if (recipe && !heroImage && !imageLoading) {
-      generateHeroImage(recipe.title, recipe.cuisine);
-    }
-  }, [recipe]);
-
-  const generateHeroImage = async (title: string, cuisine: string) => {
-    setImageLoading(true);
-    try {
-      const response = await supabase.functions.invoke("generate-recipe-image", {
-        body: { title, cuisine },
-      });
-
-      if (response.error) {
-        throw new Error(response.error.message);
-      }
-
-      if (response.data?.imageUrl) {
-        setHeroImage(response.data.imageUrl);
-      }
-    } catch (err) {
-      console.error("Failed to generate hero image:", err);
-    } finally {
-      setImageLoading(false);
-    }
-  };
 
   const generateRecipe = async () => {
     if (!prompt) return;
