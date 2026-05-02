@@ -141,6 +141,7 @@ const RecipeResult = () => {
         nutrition_info: JSON.parse(JSON.stringify(recipe.nutritionInfo)),
         prep_time: recipe.prepTime, cook_time: recipe.cookTime, servings: recipe.servings,
         cuisine: recipe.cuisine, tags: recipe.tags, share_token: null,
+        image_url: heroImage,
       }]).select().single();
       if (error) throw error;
       setIsSaved(true); setSavedRecipeId(data.id);
