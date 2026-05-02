@@ -273,6 +273,11 @@ const RecipeResult = () => {
           onImageGenerated={handleHeroImageGenerated}
         />
 
+        <div className="text-center mb-8">
+          <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">{recipe.title}</h1>
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">{recipe.description}</p>
+        </div>
+
         {/* Quick Stats Cards with spring animation */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
