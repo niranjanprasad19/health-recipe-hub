@@ -218,31 +218,13 @@ const QuickRecipe = () => {
       </div>
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
-        <div className="relative rounded-3xl overflow-hidden mb-8 shadow-fun">
-          {heroImage ? (
-            <div className="relative aspect-[16/7]">
-              <img src={heroImage} alt={recipe.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-primary-foreground mb-3 drop-shadow-lg">
-                  {recipe.title}
-                </h1>
-                <p className="text-base sm:text-lg text-primary-foreground/85 max-w-2xl">{recipe.description}</p>
-              </div>
-            </div>
-          ) : imageLoading ? (
-            <div className="aspect-[16/7] skeleton-brand flex items-center justify-center">
-              <ImageIcon className="w-10 h-10 text-muted-foreground/40 animate-pulse" />
-            </div>
-          ) : (
-            <div className="gradient-primary p-8 sm:p-10 text-center">
-              <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-                {recipe.title}
-              </h1>
-              <p className="text-base sm:text-lg text-primary-foreground/85 max-w-2xl mx-auto">{recipe.description}</p>
-            </div>
-          )}
-        </div>
+        <RecipeHeroImage
+          title={recipe.title}
+          cuisine={recipe.cuisine}
+          description={recipe.description}
+          initialImage={heroImage}
+          onImageGenerated={(url) => setHeroImage(url)}
+        />
 
         <div className="text-center mb-8">
           <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">{recipe.title}</h1>
