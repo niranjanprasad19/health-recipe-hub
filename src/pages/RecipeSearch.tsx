@@ -9,7 +9,8 @@ import {
   Clock,
   Users,
   ChefHat,
-  ExternalLink
+  ExternalLink,
+  ImageIcon
 } from "lucide-react";
 import { Header } from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
@@ -26,6 +27,7 @@ interface Recipe {
   cuisine: string | null;
   tags: string[] | null;
   share_token: string | null;
+  image_url: string | null;
 }
 
 const RecipeSearch = () => {
@@ -56,7 +58,7 @@ const RecipeSearch = () => {
 
     let queryBuilder = supabase
       .from("saved_recipes")
-      .select("id, title, description, prep_time, cook_time, servings, cuisine, tags, share_token")
+      .select("id, title, description, prep_time, cook_time, servings, cuisine, tags, share_token, image_url")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false });
 
@@ -162,6 +164,15 @@ const RecipeSearch = () => {
               >
                 <CardContent className="p-6">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="w-full sm:w-32 md:w-40 aspect-[4/3] rounded-xl overflow-hidden bg-secondary flex-shrink-0 shadow-soft">
+                      {recipe.image_url ? (
+                        <img src={recipe.image_url} alt={recipe.title} className="w-full h-full object-cover" loading="lazy" />
+                      ) : (
+                        <div className="w-full h-full gradient-primary flex items-center justify-center">
+                          <ImageIcon className="w-7 h-7 text-primary-foreground/80" />
+                        </div>
+                      )}
+                    </div>
                     <div className="flex-1">
                       <h3 className="font-heading text-xl font-semibold text-foreground mb-2">
                         {recipe.title}
