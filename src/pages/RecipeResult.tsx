@@ -96,8 +96,8 @@ const RecipeResult = () => {
   const [recipe, setRecipe] = useState<Recipe | null>(location.state?.recipe || null);
   const [isLoading, setIsLoading] = useState(!location.state?.recipe);
   const [isSaving, setIsSaving] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
-  const [savedRecipeId, setSavedRecipeId] = useState<string | null>(null);
+  const [isSaved, setIsSaved] = useState(Boolean(location.state?.fromProfile || routeRecipeId));
+  const [savedRecipeId, setSavedRecipeId] = useState<string | null>(routeRecipeId || null);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cookingMode, setCookingMode] = useState(false);
@@ -110,6 +110,14 @@ const RecipeResult = () => {
     else if (!recipe && formData) { generateRecipe(); }
     else if (!recipe && !formData) { navigate("/preferences"); }
   }, []);
+
+  useEffect(() => {
+    if (savedRecipeId && heroImage) {
+      supabase.from("saved_recipes").update({ image_url: heroImage }).eq("id", savedRecipeId).then(({ error }) => {
+        if (error) console.error("Error persisting recipe image:", error);
+      });
+    }
+  }, [savedRecipeId, heroImage]);
 
   const fetchSavedRecipe = async (id: string) => {
     setIsLoading(true); setError(null);
