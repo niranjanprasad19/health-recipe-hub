@@ -15,6 +15,7 @@ import { CookingMode } from "@/components/CookingMode";
 import { RecipeRating } from "@/components/RecipeRating";
 import { IngredientSubstitutions } from "@/components/IngredientSubstitutions";
 import { AddToCollectionDialog } from "@/components/AddToCollectionDialog";
+import { RecipeHeroImage } from "@/components/RecipeHeroImage";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
