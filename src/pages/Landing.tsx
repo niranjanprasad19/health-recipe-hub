@@ -20,6 +20,7 @@ interface SavedRecipe {
   id: string;
   title: string;
   description: string | null;
+  image_url: string | null;
   prep_time: number | null;
   cook_time: number | null;
   cuisine: string | null;
@@ -73,7 +74,7 @@ const Landing = () => {
     if (!user) return;
     const { data } = await supabase
       .from("saved_recipes")
-      .select("id, title, description, prep_time, cook_time, cuisine, is_favorite")
+      .select("id, title, description, image_url, prep_time, cook_time, cuisine, is_favorite")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
       .limit(4);
@@ -84,7 +85,7 @@ const Landing = () => {
     if (!user) return;
     const { data } = await supabase
       .from("saved_recipes")
-      .select("id, title, description, prep_time, cook_time, cuisine, is_favorite")
+      .select("id, title, description, image_url, prep_time, cook_time, cuisine, is_favorite")
       .eq("user_id", user.id)
       .eq("is_favorite", true)
       .order("created_at", { ascending: false })
@@ -637,7 +638,16 @@ const RecipeCard = ({ recipe, onToggleFavorite }: { recipe: SavedRecipe; onToggl
             </motion.button>
           )}
         </div>
-        <Link to={`/search?recipe=${recipe.id}`}>
+        <Link to={`/recipe/${recipe.id}`}>
+          <div className="mb-4 aspect-[4/3] rounded-xl overflow-hidden bg-secondary shadow-soft">
+            {recipe.image_url ? (
+              <img src={recipe.image_url} alt={recipe.title} className="w-full h-full object-cover" loading="lazy" />
+            ) : (
+              <div className="w-full h-full gradient-primary flex items-center justify-center">
+                <ChefHat className="w-8 h-8 text-primary-foreground/80" />
+              </div>
+            )}
+          </div>
           <h3 className="font-semibold text-foreground text-sm mb-1.5 line-clamp-2 hover:text-primary transition-colors cursor-pointer">{recipe.title}</h3>
         </Link>
         {recipe.description && <p className="text-xs text-muted-foreground line-clamp-2 mb-3">{recipe.description}</p>}
