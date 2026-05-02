@@ -269,6 +269,7 @@ export type Database = {
           cuisine: string | null
           description: string | null
           id: string
+          image_url: string | null
           ingredients: Json
           instructions: Json
           is_favorite: boolean
@@ -286,6 +287,7 @@ export type Database = {
           cuisine?: string | null
           description?: string | null
           id?: string
+          image_url?: string | null
           ingredients?: Json
           instructions?: Json
           is_favorite?: boolean
@@ -303,6 +305,7 @@ export type Database = {
           cuisine?: string | null
           description?: string | null
           id?: string
+          image_url?: string | null
           ingredients?: Json
           instructions?: Json
           is_favorite?: boolean

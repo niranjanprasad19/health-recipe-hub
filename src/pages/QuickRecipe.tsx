@@ -15,6 +15,7 @@ import { CookingMode } from "@/components/CookingMode";
 import { RecipeRating } from "@/components/RecipeRating";
 import { IngredientSubstitutions } from "@/components/IngredientSubstitutions";
 import { AddToCollectionDialog } from "@/components/AddToCollectionDialog";
+import { RecipeHeroImage } from "@/components/RecipeHeroImage";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -44,7 +45,6 @@ const QuickRecipe = () => {
   const [error, setError] = useState<string | null>(null);
   const [cookingMode, setCookingMode] = useState(false);
   const [heroImage, setHeroImage] = useState<string | null>(null);
-  const [imageLoading, setImageLoading] = useState(false);
 
   useEffect(() => {
     if (!prompt) {
@@ -62,33 +62,6 @@ const QuickRecipe = () => {
     }
     generateRecipe();
   }, [prompt]);
-
-  useEffect(() => {
-    if (recipe && !heroImage && !imageLoading) {
-      generateHeroImage(recipe.title, recipe.cuisine);
-    }
-  }, [recipe]);
-
-  const generateHeroImage = async (title: string, cuisine: string) => {
-    setImageLoading(true);
-    try {
-      const response = await supabase.functions.invoke("generate-recipe-image", {
-        body: { title, cuisine },
-      });
-
-      if (response.error) {
-        throw new Error(response.error.message);
-      }
-
-      if (response.data?.imageUrl) {
-        setHeroImage(response.data.imageUrl);
-      }
-    } catch (err) {
-      console.error("Failed to generate hero image:", err);
-    } finally {
-      setImageLoading(false);
-    }
-  };
 
   const generateRecipe = async () => {
     if (!prompt) return;
@@ -135,6 +108,7 @@ const QuickRecipe = () => {
         nutrition_info: JSON.parse(JSON.stringify(recipe.nutritionInfo)),
         prep_time: recipe.prepTime, cook_time: recipe.cookTime, servings: recipe.servings,
         cuisine: recipe.cuisine, tags: recipe.tags, share_token: null,
+        image_url: heroImage,
       }]).select().single();
       if (error) throw error;
       setIsSaved(true);
@@ -244,31 +218,13 @@ const QuickRecipe = () => {
       </div>
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
-        <div className="relative rounded-3xl overflow-hidden mb-8 shadow-fun">
-          {heroImage ? (
-            <div className="relative aspect-[16/7]">
-              <img src={heroImage} alt={recipe.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-primary-foreground mb-3 drop-shadow-lg">
-                  {recipe.title}
-                </h1>
-                <p className="text-base sm:text-lg text-primary-foreground/85 max-w-2xl">{recipe.description}</p>
-              </div>
-            </div>
-          ) : imageLoading ? (
-            <div className="aspect-[16/7] skeleton-brand flex items-center justify-center">
-              <ImageIcon className="w-10 h-10 text-muted-foreground/40 animate-pulse" />
-            </div>
-          ) : (
-            <div className="gradient-primary p-8 sm:p-10 text-center">
-              <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-                {recipe.title}
-              </h1>
-              <p className="text-base sm:text-lg text-primary-foreground/85 max-w-2xl mx-auto">{recipe.description}</p>
-            </div>
-          )}
-        </div>
+        <RecipeHeroImage
+          title={recipe.title}
+          cuisine={recipe.cuisine}
+          description={recipe.description}
+          initialImage={heroImage}
+          onImageGenerated={(url) => setHeroImage(url)}
+        />
 
         <div className="text-center mb-8">
           <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">{recipe.title}</h1>

@@ -18,6 +18,7 @@ import { CookingMode } from "@/components/CookingMode";
 import { RecipeRating } from "@/components/RecipeRating";
 import { IngredientSubstitutions } from "@/components/IngredientSubstitutions";
 import { AddToCollectionDialog } from "@/components/AddToCollectionDialog";
+import { RecipeHeroImage } from "@/components/RecipeHeroImage";
 
 const formatRecipeText = (recipe: Recipe): string => {
   const ingredients = recipe.ingredients.map(i => `• ${i.amount} ${i.item}${i.notes ? ` (${i.notes})` : ''}`).join('\n');
@@ -99,8 +100,7 @@ const RecipeResult = () => {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cookingMode, setCookingMode] = useState(false);
-  const [heroImage, setHeroImage] = useState<string | null>(null);
-  const [imageLoading, setImageLoading] = useState(false);
+  const [heroImage, setHeroImage] = useState<string | null>(location.state?.imageUrl || null);
 
   const formData = location.state?.formData;
 
@@ -108,34 +108,6 @@ const RecipeResult = () => {
     if (!recipe && formData) { generateRecipe(); }
     else if (!recipe && !formData) { navigate("/preferences"); }
   }, []);
-
-  // Generate AI hero image when recipe is loaded
-  useEffect(() => {
-    if (recipe && !heroImage && !imageLoading) {
-      generateHeroImage(recipe.title, recipe.cuisine);
-    }
-  }, [recipe]);
-
-  const generateHeroImage = async (title: string, cuisine: string) => {
-    setImageLoading(true);
-    try {
-      const response = await supabase.functions.invoke("generate-recipe-image", {
-        body: { title, cuisine },
-      });
-
-      if (response.error) {
-        throw new Error(response.error.message);
-      }
-
-      if (response.data?.imageUrl) {
-        setHeroImage(response.data.imageUrl);
-      }
-    } catch (err) {
-      console.error("Failed to generate hero image:", err);
-    } finally {
-      setImageLoading(false);
-    }
-  };
 
   const generateRecipe = async () => {
     if (!formData) return;
@@ -169,6 +141,7 @@ const RecipeResult = () => {
         nutrition_info: JSON.parse(JSON.stringify(recipe.nutritionInfo)),
         prep_time: recipe.prepTime, cook_time: recipe.cookTime, servings: recipe.servings,
         cuisine: recipe.cuisine, tags: recipe.tags, share_token: null,
+        image_url: heroImage,
       }]).select().single();
       if (error) throw error;
       setIsSaved(true); setSavedRecipeId(data.id);
@@ -251,41 +224,14 @@ const RecipeResult = () => {
       <Header actions={recipeActions} />
       <main className="container mx-auto px-4 py-8 max-w-4xl relative z-10">
 
-        {/* AI-Generated Hero Image */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="relative rounded-3xl overflow-hidden mb-8 shadow-fun"
-        >
-          {heroImage ? (
-            <div className="relative aspect-[16/7]">
-              <img src={heroImage} alt={recipe.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-2xl sm:text-3xl md:text-4xl font-black text-primary-foreground mb-2 drop-shadow-lg"
-                >
-                  {recipe.title}
-                </motion.h1>
-                <p className="text-sm sm:text-base text-primary-foreground/80 max-w-2xl">{recipe.description}</p>
-              </div>
-            </div>
-          ) : imageLoading ? (
-            <div className="aspect-[16/7] skeleton-brand flex items-center justify-center">
-              <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2, ease: "linear" }}>
-                <ImageIcon className="w-10 h-10 text-muted-foreground/40" />
-              </motion.div>
-            </div>
-          ) : (
-            <div className="gradient-fun p-8 sm:p-10">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-primary-foreground mb-2">{recipe.title}</h1>
-              <p className="text-sm sm:text-base text-primary-foreground/80 max-w-2xl">{recipe.description}</p>
-            </div>
-          )}
-        </motion.div>
+        {/* AI-Generated Hero Image with retry/fallback */}
+        <RecipeHeroImage
+          title={recipe.title}
+          cuisine={recipe.cuisine}
+          description={recipe.description}
+          initialImage={heroImage}
+          onImageGenerated={(url) => setHeroImage(url)}
+        />
 
         {/* Quick Stats Cards with spring animation */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
