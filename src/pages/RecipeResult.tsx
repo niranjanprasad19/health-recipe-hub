@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -88,6 +88,7 @@ const RecipeSkeleton = () => (
 const RecipeResult = () => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
+  const { id: routeRecipeId } = useParams();
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth();
   const { toast } = useToast();
@@ -100,14 +101,45 @@ const RecipeResult = () => {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cookingMode, setCookingMode] = useState(false);
-  const [heroImage, setHeroImage] = useState<string | null>(location.state?.imageUrl || null);
+  const [heroImage, setHeroImage] = useState<string | null>(location.state?.imageUrl || location.state?.recipe?.imageUrl || null);
 
   const formData = location.state?.formData;
 
   useEffect(() => {
-    if (!recipe && formData) { generateRecipe(); }
+    if (!recipe && routeRecipeId) { fetchSavedRecipe(routeRecipeId); }
+    else if (!recipe && formData) { generateRecipe(); }
     else if (!recipe && !formData) { navigate("/preferences"); }
   }, []);
+
+  const fetchSavedRecipe = async (id: string) => {
+    setIsLoading(true); setError(null);
+    try {
+      const { data, error } = await supabase.from("saved_recipes").select("*").eq("id", id).single();
+      if (error) throw error;
+      setRecipe({
+        id: data.id, title: data.title, description: data.description || "",
+        prepTime: data.prep_time || 0, cookTime: data.cook_time || 0, servings: data.servings || 2,
+        cuisine: data.cuisine || "Various",
+        ingredients: data.ingredients as unknown as Recipe["ingredients"],
+        instructions: data.instructions as unknown as Recipe["instructions"],
+        nutritionInfo: data.nutrition_info as unknown as Recipe["nutritionInfo"],
+        tags: data.tags || [], healthBenefits: [], imageUrl: data.image_url,
+      });
+      setHeroImage(data.image_url);
+      setIsSaved(true);
+      setSavedRecipeId(data.id);
+    } catch (err) {
+      console.error("Error loading saved recipe:", err);
+      setError(err instanceof Error ? err.message : "Failed to load recipe");
+    } finally { setIsLoading(false); }
+  };
+
+  const handleHeroImageGenerated = async (url: string) => {
+    setHeroImage(url);
+    if (savedRecipeId) {
+      await supabase.from("saved_recipes").update({ image_url: url }).eq("id", savedRecipeId);
+    }
+  };
 
   const generateRecipe = async () => {
     if (!formData) return;
@@ -230,7 +262,7 @@ const RecipeResult = () => {
           cuisine={recipe.cuisine}
           description={recipe.description}
           initialImage={heroImage}
-          onImageGenerated={(url) => setHeroImage(url)}
+          onImageGenerated={handleHeroImageGenerated}
         />
 
         {/* Quick Stats Cards with spring animation */}
