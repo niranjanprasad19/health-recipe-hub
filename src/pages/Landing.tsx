@@ -258,6 +258,11 @@ const Landing = () => {
                   <Refrigerator className="w-4 h-4 mr-2" />{t('landing.useLeftovers')}
                 </Button>
               </Link>
+              <Link to="/food-tracker">
+                <Button size="lg" variant="outline" className="rounded-xl glass-card border-border/50 hover:border-primary/50 hover:glow-border transition-all">
+                  <TrendingUp className="w-4 h-4 mr-2" />Food Tracker
+                </Button>
+              </Link>
               {isAuthenticated && (
                 <>
                   <Link to="/meal-planning">
@@ -398,12 +403,12 @@ const Landing = () => {
           </div>
         </motion.section>
 
-        {/* Favorites Section */}
+        {/* Favorites Carousel */}
         {isAuthenticated && favoriteRecipes.length > 0 && (
           <motion.section initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="py-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-foreground flex items-center gap-2">
-                <Star className="w-5 h-5 text-warning fill-warning" />
+                <Heart className="w-5 h-5 text-fun-orange fill-fun-orange" />
                 {t('landing.yourFavorites')}
               </h2>
               <Link to="/profile">
@@ -412,9 +417,11 @@ const Landing = () => {
                 </Button>
               </Link>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
               {favoriteRecipes.map((recipe) => (
-                <RecipeCard key={recipe.id} recipe={recipe} onToggleFavorite={toggleFavorite} />
+                <div key={recipe.id} className="min-w-[260px] max-w-[260px] snap-start">
+                  <RecipeCard recipe={recipe} onToggleFavorite={toggleFavorite} />
+                </div>
               ))}
             </div>
           </motion.section>
