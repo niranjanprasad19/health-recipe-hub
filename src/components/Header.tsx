@@ -13,6 +13,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { ThemeSelector } from "@/components/ThemeSelector";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { GoogleTranslate } from "@/components/GoogleTranslate";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -88,6 +89,7 @@ export const Header = ({
     { to: "/family-profiles", label: t('nav.familyProfiles'), icon: Users },
     { to: "/meal-planning", label: t('nav.mealPlanning'), icon: Calendar },
     { to: "/shopping-list", label: t('nav.shoppingList'), icon: ShoppingCart },
+    { to: "/food-tracker", label: "Food Tracker", icon: TrendingUp },
   ];
 
   const getInitials = () => {

@@ -22,6 +22,7 @@ import NutritionDashboard from "./pages/NutritionDashboard";
 import Collections from "./pages/Collections";
 import FamilyProfiles from "./pages/FamilyProfiles";
 import { OnboardingWalkthrough } from "./components/OnboardingWalkthrough";
+import FoodTracker from "./pages/FoodTracker";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,7 @@ const App = () => (
             <Route path="/nutrition" element={<NutritionDashboard />} />
             <Route path="/collections" element={<Collections />} />
             <Route path="/family-profiles" element={<FamilyProfiles />} />
+            <Route path="/food-tracker" element={<FoodTracker />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
