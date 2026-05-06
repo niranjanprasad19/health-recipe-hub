@@ -89,6 +89,57 @@ export type Database = {
         }
         Relationships: []
       }
+      food_logs: {
+        Row: {
+          calories: number
+          carbs: number
+          created_at: string
+          fat: number
+          fiber: number | null
+          food_name: string
+          id: string
+          image_url: string | null
+          logged_at: string
+          notes: string | null
+          protein: number
+          serving: string | null
+          source: string
+          user_id: string
+        }
+        Insert: {
+          calories?: number
+          carbs?: number
+          created_at?: string
+          fat?: number
+          fiber?: number | null
+          food_name: string
+          id?: string
+          image_url?: string | null
+          logged_at?: string
+          notes?: string | null
+          protein?: number
+          serving?: string | null
+          source?: string
+          user_id: string
+        }
+        Update: {
+          calories?: number
+          carbs?: number
+          created_at?: string
+          fat?: number
+          fiber?: number | null
+          food_name?: string
+          id?: string
+          image_url?: string | null
+          logged_at?: string
+          notes?: string | null
+          protein?: number
+          serving?: string | null
+          source?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       meal_plan_items: {
         Row: {
           created_at: string
@@ -159,6 +210,42 @@ export type Database = {
           id?: string
           name?: string
           start_date?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      nutrition_goals: {
+        Row: {
+          created_at: string
+          daily_calories: number
+          daily_carbs: number
+          daily_fat: number
+          daily_protein: number
+          reminder_enabled: boolean
+          reminder_times: string[]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          daily_calories?: number
+          daily_carbs?: number
+          daily_fat?: number
+          daily_protein?: number
+          reminder_enabled?: boolean
+          reminder_times?: string[]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          daily_calories?: number
+          daily_carbs?: number
+          daily_fat?: number
+          daily_protein?: number
+          reminder_enabled?: boolean
+          reminder_times?: string[]
           updated_at?: string
           user_id?: string
         }
