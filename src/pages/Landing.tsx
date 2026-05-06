@@ -258,6 +258,11 @@ const Landing = () => {
                   <Refrigerator className="w-4 h-4 mr-2" />{t('landing.useLeftovers')}
                 </Button>
               </Link>
+              <Link to="/food-tracker">
+                <Button size="lg" variant="outline" className="rounded-xl glass-card border-border/50 hover:border-primary/50 hover:glow-border transition-all">
+                  <TrendingUp className="w-4 h-4 mr-2" />Food Tracker
+                </Button>
+              </Link>
               {isAuthenticated && (
                 <>
                   <Link to="/meal-planning">
