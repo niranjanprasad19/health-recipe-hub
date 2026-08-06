@@ -11,6 +11,7 @@ import {
   Home
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { RecipeJsonLd } from "@/components/RecipeJsonLd";
 import { Header } from "@/components/Header";
 
 interface Recipe {
@@ -95,6 +96,18 @@ const SharedRecipe = () => {
 
   return (
     <div className="min-h-screen gradient-hero">
+      <RecipeJsonLd
+        title={recipe.title}
+        description={recipe.description}
+        image={(recipe as any).image_url}
+        cuisine={recipe.cuisine}
+        prepTime={(recipe as any).prep_time}
+        cookTime={(recipe as any).cook_time}
+        servings={recipe.servings}
+        ingredients={ingredients}
+        instructions={instructions}
+        calories={(recipe as any).nutrition_info?.calories}
+      />
       <Header 
         actions={
           <Link to="/preferences">

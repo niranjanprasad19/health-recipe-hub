@@ -48,7 +48,7 @@ export const ThemeSelector = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="gap-1.5">
+        <Button variant="ghost" size="sm" className="gap-1.5" aria-label="Change color theme">
           <Palette className="w-4 h-4" />
           <span className="hidden sm:inline text-xs">{current.emoji}</span>
         </Button>

@@ -1,4 +1,5 @@
 import { createRoot } from "react-dom/client";
+import { HelmetProvider } from "react-helmet-async";
 import App from "./App.tsx";
 import "./i18n";
 import "./index.css";
@@ -7,4 +8,8 @@ import "./index.css";
 const savedTheme = localStorage.getItem("nutrichef-color-theme") || "fresh";
 document.documentElement.setAttribute("data-color-theme", savedTheme);
 
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <HelmetProvider>
+    <App />
+  </HelmetProvider>
+);

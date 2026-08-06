@@ -240,7 +240,7 @@ const Collections = () => {
                             </div>
                           </div>
                         </Link>
-                        <Button variant="ghost" size="sm" onClick={() => removeFromCollection(r.id)} className="text-destructive hover:text-destructive"><Trash2 className="w-4 h-4" /></Button>
+                        <Button variant="ghost" size="sm" aria-label="Remove recipe from collection" onClick={() => removeFromCollection(r.id)} className="text-destructive hover:text-destructive"><Trash2 className="w-4 h-4" /></Button>
                       </div>
                     ))}
                   </div>
@@ -271,7 +271,7 @@ const Collections = () => {
                             <span className="text-3xl">{c.emoji}</span>
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
-                                <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive" onClick={(e) => e.stopPropagation()}>
+                                <Button variant="ghost" size="sm" aria-label={`Delete collection ${c.name}`} className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive" onClick={(e) => e.stopPropagation()}>
                                   <Trash2 className="w-4 h-4" />
                                 </Button>
                               </AlertDialogTrigger>
