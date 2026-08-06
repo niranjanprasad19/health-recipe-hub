@@ -18,6 +18,7 @@ import { CookingMode } from "@/components/CookingMode";
 import { RecipeRating } from "@/components/RecipeRating";
 import { IngredientSubstitutions } from "@/components/IngredientSubstitutions";
 import { AddToCollectionDialog } from "@/components/AddToCollectionDialog";
+import { RecipeJsonLd } from "@/components/RecipeJsonLd";
 import { RecipeHeroImage } from "@/components/RecipeHeroImage";
 
 const formatRecipeText = (recipe: Recipe): string => {
@@ -261,6 +262,18 @@ const RecipeResult = () => {
 
   return (
     <div className="min-h-screen gradient-hero blob-bg">
+      <RecipeJsonLd
+        title={recipe.title}
+        description={recipe.description}
+        image={heroImage}
+        cuisine={recipe.cuisine}
+        prepTime={recipe.prepTime}
+        cookTime={recipe.cookTime}
+        servings={recipe.servings}
+        ingredients={recipe.ingredients}
+        instructions={recipe.instructions}
+        calories={recipe.nutritionInfo?.calories}
+      />
       <Header actions={recipeActions} />
       <main className="container mx-auto px-4 py-8 max-w-4xl relative z-10">
 
