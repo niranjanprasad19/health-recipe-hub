@@ -300,7 +300,7 @@ const FoodTracker = () => {
                             {l.serving ? `${l.serving} • ` : ""}{l.calories} kcal · P {Math.round(Number(l.protein))}g · C {Math.round(Number(l.carbs))}g · F {Math.round(Number(l.fat))}g
                           </p>
                         </div>
-                        <Button variant="ghost" size="icon" onClick={() => deleteLog(l.id)}><Trash2 className="w-4 h-4 text-muted-foreground" /></Button>
+                        <Button variant="ghost" size="icon" aria-label={`Delete food log ${l.food_name ?? ""}`} onClick={() => deleteLog(l.id)}><Trash2 className="w-4 h-4 text-muted-foreground" /></Button>
                       </CardContent>
                     </Card>
                   </motion.div>

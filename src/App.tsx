@@ -23,6 +23,7 @@ import Collections from "./pages/Collections";
 import FamilyProfiles from "./pages/FamilyProfiles";
 import { OnboardingWalkthrough } from "./components/OnboardingWalkthrough";
 import FoodTracker from "./pages/FoodTracker";
+import { RouteSeo } from "./components/RouteSeo";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
         <Sonner />
         <OnboardingWalkthrough />
         <BrowserRouter>
+          <RouteSeo />
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/auth" element={<Auth />} />

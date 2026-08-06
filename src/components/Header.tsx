@@ -206,7 +206,7 @@ export const Header = ({
             {!minimal && (
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="sm"><Menu className="w-5 h-5" /></Button>
+                  <Button variant="ghost" size="sm" aria-label="Open navigation menu"><Menu className="w-5 h-5" /></Button>
                 </SheetTrigger>
                 <SheetContent side="right" className="w-72">
                   <div className="flex flex-col gap-4 mt-8">
