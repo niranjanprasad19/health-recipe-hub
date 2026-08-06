@@ -253,7 +253,7 @@ Please respond with a JSON object in this exact format:
   } catch (error) {
     console.error("Error generating recipe:", error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : "Failed to generate recipe" }),
+      JSON.stringify({ error: "Internal server error. Please try again later." }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
