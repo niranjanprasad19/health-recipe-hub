@@ -287,7 +287,9 @@ const FoodTracker = () => {
             <Button onClick={() => fileRef.current?.click()} disabled={analyzing} className="flex-1 h-14 gradient-fun text-primary-foreground font-bold rounded-2xl shadow-fun">
               {analyzing ? <><Loader2 className="w-5 h-5 mr-2 animate-spin" />Analyzing…</> : <><Camera className="w-5 h-5 mr-2" />Snap a Photo</>}
             </Button>
+            <Button variant="outline" className="h-14 rounded-2xl" aria-label="Scan a barcode" onClick={() => setScanOpen(true)}><ScanBarcode className="w-5 h-5" /></Button>
             <input ref={fileRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handlePhotoSnap} />
+
             <Dialog open={manualOpen} onOpenChange={setManualOpen}>
               <DialogTrigger asChild>
                 <Button variant="outline" className="h-14 rounded-2xl"><Plus className="w-5 h-5" /></Button>
