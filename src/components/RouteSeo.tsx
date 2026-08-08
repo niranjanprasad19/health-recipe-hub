@@ -84,9 +84,15 @@ const routeMeta: Record<string, RouteMeta> = {
   "/food-tracker": {
     title: "AI Food & Calorie Tracker — NutriChef",
     description:
-      "Snap a photo of your meal and instantly log calories, protein, carbs and fat with AI nutrition analysis.",
+      "Snap a photo or scan a barcode and instantly log calories, protein, carbs and fat with AI nutrition analysis.",
+  },
+  "/pantry": {
+    title: "Pantry Tracker — NutriChef",
+    description:
+      "Track what's in your pantry, get expiry reminders and cook full meals from ingredients you already have.",
   },
 };
+
 
 const fallback: RouteMeta = {
   title: "NutriChef — AI Recipes & Meal Planning",
@@ -107,8 +113,11 @@ function metaForPath(pathname: string): RouteMeta {
 
 export const RouteSeo = () => {
   const { pathname } = useLocation();
+  // Pages that own their own <Helmet> head tags.
+  if (pathname.startsWith("/r/") || pathname === "/recipes") return null;
   const meta = metaForPath(pathname);
   const canonical = `${SITE_URL}${pathname === "/" ? "/" : pathname}`;
+
 
   return (
     <Helmet>

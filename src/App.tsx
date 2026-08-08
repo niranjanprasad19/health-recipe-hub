@@ -23,7 +23,11 @@ import Collections from "./pages/Collections";
 import FamilyProfiles from "./pages/FamilyProfiles";
 import { OnboardingWalkthrough } from "./components/OnboardingWalkthrough";
 import FoodTracker from "./pages/FoodTracker";
+import Pantry from "./pages/Pantry";
+import PublicRecipe from "./pages/PublicRecipe";
+import RecipeGallery from "./pages/RecipeGallery";
 import { RouteSeo } from "./components/RouteSeo";
+
 
 const queryClient = new QueryClient();
 
@@ -55,6 +59,10 @@ const App = () => (
             <Route path="/collections" element={<Collections />} />
             <Route path="/family-profiles" element={<FamilyProfiles />} />
             <Route path="/food-tracker" element={<FoodTracker />} />
+            <Route path="/pantry" element={<Pantry />} />
+            <Route path="/recipes" element={<RecipeGallery />} />
+            <Route path="/r/:slug" element={<PublicRecipe />} />
+
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

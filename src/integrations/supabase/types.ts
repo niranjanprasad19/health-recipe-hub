@@ -251,6 +251,42 @@ export type Database = {
         }
         Relationships: []
       }
+      pantry_items: {
+        Row: {
+          barcode: string | null
+          category: string
+          created_at: string
+          expires_on: string | null
+          id: string
+          name: string
+          quantity: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          barcode?: string | null
+          category?: string
+          created_at?: string
+          expires_on?: string | null
+          id?: string
+          name: string
+          quantity?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          barcode?: string | null
+          category?: string
+          created_at?: string
+          expires_on?: string | null
+          id?: string
+          name?: string
+          quantity?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -360,13 +396,17 @@ export type Database = {
           ingredients: Json
           instructions: Json
           is_favorite: boolean
+          is_public: boolean
           nutrition_info: Json | null
           prep_time: number | null
+          published_at: string | null
           servings: number | null
           share_token: string | null
+          slug: string | null
           tags: string[] | null
           title: string
           user_id: string
+          view_count: number
         }
         Insert: {
           cook_time?: number | null
@@ -378,13 +418,17 @@ export type Database = {
           ingredients?: Json
           instructions?: Json
           is_favorite?: boolean
+          is_public?: boolean
           nutrition_info?: Json | null
           prep_time?: number | null
+          published_at?: string | null
           servings?: number | null
           share_token?: string | null
+          slug?: string | null
           tags?: string[] | null
           title: string
           user_id: string
+          view_count?: number
         }
         Update: {
           cook_time?: number | null
@@ -396,13 +440,17 @@ export type Database = {
           ingredients?: Json
           instructions?: Json
           is_favorite?: boolean
+          is_public?: boolean
           nutrition_info?: Json | null
           prep_time?: number | null
+          published_at?: string | null
           servings?: number | null
           share_token?: string | null
+          slug?: string | null
           tags?: string[] | null
           title?: string
           user_id?: string
+          view_count?: number
         }
         Relationships: []
       }

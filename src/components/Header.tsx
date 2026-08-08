@@ -8,7 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Leaf, LogOut, User, ArrowLeft, Menu, Home, Calendar, ShoppingCart, Search, Heart, Upload, Refrigerator, PartyPopper, TrendingUp, BookOpen, Users } from "lucide-react";
+import { Leaf, LogOut, User, ArrowLeft, Menu, Home, Calendar, ShoppingCart, Search, Heart, Upload, Refrigerator, PartyPopper, TrendingUp, BookOpen, Users, Globe } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { ThemeSelector } from "@/components/ThemeSelector";
@@ -90,6 +90,9 @@ export const Header = ({
     { to: "/meal-planning", label: t('nav.mealPlanning'), icon: Calendar },
     { to: "/shopping-list", label: t('nav.shoppingList'), icon: ShoppingCart },
     { to: "/food-tracker", label: "Food Tracker", icon: TrendingUp },
+    { to: "/pantry", label: "My Pantry", icon: Refrigerator },
+    { to: "/recipes", label: "Community Recipes", icon: Globe },
+
   ];
 
   const getInitials = () => {

@@ -9,7 +9,10 @@ import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Camera, Plus, Trash2, Flame, Beef, Wheat, Droplets, Target, Bell, Loader2, Sparkles } from "lucide-react";
+import { Camera, Plus, Trash2, Flame, Beef, Wheat, Droplets, Target, Bell, Loader2, Sparkles, ScanBarcode } from "lucide-react";
+import { BarcodeScannerDialog } from "@/components/BarcodeScannerDialog";
+import { lookupBarcode } from "@/lib/openFoodFacts";
+
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -45,6 +48,9 @@ const FoodTracker = () => {
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [logs, setLogs] = useState<FoodLog[]>([]);
+  const [scanOpen, setScanOpen] = useState(false);
+  const [scanBusy, setScanBusy] = useState(false);
+
   const [goals, setGoals] = useState<Goals>(DEFAULT_GOALS);
   const [loading, setLoading] = useState(true);
   const [analyzing, setAnalyzing] = useState(false);
@@ -161,7 +167,39 @@ const FoodTracker = () => {
     toast.success("Logged!");
   };
 
+  const handleBarcode = async (barcode: string) => {
+    if (!user) return;
+    setScanBusy(true);
+    try {
+      const product = await lookupBarcode(barcode);
+      if (!product) { toast.error("Product not found — add it manually."); return; }
+      const insert = {
+        user_id: user.id,
+        food_name: [product.brand, product.name].filter(Boolean).join(" ").trim(),
+        serving: product.serving ?? (product.perServing ? "1 serving" : "100 g"),
+        calories: product.calories,
+        protein: product.protein,
+        carbs: product.carbs,
+        fat: product.fat,
+        fiber: product.fiber,
+        image_url: product.imageUrl ?? null,
+        source: "barcode",
+      };
+      const { data, error } = await supabase.from("food_logs").insert(insert).select().single();
+      if (error) throw error;
+      if (data) setLogs(prev => [data as FoodLog, ...prev]);
+      setScanOpen(false);
+      toast.success(`${insert.food_name} logged!`);
+    } catch (err) {
+      console.error("Barcode log failed:", err);
+      toast.error("Couldn't log that item. Please try again.");
+    } finally {
+      setScanBusy(false);
+    }
+  };
+
   const deleteLog = async (id: string) => {
+
     await supabase.from("food_logs").delete().eq("id", id);
     setLogs(prev => prev.filter(l => l.id !== id));
   };
@@ -249,7 +287,9 @@ const FoodTracker = () => {
             <Button onClick={() => fileRef.current?.click()} disabled={analyzing} className="flex-1 h-14 gradient-fun text-primary-foreground font-bold rounded-2xl shadow-fun">
               {analyzing ? <><Loader2 className="w-5 h-5 mr-2 animate-spin" />Analyzing…</> : <><Camera className="w-5 h-5 mr-2" />Snap a Photo</>}
             </Button>
+            <Button variant="outline" className="h-14 rounded-2xl" aria-label="Scan a barcode" onClick={() => setScanOpen(true)}><ScanBarcode className="w-5 h-5" /></Button>
             <input ref={fileRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handlePhotoSnap} />
+
             <Dialog open={manualOpen} onOpenChange={setManualOpen}>
               <DialogTrigger asChild>
                 <Button variant="outline" className="h-14 rounded-2xl"><Plus className="w-5 h-5" /></Button>
@@ -310,7 +350,10 @@ const FoodTracker = () => {
           )}
         </motion.div>
       </main>
+
+      <BarcodeScannerDialog open={scanOpen} onOpenChange={setScanOpen} onDetected={handleBarcode} busy={scanBusy} />
     </div>
+
   );
 };
 
