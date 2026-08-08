@@ -20,6 +20,8 @@ import { IngredientSubstitutions } from "@/components/IngredientSubstitutions";
 import { AddToCollectionDialog } from "@/components/AddToCollectionDialog";
 import { RecipeJsonLd } from "@/components/RecipeJsonLd";
 import { RecipeHeroImage } from "@/components/RecipeHeroImage";
+import { PublishRecipeToggle } from "@/components/PublishRecipeToggle";
+
 
 const formatRecipeText = (recipe: Recipe): string => {
   const ingredients = recipe.ingredients.map(i => `• ${i.amount} ${i.item}${i.notes ? ` (${i.notes})` : ''}`).join('\n');
@@ -223,6 +225,10 @@ const RecipeResult = () => {
         {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : isSaved ? <BookmarkCheck className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}
       </Button>
       {isSaved && savedRecipeId && <AddToCollectionDialog recipeId={savedRecipeId} />}
+      {isSaved && savedRecipeId && recipe && (
+        <PublishRecipeToggle recipeId={savedRecipeId} title={recipe.title} />
+      )}
+
       <Button variant="outline" size="icon" onClick={handleShare} className="ripple-container">
         {copied ? <CheckCircle className="w-4 h-4 text-success" /> : <Share2 className="w-4 h-4" />}
       </Button>

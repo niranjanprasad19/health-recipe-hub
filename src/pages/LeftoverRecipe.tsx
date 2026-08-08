@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,11 +33,18 @@ const formatRecipeText = (recipe: Recipe): string => {
 const LeftoverRecipe = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, isAuthenticated } = useAuth();
   const { toast } = useToast();
 
-  const [ingredients, setIngredients] = useState<string[]>([]);
+  // Pre-filled when arriving from the pantry ("Cook from my pantry").
+  const prefilled: string[] = Array.isArray(location.state?.ingredients)
+    ? location.state.ingredients.filter((i: unknown) => typeof i === "string")
+    : [];
+
+  const [ingredients, setIngredients] = useState<string[]>(prefilled);
   const [inputValue, setInputValue] = useState("");
+
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
