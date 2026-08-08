@@ -348,7 +348,10 @@ const FoodTracker = () => {
           )}
         </motion.div>
       </main>
+
+      <BarcodeScannerDialog open={scanOpen} onOpenChange={setScanOpen} onDetected={handleBarcode} busy={scanBusy} />
     </div>
+
   );
 };
 
