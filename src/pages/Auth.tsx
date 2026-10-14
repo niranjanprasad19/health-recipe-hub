@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -62,14 +63,17 @@ const Auth = () => {
 
   const handleGoogleSignIn = async () => {
     setGoogleLoading(true);
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: { redirectTo: `${window.location.origin}/` },
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
     });
-    if (error) {
+    if (result.error) {
       setGoogleLoading(false);
-      toast({ title: t('auth.signInFailed'), description: error.message, variant: "destructive" });
+      toast({ title: t('auth.signInFailed'), description: String(result.error.message ?? result.error), variant: "destructive" });
+      return;
     }
+    if (result.redirected) return;
+    setGoogleLoading(false);
+    navigate("/");
   };
 
   return (
