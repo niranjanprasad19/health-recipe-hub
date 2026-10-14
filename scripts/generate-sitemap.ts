@@ -24,7 +24,33 @@ const entries: SitemapEntry[] = [
   { path: "/nutrition", changefreq: "monthly", priority: "0.6" },
   { path: "/collections", changefreq: "monthly", priority: "0.6" },
   { path: "/family-profiles", changefreq: "monthly", priority: "0.5" },
+  { path: "/recipes", changefreq: "daily", priority: "0.8" },
+  { path: "/guides", changefreq: "weekly", priority: "0.8" },
+  ...[
+    "10-minute-hostel-recipes",
+    "indian-recipes-with-us-grocery-ingredients",
+    "budget-indian-student-meals",
+    "high-protein-vegetarian-indian",
+    "jain-and-satvik-recipes",
+    "south-indian-breakfast-recipes",
+  ].map((s) => ({ path: `/guides/${s}`, changefreq: "monthly" as const, priority: "0.8" })),
 ];
+
+async function publicRecipeEntries(): Promise<SitemapEntry[]> {
+  const url = process.env.VITE_SUPABASE_URL;
+  const key = process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  if (!url || !key) return [];
+  try {
+    const res = await fetch(`${url}/rest/v1/saved_recipes?select=slug&is_public=eq.true&slug=not.is.null&limit=5000`, {
+      headers: { apikey: key, Authorization: `Bearer ${key}` },
+    });
+    if (!res.ok) return [];
+    const rows: { slug: string }[] = await res.json();
+    return rows.map((r) => ({ path: `/r/${r.slug}`, changefreq: "monthly", priority: "0.6" }));
+  } catch {
+    return [];
+  }
+}
 
 function generateSitemap(list: SitemapEntry[]) {
   const urls = list.map((e) =>
@@ -47,5 +73,6 @@ function generateSitemap(list: SitemapEntry[]) {
   ].join("\n");
 }
 
-writeFileSync(resolve("public/sitemap.xml"), generateSitemap(entries));
-console.log(`sitemap.xml written (${entries.length} entries)`);
+const all = [...entries, ...(await publicRecipeEntries())];
+writeFileSync(resolve("public/sitemap.xml"), generateSitemap(all));
+console.log(`sitemap.xml written (${all.length} entries)`);

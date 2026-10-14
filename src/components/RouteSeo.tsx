@@ -114,7 +114,7 @@ function metaForPath(pathname: string): RouteMeta {
 export const RouteSeo = () => {
   const { pathname } = useLocation();
   // Pages that own their own <Helmet> head tags.
-  if (pathname.startsWith("/r/") || pathname === "/recipes") return null;
+  if (pathname.startsWith("/r/") || pathname === "/recipes" || pathname.startsWith("/guides")) return null;
   const meta = metaForPath(pathname);
   const canonical = `${SITE_URL}${pathname === "/" ? "/" : pathname}`;
 

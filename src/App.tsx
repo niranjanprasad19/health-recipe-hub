@@ -26,6 +26,7 @@ import FoodTracker from "./pages/FoodTracker";
 import Pantry from "./pages/Pantry";
 import PublicRecipe from "./pages/PublicRecipe";
 import RecipeGallery from "./pages/RecipeGallery";
+import RecipeHub, { RecipeHubIndex } from "./pages/RecipeHub";
 import { RouteSeo } from "./components/RouteSeo";
 
 
@@ -62,6 +63,8 @@ const App = () => (
             <Route path="/pantry" element={<Pantry />} />
             <Route path="/recipes" element={<RecipeGallery />} />
             <Route path="/r/:slug" element={<PublicRecipe />} />
+            <Route path="/guides" element={<RecipeHubIndex />} />
+            <Route path="/guides/:slug" element={<RecipeHub />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
