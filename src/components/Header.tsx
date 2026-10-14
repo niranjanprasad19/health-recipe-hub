@@ -92,6 +92,7 @@ export const Header = ({
     { to: "/food-tracker", label: "Food Tracker", icon: TrendingUp },
     { to: "/pantry", label: "My Pantry", icon: Refrigerator },
     { to: "/recipes", label: "Community Recipes", icon: Globe },
+    { to: "/guides", label: "Recipe Guides", icon: Globe },
 
   ];
 

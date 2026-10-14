@@ -104,6 +104,8 @@ export const indianFoodLikes = [
   "Paneer", "Dal (Lentils)", "Basmati Rice", "Roti/Naan", "Ghee",
   "Curd/Raita", "Biryani", "Samosa", "Idli/Dosa", "Chana",
   "Rajma", "Palak", "Methi", "Aloo", "Gobi",
+  "Soya Chunks", "Sprouts", "Bhindi", "Baingan", "Lauki", "Sabudana",
+  "Millets (Ragi/Jowar/Bajra)", "Pav Bhaji", "Dhokla", "Pongal", "Appam", "Fish Curry",
   "Tandoori Chicken", "Butter Chicken", "Chole", "Poha", "Upma"
 ];
 
@@ -135,12 +137,26 @@ export const indianRegionalCuisines = [
   { id: "chettinad", label: "Chettinad", emoji: "🌶️" },
   { id: "goan", label: "Goan", emoji: "🦐" },
   { id: "awadhi", label: "Awadhi", emoji: "👑" },
+  { id: "kashmiri", label: "Kashmiri", emoji: "🏔️" },
+  { id: "andhra", label: "Andhra", emoji: "🔥" },
+  { id: "karnataka", label: "Udupi / Karnataka", emoji: "🍃" },
+  { id: "sindhi", label: "Sindhi", emoji: "🫓" },
+  { id: "bihari", label: "Bihari", emoji: "🍠" },
+  { id: "northeast", label: "North-East", emoji: "🎋" },
+  { id: "parsi", label: "Parsi", emoji: "🥚" },
+  { id: "street-food", label: "Street Food", emoji: "🛺" },
 ];
 
 export const indianDietaryStyles = [
   { id: "jain", label: "Jain", description: "No root vegetables, no onion/garlic" },
   { id: "sattvic", label: "Sattvic", description: "Pure, yogic diet — no onion/garlic, minimal spice" },
   { id: "ayurvedic", label: "Ayurvedic", description: "Balanced doshas, seasonal eating" },
+  { id: "no-onion-garlic", label: "No Onion-Garlic", description: "Common on Tuesdays, Navratri & pujas" },
+  { id: "vrat", label: "Vrat / Upvas (Fasting)", description: "Sendha namak, kuttu, sabudana, no grains" },
+  { id: "eggetarian", label: "Eggetarian", description: "Vegetarian plus eggs" },
+  { id: "diabetic-friendly", label: "Diabetic-Friendly", description: "Low GI, millets, less rice & sugar" },
+  { id: "pcos-friendly", label: "PCOS-Friendly", description: "High protein, low refined carbs" },
+  { id: "less-oil", label: "Less Oil / Ghee", description: "Light tadka, air-fryer & steam" },
 ];
 
 export const indianMealTypes = [
@@ -149,6 +165,8 @@ export const indianMealTypes = [
   { id: "dinner", label: "Dinner", emoji: "🌙" },
   { id: "chaat-tiffin", label: "Snacks (Chaat/Tiffin)", emoji: "🥟" },
   { id: "festive", label: "Festive / Special", emoji: "🪔" },
+  { id: "tiffin", label: "Office / School Tiffin", emoji: "🍱" },
+  { id: "hostel", label: "Hostel / PG (minimal kitchen)", emoji: "🎒" },
 ];
 
 export const spiceLevels = [
