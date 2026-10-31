@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { motion, useScroll, useTransform, useInView, useMotionValue, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -27,27 +27,6 @@ interface SavedRecipe {
   is_favorite: boolean;
 }
 
-// Animated counter component
-const AnimatedCounter = ({ target, suffix = "", duration = 2 }: { target: number; suffix?: string; duration?: number }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-    let start = 0;
-    const end = target;
-    const step = end / (duration * 60);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= end) { setCount(end); clearInterval(timer); }
-      else setCount(Math.floor(start));
-    }, 1000 / 60);
-    return () => clearInterval(timer);
-  }, [isInView, target, duration]);
-
-  return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
-};
 
 const Landing = () => {
   const { t } = useTranslation();
@@ -287,10 +266,10 @@ const Landing = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-center">
             {[
-              { value: 10000, suffix: "+", label: t("landing.recipesGenerated") || "Recipes Generated", color: "text-gradient-fun" },
-              { value: 50, suffix: "+", label: t("landing.cuisines") || "Global Cuisines", color: "text-gradient-warm" },
-              { value: 500, suffix: "+", label: t("landing.ingredients") || "Ingredients", color: "text-gradient" },
-              { value: 15, suffix: "", label: t("landing.languages") || "Languages", color: "text-gradient-fun" },
+              { value: "50", suffix: "+", label: t("landing.cuisines") || "Global Cuisines", color: "text-gradient-warm" },
+              { value: "500", suffix: "+", label: t("landing.ingredients") || "Ingredients", color: "text-gradient" },
+              { value: "100", suffix: "+", label: t("landing.languages") || "Languages", color: "text-gradient-fun" },
+              { value: "100", suffix: "%", label: t("landing.recipesGenerated") || "Free to Use", color: "text-gradient-fun" },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -302,7 +281,7 @@ const Landing = () => {
                 className="space-y-1"
               >
                 <p className={`text-3xl sm:text-5xl font-black ${stat.color}`}>
-                  <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                  {stat.value}{stat.suffix}
                 </p>
                 <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
               </motion.div>

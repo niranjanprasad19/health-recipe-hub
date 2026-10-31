@@ -11,9 +11,9 @@ interface RouteMeta {
 
 const routeMeta: Record<string, RouteMeta> = {
   "/": {
-    title: "NutriChef — AI Recipes & Meal Planning",
+    title: "NutriChef — AI Indian Recipes for Students & NRIs",
     description:
-      "Generate personalized AI recipes, plan meals, build shopping lists and track nutrition around your tastes, allergies and health goals.",
+      "Generate personalized Indian and global recipes for students, bachelors and NRIs abroad — from your pantry, allergies, budget and health goals. Free AI leftover-recipe generator included.",
   },
   "/auth": {
     title: "Sign In — NutriChef",
