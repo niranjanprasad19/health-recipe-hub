@@ -266,10 +266,10 @@ const Landing = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-center">
             {[
-              { value: 10000, suffix: "+", label: t("landing.recipesGenerated") || "Recipes Generated", color: "text-gradient-fun" },
-              { value: 50, suffix: "+", label: t("landing.cuisines") || "Global Cuisines", color: "text-gradient-warm" },
-              { value: 500, suffix: "+", label: t("landing.ingredients") || "Ingredients", color: "text-gradient" },
-              { value: 15, suffix: "", label: t("landing.languages") || "Languages", color: "text-gradient-fun" },
+              { value: "50", suffix: "+", label: t("landing.cuisines") || "Global Cuisines", color: "text-gradient-warm" },
+              { value: "500", suffix: "+", label: t("landing.ingredients") || "Ingredients", color: "text-gradient" },
+              { value: "100", suffix: "+", label: t("landing.languages") || "Languages", color: "text-gradient-fun" },
+              { value: "100", suffix: "%", label: t("landing.recipesGenerated") || "Free to Use", color: "text-gradient-fun" },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -281,7 +281,7 @@ const Landing = () => {
                 className="space-y-1"
               >
                 <p className={`text-3xl sm:text-5xl font-black ${stat.color}`}>
-                  <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                  {stat.value}{stat.suffix}
                 </p>
                 <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
               </motion.div>
