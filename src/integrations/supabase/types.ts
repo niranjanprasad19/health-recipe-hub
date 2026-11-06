@@ -349,27 +349,36 @@ export type Database = {
       }
       recipe_ratings: {
         Row: {
+          cooked_at: string | null
           created_at: string
           id: string
+          is_public: boolean
           notes: string | null
+          public_review: string | null
           rating: number | null
           recipe_id: string
           updated_at: string
           user_id: string
         }
         Insert: {
+          cooked_at?: string | null
           created_at?: string
           id?: string
+          is_public?: boolean
           notes?: string | null
+          public_review?: string | null
           rating?: number | null
           recipe_id: string
           updated_at?: string
           user_id: string
         }
         Update: {
+          cooked_at?: string | null
           created_at?: string
           id?: string
+          is_public?: boolean
           notes?: string | null
+          public_review?: string | null
           rating?: number | null
           recipe_id?: string
           updated_at?: string
